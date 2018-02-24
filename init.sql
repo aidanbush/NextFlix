@@ -1,6 +1,30 @@
 --drop database project;
-
 --create database project;
+
+--drop tables
+drop table actor_rating;
+drop table movie_rating;
+drop table starred;
+drop table actor;
+drop table [queue];
+drop table [order];
+drop table movie;
+drop table employee_phone;
+drop table employee;
+drop table customer_phone;
+drop table customer;
+
+--drop functions
+drop function calc_cust_rating;
+
+--drop triggers
+/*
+drop trigger actor_rating_trigger;
+drop trigger movie_rating_trigger;
+drop trigger cust_rating_trigger;
+drop trigger cust_email_lower_trigger;
+drop trigger cust_postal_code_upper_trigger;
+--*/
 
 create table customer (
 	cid int not null primary key identity,
@@ -12,9 +36,9 @@ create table customer (
 	city text,
 	province text,
 	postalcode char(6),
-	email varchar(320) check(email like '%@%.%'), -- need to test!!!
+	email varchar(320) check(email like '_%@_%._%'),
 	account_type text not null, -- add constraint
-	creation_date date not null check(creation_date < getdate()),
+	creation_date date not null check(creation_date <= getdate()),
 	credit_card text,
 	rating int check(1 <= rating and rating <= 5),
 );
@@ -66,7 +90,7 @@ create table [order] (
 	mid int not null,
 	cid int not null,
 	eid int,
-	order_placed date not null check(order_placed < getdate()),
+	order_placed date not null check(order_placed <= getdate()),
 	foreign key (mid) references movie(mid),
 	foreign key (cid) references customer(cid),
 	foreign key (eid) references employee(eid),
@@ -75,7 +99,7 @@ create table [order] (
 create table [queue] (
 	cid int not null,
 	mid int not null,
-	date_added date not null check(date_added < getdate()),
+	date_added date not null check(date_added <= getdate()),
 	primary key (cid, mid),
 	foreign key (mid) references movie(mid),
 	foreign key (cid) references customer(cid),
@@ -86,7 +110,7 @@ create table actor (
 	first_name text not null,
 	last_name text,
 	gender char,
-	dob date check(dob < getdate()),
+	dob date check(dob <= getdate()),
 	age as datediff(hour, dob, getdate())/8766,
 	rating int check(1 <= rating and rating <= 5),
 );
@@ -118,15 +142,16 @@ create table actor_rating (
 );
 go
 
+--functions
 create function calc_cust_rating (@cid int)
 returns int
 as
 begin
 	-- get users orders in last month
 	declare @value int;
-	set @value = (select count(*)
+	select @value = count(*)
 		from [order]
-		where cid = @cid and datediff(mm, order_placed, getdate()) < 1);
+		where cid = @cid and datediff(mm, order_placed, getdate()) < 1;
 		
 	-- get average and standard deviation
 	declare @avg float;
@@ -139,19 +164,19 @@ begin
 	
 	-- calculate z-score and add 3 to get into range about +3
 	declare @score float;
-	set @score = (@value - @avg / @stdev) + 3;
+	set @score = (cast(@value as float) - cast(@avg as float) / @stdev) + 3;
 	
 	-- deal with outliers
-	if @score < 1
+	if @score < 1.0
 		return 1;
-	else if @score > 5
+	else if @score > 5.0
 		return 5;
 
 	return cast(round(@score, 0) as int);
 end;
-
 go
 
+--triggers
 create trigger cust_postal_code_upper_trigger
 on customer
 after insert, update
@@ -163,7 +188,6 @@ begin
 end
 go
 
--- need to test
 create trigger cust_email_lower_trigger
 on customer
 after insert, update
@@ -185,9 +209,11 @@ on [order]
 after insert
 as
 begin
+	declare @rating int
 	update customer
-	set rating = (exec calc_cust_rating, @cid cid)
+	set rating = @rating
 	where customer.cid in (select cid from inserted)
+	exec @rating = calc_cust_rating @cid = cid
 end;
 go
 

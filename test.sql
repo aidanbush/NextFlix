@@ -4,7 +4,7 @@ insert into actor (first_name, dob)
 	values ('test2', '1968-02-21');
 
 select * from actor;
-*/
+--*/
 
 -- test customer account creation date
 /*
@@ -12,7 +12,7 @@ insert into customer (first_name, last_name, account_type, creation_date)
 	values ('first', 'second', 'limited', getdate());
 
 select * from customer;
-*/
+--*/
 
 -- test movie rating trigger
 /*
@@ -26,7 +26,7 @@ insert into movie_rating (mid, cid, rating)
 	values (1, 1, 5);
 
 select * from movie;
-*/
+--*/
 
 -- test actor rating trigger
 /*
@@ -40,7 +40,7 @@ insert into actor_rating (aid, cid, rating)
 	values (1, 1, 5);
 
 select * from actor;
-*/
+--*/
 
 -- test customer rating trigger
 /*
@@ -54,7 +54,7 @@ insert into [order] (mid, cid, order_placed)
 	values (1, 1, getdate());
 
 select * from customer;
-*/
+--*/
 
 -- test postal code constraint
 /*
@@ -76,13 +76,17 @@ insert into customer (first_name, last_name, account_type, creation_date, postal
 	values ('postal', ' code', 'test', getdate(), '3D9A0Z');
 --validate
 select * from customer;
-*/
+--*/
 
 -- test customer email validating
---/*
+/*
 --valid
+--lowercase
 insert into customer (first_name, last_name, account_type, creation_date, email)
-	values ('email', 'validating', 'test', getdate(), 'local@domain.tld');
+	values ('email', 'validating', 'test', getdate(), 'local1@domain.tld');
+--uppercase
+insert into customer (first_name, last_name, account_type, creation_date, email)
+	values ('email', 'validating', 'test', getdate(), 'LOCAL2@DOMAIN.TLD');
 --invalid
 --no local part
 insert into customer (first_name, last_name, account_type, creation_date, email)
@@ -101,5 +105,29 @@ insert into customer (first_name, last_name, account_type, creation_date, email)
 insert into customer (first_name, last_name, account_type, creation_date, email)
 	values ('email', 'validating', 'test', getdate(), 'localdomaintld');
 --validate
+select * from customer;
+--*/
+
+-- test customer rating
+/*
+--setup
+--create two customers
+insert into customer (first_name, last_name, account_type, creation_date)
+	values ('first', 'rating', 'test', getdate());
+insert into customer (first_name, last_name, account_type, creation_date)
+	values ('first', 'rating', 'test', getdate());
+--create movie
+insert into movie (name, fees, num_copies, copies_available)
+	values ('rating test', 1.0, 10, 5);
+--tests
+--test middle value
+insert into [order] (mid, cid, order_placed)
+	values (1, 1, getdate());
+insert into [order] (mid, cid, order_placed)
+	values (1, 2, getdate());
+select * from customer;
+--test high / low value
+insert into [order] (mid, cid, order_placed)
+	values (1, 1, getdate());
 select * from customer;
 --*/
