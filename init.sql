@@ -25,8 +25,8 @@ create table customer (
 	house_number text,
 	city text,
 	province text,
-	postalcode char(6),
 	phone_number char(10) check(phone_number not like '%[^0-9]%'),
+	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
 	email varchar(320) check(email like '_%@_%._%'),
 	account_type text not null, -- add constraint
 	creation_date date not null check(creation_date <= getdate()),
@@ -44,11 +44,11 @@ create table employee (
 	house_number text,
 	city text,
 	province text,
-	postalcode char(6),
 	phone_number char(10) check(phone_number not like '%[^0-9]%'),
+	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
 	start date not null,
-	wage float not null,
-	social_insurance_num int,
+	wage float not null check(wage > 0),
+	social_insurance_num char(9) check(len(social_insurance_num) = 6 and isnumeric(social_insurance_num) = 1),
 );
 
 create table movie (
@@ -191,22 +191,6 @@ begin
 	where customer.cid in (select cid from inserted)
 end
 go
-
--- need to test
-/*
-create trigger cust_rating_trigger
-on [order]
-after insert
-as
-begin
-	declare @rating int
-	update customer
-	set rating = @rating
-	where customer.cid in (select cid from inserted)
-	exec @rating = get_three;--calc_cust_rating @cid = cid;
-end;
-go
-*/
 
 create trigger movie_rating_trigger
 on movie_rating
