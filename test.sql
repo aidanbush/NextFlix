@@ -1,17 +1,19 @@
 -- test actor dob
-/*
+--/*
 insert into actor (first_name, dob)
 	values ('test2', '1968-02-21');
 
 select * from actor;
+delete from actor;
 --*/
 
 -- test customer account creation date
-/*
+--/*
 insert into customer (first_name, last_name, account_type, creation_date)
 	values ('first', 'second', 'limited', getdate());
 
 select * from customer;
+delete from customer;
 --*/
 
 -- test movie rating trigger
@@ -109,7 +111,7 @@ select * from customer;
 --*/
 
 -- test customer rating
-/*
+--/*
 --setup
 --create two customers
 declare @mid1 int;
