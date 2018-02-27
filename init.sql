@@ -28,9 +28,9 @@ create table customer (
 	phone_number char(10) check(phone_number not like '%[^0-9]%'),
 	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
 	email varchar(320) check(email like '_%@_%._%'),
-	account_type text not null, -- add constraint
+	account_type text not null check (account_type IN ('Limited', 'Bronze', 'Silver', 'Gold')), -- add constraint
 	creation_date date not null check(creation_date <= getdate()),
-	credit_card text,
+	credit_card text, --doesn't always have 16 digits
 	rating int check(0 <= rating and rating <= 5) default 0 not null,
 );
 
@@ -48,7 +48,7 @@ create table employee (
 	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
 	start date not null,
 	wage float not null check(wage > 0),
-	social_insurance_num char(9) check(len(social_insurance_num) = 6 and isnumeric(social_insurance_num) = 1),
+	social_insurance_num char(9) check(len(social_insurance_num) = 9 and isnumeric(social_insurance_num) = 1),
 );
 
 create table movie (
