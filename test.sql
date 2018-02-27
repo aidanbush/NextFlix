@@ -112,22 +112,41 @@ select * from customer;
 /*
 --setup
 --create two customers
+declare @mid1 int;
+declare @cid1 int;
+declare @cid2 int;
 insert into customer (first_name, last_name, account_type, creation_date)
 	values ('first', 'rating', 'test', getdate());
 insert into customer (first_name, last_name, account_type, creation_date)
-	values ('first', 'rating', 'test', getdate());
+	values ('second', 'rating', 'test', getdate());
+set @cid2 = @@IDENTITY;
+insert into customer (first_name, last_name, account_type, creation_date)
+	values ('no movies', 'rating', 'test', getdate());
+set @mid1 = @@IDENTITY;
 --create movie
 insert into movie (name, fees, num_copies, copies_available)
 	values ('rating test', 1.0, 10, 5);
+
+--grab inserted identitys
+select @cid1 = cid from customer where first_name like 'first';
+select @cid2 = cid from customer where first_name like 'second';
+select @mid1 = mid from movie where name like 'rating test';
+
 --tests
 --test middle value
 insert into [order] (mid, cid, order_placed)
-	values (1, 1, getdate());
+	values (@mid1, @cid1, getdate());
 insert into [order] (mid, cid, order_placed)
-	values (1, 2, getdate());
+	values (@mid1, @cid2, getdate());
+exec calc_cust_rating;
 select * from customer;
 --test high / low value
 insert into [order] (mid, cid, order_placed)
-	values (1, 1, getdate());
+	values (@mid1, @cid1, getdate());
+exec calc_cust_rating;
 select * from customer;
+
+delete from [order];
+delete from movie;
+delete from customer;
 --*/
