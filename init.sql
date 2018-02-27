@@ -9,9 +9,7 @@ drop table actor;
 drop table [queue];
 drop table [order];
 drop table movie;
-drop table employee_phone;
 drop table employee;
-drop table customer_phone;
 drop table customer;
 
 --drop functions / stored procedures
@@ -28,19 +26,12 @@ create table customer (
 	city text,
 	province text,
 	postalcode char(6),
+	phone_number char(10) check(phone_number not like '%[^0-9]%'),
 	email varchar(320) check(email like '_%@_%._%'),
 	account_type text not null, -- add constraint
 	creation_date date not null check(creation_date <= getdate()),
 	credit_card text,
 	rating int check(0 <= rating and rating <= 5) default 0 not null,
-);
-
-create table customer_phone (
-	cid int not null,
-	number char(10) not null check(number not like '%[^0-9]%'),
-	[type] text not null,
-	primary key (cid, number),
-	foreign key (cid) references customer(cid),
 );
 
 create table employee (
@@ -54,17 +45,10 @@ create table employee (
 	city text,
 	province text,
 	postalcode char(6),
+	phone_number char(10) check(phone_number not like '%[^0-9]%'),
 	start date not null,
 	wage float not null,
 	social_insurance_num int,
-);
-
-create table employee_phone (
-	eid int not null,
-	number char(10) not null check(number not like '%[^0-9]%'),
-	[type] text not null,
-	primary key (eid, number),
-	foreign key (eid) references employee(eid),
 );
 
 create table movie (
