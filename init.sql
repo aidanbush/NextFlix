@@ -208,22 +208,6 @@ begin
 end
 go
 
--- need to test
-/*
-create trigger cust_rating_trigger
-on [order]
-after insert
-as
-begin
-	declare @rating int
-	update customer
-	set rating = @rating
-	where customer.cid in (select cid from inserted)
-	exec @rating = get_three;--calc_cust_rating @cid = cid;
-end;
-go
-*/
-
 create trigger movie_rating_trigger
 on movie_rating
 after insert
