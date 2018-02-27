@@ -106,13 +106,13 @@ insert into customer (first_name, last_name, account_type, creation_date, postal
 -- invalid
 -- short
 /*insert into customer (first_name, last_name, account_type, creation_date, postalcode)
-	values ('postal', ' code', 'test', getdate(), 'A0Z9L');*/
+	values ('postal', ' code', 'test', getdate(), 'A0Z9L');
 -- long
-/*insert into customer (first_name, last_name, account_type, creation_date, postalcode)
-	values ('postal', ' code', 'test', getdate(), 'A0Z9L5W');*/
+insert into customer (first_name, last_name, account_type, creation_date, postalcode)
+	values ('postal', ' code', 'test', getdate(), 'A0Z9L5W');
 -- swaped order
-/*insert into customer (first_name, last_name, account_type, creation_date, postalcode)
-	values ('postal', ' code', 'test', getdate(), '3D9A0Z');*/
+insert into customer (first_name, last_name, account_type, creation_date, postalcode)
+	values ('postal', ' code', 'test', getdate(), '3D9A0Z');--*/
 -- validate
 select * from customer;
 

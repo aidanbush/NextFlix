@@ -53,10 +53,10 @@ create table employee (
 	house_number text,
 	city text,
 	province text,
-	postalcode char(6),
+	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
 	start date not null,
-	wage float not null,
-	social_insurance_num int,
+	wage float not null check(wage > 0),
+	social_insurance_num char(9) check(len(social_insurance_num) = 6 and isnumeric(social_insurance_num) = 1),
 );
 
 create table employee_phone (
