@@ -14,17 +14,9 @@ drop table employee;
 drop table customer_phone;
 drop table customer;
 
---drop functions
-drop function calc_cust_rating;
-
---drop triggers
-/*
-drop trigger actor_rating_trigger;
-drop trigger movie_rating_trigger;
-drop trigger cust_rating_trigger;
-drop trigger cust_email_lower_trigger;
-drop trigger cust_postal_code_upper_trigger;
---*/
+--drop functions / stored procedures
+drop function limit_score;
+drop proc calc_cust_rating;
 
 create table customer (
 	cid int not null primary key identity,
@@ -40,7 +32,7 @@ create table customer (
 	account_type text not null, -- add constraint
 	creation_date date not null check(creation_date <= getdate()),
 	credit_card text,
-	rating int check(1 <= rating and rating <= 5),
+	rating int check(0 <= rating and rating <= 5) default 0 not null,
 );
 
 create table customer_phone (
@@ -143,36 +135,48 @@ create table actor_rating (
 go
 
 --functions
-create function calc_cust_rating (@cid int)
+create function limit_score (@score float)
 returns int
 as
 begin
-	-- get users orders in last month
-	declare @value int;
-	select @value = count(*)
-		from [order]
-		where cid = @cid and datediff(mm, order_placed, getdate()) < 1;
+	if @score < 1
+		return 1;
+	else if @score > 5
+		return 5;
+	return cast(@score as int);
+end
+go
+
+create proc calc_cust_rating
+as
+begin
+	-- get users orders in the last month
+	declare @temp table (cid int, order_count int)
+	insert into @temp (cid, order_count)
+		select cid, count(*) as order_count
+			from [order]
+			where datediff(mm, order_placed, getdate()) < 1
+			group by cid;
 		
 	-- get average and standard deviation
 	declare @avg float;
 	declare @stdev float;
-	select @avg = avg(order_count), @stdev = stdev(order_count) from
-			(select count(*) as order_count, cid
-			from [order]
-			where datediff(mm, order_placed, getdate()) < 1
-			group by cid) as cust_orders;
-	
-	-- calculate z-score and add 3 to get into range about +3
-	declare @score float;
-	set @score = (cast(@value as float) - cast(@avg as float) / @stdev) + 3;
-	
-	-- deal with outliers
-	if @score < 1.0
-		return 1;
-	else if @score > 5.0
-		return 5;
+	select @avg = avg(order_count), @stdev = stdev(order_count)
+		from @temp as cust_orders;
 
-	return cast(round(@score, 0) as int);
+	-- deal with stdev == 0
+	if @stdev = 0
+		set @stdev = 0.0001;
+
+	-- update all scores
+	-- need to deal with outliers
+	update customer set rating = dbo.limit_score((order_count - @avg) / @stdev + 3)
+		from @temp as t
+		where customer.cid = t.cid;
+
+	-- set all other customers to have a rating of 0
+	update customer set rating = 0
+		where customer.cid not in (select cid from @temp);
 end;
 go
 
@@ -204,6 +208,7 @@ end
 go
 
 -- need to test
+/*
 create trigger cust_rating_trigger
 on [order]
 after insert
@@ -213,9 +218,10 @@ begin
 	update customer
 	set rating = @rating
 	where customer.cid in (select cid from inserted)
-	exec @rating = calc_cust_rating @cid = cid
+	exec @rating = get_three;--calc_cust_rating @cid = cid;
 end;
 go
+*/
 
 create trigger movie_rating_trigger
 on movie_rating
