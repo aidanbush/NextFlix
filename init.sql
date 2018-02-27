@@ -27,7 +27,7 @@ create table customer (
 	house_number text,
 	city text,
 	province text,
-	postalcode char(6),
+	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
 	email varchar(320) check(email like '_%@_%._%'),
 	account_type text not null, -- add constraint
 	creation_date date not null check(creation_date <= getdate()),
