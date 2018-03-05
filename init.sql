@@ -28,7 +28,7 @@ create table customer (
 	phone_number char(10) check(phone_number not like '%[^0-9]%'),
 	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
 	email varchar(320) check(email like '_%@_%._%'),
-	account_type text not null check (account_type IN ('Limited', 'Bronze', 'Silver', 'Gold')), -- add constraint
+	account_type varchar(10) not null check (account_type IN ('Limited', 'Bronze', 'Silver', 'Gold')),
 	creation_date date not null check(creation_date <= getdate()),
 	credit_card text, --doesn't always have 16 digits
 	rating int check(0 <= rating and rating <= 5) default 0 not null,
@@ -51,6 +51,7 @@ create table employee (
 	social_insurance_num char(9) check(len(social_insurance_num) = 9 and isnumeric(social_insurance_num) = 1),
 );
 
+
 create table movie (
 	mid int not null primary key identity,
 	name text not null,
@@ -72,6 +73,7 @@ create table [order] (
 	foreign key (eid) references employee(eid),
 );
 
+
 create table [queue] (
 	cid int not null,
 	mid int not null,
@@ -80,6 +82,7 @@ create table [queue] (
 	foreign key (mid) references movie(mid),
 	foreign key (cid) references customer(cid),
 );
+
 
 create table actor (
 	aid int not null primary key identity,
@@ -132,6 +135,7 @@ begin
 end
 go
 
+
 create proc calc_cust_rating
 as
 begin
@@ -165,6 +169,7 @@ begin
 end;
 go
 
+
 --triggers
 create trigger cust_postal_code_upper_trigger
 on customer
@@ -192,23 +197,24 @@ begin
 end
 go
 
+
 create trigger movie_rating_trigger
 on movie_rating
-after insert
+after insert, delete
 as
 begin
 	update movie
 	set rating = (select avg(rating) from movie_rating where mid = movie.mid) -- test
-	where movie.mid in (select mid from inserted)
+	where movie.mid in (select mid from inserted) or movie.mid in (select mid from deleted)
 end;
 go
 
 create trigger actor_rating_trigger
 on actor_rating
-after insert
+after insert, delete
 as
 begin
 	update actor
 	set rating = (select avg(rating) from actor_rating where aid = actor.aid) -- test
-	where actor.aid in (select aid from inserted)
+	where actor.aid in (select aid from inserted) or actor.aid in (select aid from deleted)
 end;
