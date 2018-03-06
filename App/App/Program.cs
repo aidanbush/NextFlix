@@ -14,6 +14,8 @@ namespace App
         [STAThread]
         static void Main()
         {
+            DBEnvironment.ConnectToDB();
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
