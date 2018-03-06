@@ -1,4 +1,8 @@
 
+declare @cid1 int;
+declare @mid1 int;
+declare @cid2 int;
+
 /*************************************
  * test customer account creation date
  *************************************/
