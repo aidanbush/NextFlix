@@ -15,6 +15,11 @@ namespace App
         public Form1()
         {
             InitializeComponent();
+            //creates a new form and adds it to navigation
+            FormNavigator.AddForm(new Form2(), "customersView");
+
+            //navigates to the selected form
+            FormNavigator.ChangeForm(this, "customersView");
         }
     }
 }
