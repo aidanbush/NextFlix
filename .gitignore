@@ -455,3 +455,7 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/csharp,windows,visualstudio
 App/App/obj/Debug/App.csproj.CoreCompileInputs.cache
+App/.vs/App/v15/Server/sqlite3/storage.ide
+App/.vs/App/v15/Server/sqlite3/storage.ide-wal
+App/App/obj/Debug/App.csproj.CoreCompileInputs.cache
+App/App/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
