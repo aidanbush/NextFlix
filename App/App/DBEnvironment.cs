@@ -37,7 +37,7 @@ namespace App
             return connectionString;
         }
 
-        public static DataSet CustomerInsertionQuery(CustomerInsertionParameters parameters)
+        public static bool CustomerInsertionQuery(CustomerInsertionParameters parameters)
         {
             UserName name = parameters.GetUserName();
             Address address = parameters.GetAddress();
@@ -49,39 +49,40 @@ namespace App
 
             using (SqlCommand command = new SqlCommand(q, con))
             {
-
-                command.Parameters.AddWithValue("@first_name", name.GetFirstName());
-                command.Parameters.AddWithValue("@last_name", name.GetLastName());
-                command.Parameters.AddWithValue("@creation_date", DateTime.Now);
-                command.Parameters.AddWithValue("@account_type", "Limited");
-                command.Parameters.AddWithValue("@phone_number", info.getPhoneNumber());
-                command.Parameters.AddWithValue("@email", info.getEmail());
-                command.Parameters.AddWithValue("@suite_number", address.GetSuiteNumber());
-                command.Parameters.AddWithValue("@street_number", address.GetStreetNumber());
-                command.Parameters.AddWithValue("@house_number", address.GetHouseNumber());
-                command.Parameters.AddWithValue("@postalcode", address.GetPostal());
-                command.Parameters.AddWithValue("@city", address.GetCity());
-                command.Parameters.AddWithValue("@province", address.GetProvince());
-
-                int err = command.ExecuteNonQuery();
-                if (err < 0)
+                try
                 {
-                    Debug.Print("InserFailed");
+                    command.Parameters.AddWithValue("@first_name", name.GetFirstName());
+                    command.Parameters.AddWithValue("@last_name", name.GetLastName());
+                    command.Parameters.AddWithValue("@creation_date", DateTime.Now);
+                    command.Parameters.AddWithValue("@account_type", "Limited");
+                    command.Parameters.AddWithValue("@phone_number", info.getPhoneNumber());
+                    command.Parameters.AddWithValue("@email", info.getEmail());
+                    command.Parameters.AddWithValue("@suite_number", address.GetSuiteNumber());
+                    command.Parameters.AddWithValue("@street_number", address.GetStreetNumber());
+                    command.Parameters.AddWithValue("@house_number", address.GetHouseNumber());
+                    command.Parameters.AddWithValue("@postalcode", address.GetPostal());
+                    command.Parameters.AddWithValue("@city", address.GetCity());
+                    command.Parameters.AddWithValue("@province", address.GetProvince());
+                    int err = command.ExecuteNonQuery();
                 }
-            }
-            
+                catch(Exception e)
+                {
+                    Debug.Print(e.ToString());
+                    con.Close();
+                    return false;
+                }
+              
+            }           
             con.Close();
-            return ds;
+            return true;
 
         }
-
         public static DataSet getDataSet()
         {
             DataSet ds = new DataSet();
             sda.Fill(ds, "Customers");
             return ds;
         }
-
         public static void RetrieveCustomers()
         {
             string qString = "SELECT * FROM customer";

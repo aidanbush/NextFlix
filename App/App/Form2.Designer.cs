@@ -47,18 +47,21 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(361, 73);
+            this.dataGridView1.Location = new System.Drawing.Point(542, 114);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1000, 691);
+            this.dataGridView1.Size = new System.Drawing.Size(1500, 1080);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(99, 96);
+            this.AddButton.Location = new System.Drawing.Point(148, 150);
+            this.AddButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(179, 68);
+            this.AddButton.Size = new System.Drawing.Size(268, 106);
             this.AddButton.TabIndex = 1;
             this.AddButton.Text = "Add";
             this.AddButton.UseVisualStyleBackColor = true;
@@ -72,7 +75,8 @@
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1373, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(2060, 42);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -85,31 +89,31 @@
             this.moviesToolStripMenuItem,
             this.salesReportsToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            this.menuToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(90, 36);
             this.menuToolStripMenuItem.Text = "Menu";
             // 
             // customersToolStripMenuItem
             // 
             this.customersToolStripMenuItem.Name = "customersToolStripMenuItem";
-            this.customersToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.customersToolStripMenuItem.Size = new System.Drawing.Size(391, 38);
             this.customersToolStripMenuItem.Text = "Customers";
             // 
             // customerRepresentativesToolStripMenuItem
             // 
             this.customerRepresentativesToolStripMenuItem.Name = "customerRepresentativesToolStripMenuItem";
-            this.customerRepresentativesToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.customerRepresentativesToolStripMenuItem.Size = new System.Drawing.Size(391, 38);
             this.customerRepresentativesToolStripMenuItem.Text = "Customer Representatives";
             // 
             // moviesToolStripMenuItem
             // 
             this.moviesToolStripMenuItem.Name = "moviesToolStripMenuItem";
-            this.moviesToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.moviesToolStripMenuItem.Size = new System.Drawing.Size(391, 38);
             this.moviesToolStripMenuItem.Text = "Movies";
             // 
             // salesReportsToolStripMenuItem
             // 
             this.salesReportsToolStripMenuItem.Name = "salesReportsToolStripMenuItem";
-            this.salesReportsToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.salesReportsToolStripMenuItem.Size = new System.Drawing.Size(391, 38);
             this.salesReportsToolStripMenuItem.Text = "Sales Reports";
             // 
             // contextMenuStrip1
@@ -120,33 +124,36 @@
             // 
             // EditButton
             // 
-            this.EditButton.Location = new System.Drawing.Point(99, 180);
+            this.EditButton.Location = new System.Drawing.Point(148, 281);
+            this.EditButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.EditButton.Name = "EditButton";
-            this.EditButton.Size = new System.Drawing.Size(179, 68);
+            this.EditButton.Size = new System.Drawing.Size(268, 106);
             this.EditButton.TabIndex = 6;
             this.EditButton.Text = "Edit";
             this.EditButton.UseVisualStyleBackColor = true;
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(99, 272);
+            this.DeleteButton.Location = new System.Drawing.Point(148, 425);
+            this.DeleteButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(179, 68);
+            this.DeleteButton.Size = new System.Drawing.Size(268, 106);
             this.DeleteButton.TabIndex = 7;
             this.DeleteButton.Text = "Delete";
             this.DeleteButton.UseVisualStyleBackColor = true;
             // 
             // ManagerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1373, 776);
+            this.ClientSize = new System.Drawing.Size(2060, 1212);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.EditButton);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ManagerForm";
             this.Text = "Manager";
             this.Load += new System.EventHandler(this.Form2_Load);
