@@ -69,7 +69,6 @@
             this.FirstNameBox.Name = "FirstNameBox";
             this.FirstNameBox.Size = new System.Drawing.Size(277, 31);
             this.FirstNameBox.TabIndex = 1;
-            this.FirstNameBox.Text = "jordan";
             // 
             // LastNameBox
             // 
@@ -77,7 +76,6 @@
             this.LastNameBox.Name = "LastNameBox";
             this.LastNameBox.Size = new System.Drawing.Size(277, 31);
             this.LastNameBox.TabIndex = 2;
-            this.LastNameBox.Text = "hewko";
             // 
             // SuiteBox
             // 
@@ -85,7 +83,6 @@
             this.SuiteBox.Name = "SuiteBox";
             this.SuiteBox.Size = new System.Drawing.Size(100, 31);
             this.SuiteBox.TabIndex = 3;
-            this.SuiteBox.Text = "1234";
             // 
             // HouseBox
             // 
@@ -93,7 +90,6 @@
             this.HouseBox.Name = "HouseBox";
             this.HouseBox.Size = new System.Drawing.Size(100, 31);
             this.HouseBox.TabIndex = 4;
-            this.HouseBox.Text = "4567";
             // 
             // StreetBox
             // 
@@ -101,7 +97,6 @@
             this.StreetBox.Name = "StreetBox";
             this.StreetBox.Size = new System.Drawing.Size(100, 31);
             this.StreetBox.TabIndex = 5;
-            this.StreetBox.Text = "Jasper Ave";
             // 
             // ProvinceBox
             // 
@@ -109,7 +104,6 @@
             this.ProvinceBox.Name = "ProvinceBox";
             this.ProvinceBox.Size = new System.Drawing.Size(100, 31);
             this.ProvinceBox.TabIndex = 6;
-            this.ProvinceBox.Text = "Ab";
             // 
             // label1
             // 
@@ -180,7 +174,6 @@
             this.PostalBox.Name = "PostalBox";
             this.PostalBox.Size = new System.Drawing.Size(128, 31);
             this.PostalBox.TabIndex = 8;
-            this.PostalBox.Text = "t5t5t5";
             // 
             // label8
             // 
@@ -206,7 +199,6 @@
             this.EmailBox.Name = "EmailBox";
             this.EmailBox.Size = new System.Drawing.Size(279, 31);
             this.EmailBox.TabIndex = 9;
-            this.EmailBox.Text = "jordan@cool.dude";
             // 
             // CancelButton
             // 
@@ -216,6 +208,7 @@
             this.CancelButton.TabIndex = 18;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // label10
             // 
@@ -232,7 +225,6 @@
             this.PhoneBox.Name = "PhoneBox";
             this.PhoneBox.Size = new System.Drawing.Size(284, 31);
             this.PhoneBox.TabIndex = 10;
-            this.PhoneBox.Text = "7804234567";
             // 
             // label11
             // 
@@ -249,7 +241,6 @@
             this.CityBox.Name = "CityBox";
             this.CityBox.Size = new System.Drawing.Size(100, 31);
             this.CityBox.TabIndex = 7;
-            this.CityBox.Text = "edmonton";
             // 
             // AddCustomerForm
             // 
@@ -281,6 +272,7 @@
             this.Controls.Add(this.AddUserButton);
             this.Name = "AddCustomerForm";
             this.Text = "Add User";
+            this.Load += new System.EventHandler(this.AddCustomerForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,11 +34,10 @@ namespace App
 
         private void button1_Click(object sender, EventArgs e)
         {
-          
-            //dataGridView1.DataSource = DBEnvironment.getDataSet();
-            AddCustomerForm AddUserForm = new AddCustomerForm();
+            
+            AddCustomerForm AddUserForm = new AddCustomerForm(this);
             AddUserForm.Show();
-            dataGridView1.Refresh();
+            
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
