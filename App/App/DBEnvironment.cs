@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace App
 {
@@ -13,12 +14,11 @@ namespace App
         private static SqlDataAdapter sda;
         private static DataSet ds;
 
-        public static DataSet ConnectToDB()
+        public static void ConnectToDB()
         {
             string conn = getConnectionString();
             con = new SqlConnection(conn);
             sda = new SqlDataAdapter("SELECT * FROM customer", conn);
-            return ds;
         }
 
         private static string getConnectionString()
@@ -83,13 +83,61 @@ namespace App
             sda.Fill(ds, "Customers");
             return ds;
         }
-        public static void RetrieveCustomers()
+
+        public static List<Customer> RetrieveCustomers()
         {
+            List<Customer> customers = new List<Customer>();
+
             string qString = "SELECT * FROM customer";
             SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
 
-            DataSet customers = new DataSet();
-            adaptor.Fill(customers);
+            DataTable customerTable = new DataTable();
+            adaptor.Fill(customerTable);
+
+            foreach(DataRow customerRow in customerTable.Rows) {
+                UserName name = new UserName((string)customerRow["first_name"], (string)customerRow["last_name"]);
+                Address address = new Address((string)customerRow["suite_number"], (string)customerRow["street_number"],
+                                              (string)customerRow["house_number"], (string)customerRow["city"],
+                                              (string)customerRow["province"], (string)customerRow["postalcode"]);
+                Customer.AccountType account = Customer.AccountType.Limited; ;
+                switch ((string)customerRow["account_type"])
+                {
+                    case "Limited":
+                        account = Customer.AccountType.Limited;
+                        break;
+                    case "Bronze":
+                        account = Customer.AccountType.Bronze;
+                        break;
+                    case "Silver":
+                        account = Customer.AccountType.Silver;
+                        break;
+                    case "Gold":
+                        account = Customer.AccountType.Gold;
+                        break;
+                    default:
+                        Debug.Write("Read customer without account type.");
+                        continue;
+                }
+                
+                Customer customer = new Customer(name, address, (string)customerRow["email"], account);
+
+                customers.Add(customer);
+            }
+
+            return customers;
+        }
+
+        public static void UpdateRatings()
+        {
+            con.Open();
+
+            // setup stored procedure call
+            SqlCommand cmd = new SqlCommand("calc_cust_rating", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.ExecuteNonQuery();
+
+            con.Close();
         }
     }
 }

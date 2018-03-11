@@ -1,4 +1,4 @@
-﻿namespace App
+namespace App
 {
     partial class ManagerForm
     {
@@ -40,6 +40,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
+            this.RatingUpdateButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -147,6 +148,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2060, 1212);
+            // RatingUpdateButton
+            // 
+            this.RatingUpdateButton.Location = new System.Drawing.Point(74, 289);
+            this.RatingUpdateButton.Margin = new System.Windows.Forms.Padding(2);
+            this.RatingUpdateButton.Name = "RatingUpdateButton";
+            this.RatingUpdateButton.Size = new System.Drawing.Size(134, 55);
+            this.RatingUpdateButton.TabIndex = 8;
+            this.RatingUpdateButton.Text = "Update Customer Ratings";
+            this.RatingUpdateButton.UseVisualStyleBackColor = true;
+            this.RatingUpdateButton.Click += new System.EventHandler(this.button1_Click_1);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.EditButton);
             this.Controls.Add(this.AddButton);
@@ -178,5 +189,6 @@
         private System.Windows.Forms.ToolStripMenuItem salesReportsToolStripMenuItem;
         private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button DeleteButton;
+        private System.Windows.Forms.Button RatingUpdateButton;
     }
 }

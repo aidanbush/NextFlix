@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -52,5 +52,11 @@ namespace App
             
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            DBEnvironment.UpdateRatings();
+            // reload view
+            Debug.Write("Updated Ratings");
+        }
     }
 }
