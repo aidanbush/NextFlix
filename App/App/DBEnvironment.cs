@@ -84,11 +84,16 @@ namespace App
 
         public static void RetrieveCustomers()
         {
+            //Customer[] customer;
             string qString = "SELECT * FROM customer";
             SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
 
-            DataSet customers = new DataSet();
-            adaptor.Fill(customers);
+            DataTable customerTable = new DataTable();
+            adaptor.Fill(customerTable);
+
+            foreach(DataRow customer in customerTable.Rows) {
+                // create new object
+            }
         }
     }
 }
