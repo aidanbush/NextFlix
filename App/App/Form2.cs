@@ -12,28 +12,14 @@ using System.Windows.Forms;
 
 namespace App
 {
-    public partial class Form2 : Form
+    public partial class ManagerForm : Form
     {
-
-        SqlConnection con = new SqlConnection(@"Data Source=LAPTOP-J0175O94;Initial Catalog=project;Integrated Security=True");
-        DataSet ds = new DataSet();
-        SqlDataAdapter sda;
-        public Form2()
+        public ManagerForm()
         {
             InitializeComponent();
-            sda = new SqlDataAdapter("Select * From customer", con);
-
-            sda.Fill(ds, "Customers");
-
-            foreach (DataRow pRow in ds.Tables["Customers"].Rows)
-            {
-                Console.WriteLine(pRow["first_name"]);
-            }
-
-            dataGridView1.DataSource = ds;
             dataGridView1.DataMember = "Customers";
+            dataGridView1.DataSource = DBEnvironment.getDataSet();
             dataGridView1.AutoGenerateColumns = true;
-            con.Open();
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -48,31 +34,6 @@ namespace App
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email)" +
-                "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email)";
-
-            using (SqlCommand command = new SqlCommand(q, con))
-            {
-
-                command.Parameters.AddWithValue("@first_name", "abc");
-                command.Parameters.AddWithValue("@last_name", "abc");
-                command.Parameters.AddWithValue("@creation_date", DateTime.Now);
-                command.Parameters.AddWithValue("@account_type", "Limited");
-                command.Parameters.AddWithValue("@phone_number", 7806679099);
-                command.Parameters.AddWithValue("@email", "abc@gmaail.com");
-
-
-                int err = command.ExecuteNonQuery();
-                if (err < 0)
-                {
-                    Debug.Print("InserFailed");
-                }
-                sda.Fill(ds, "Customers");
-                //dataGridView1.Rows.Clear();
-                //dataGridView1.Refresh();
-
-            }
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -83,6 +44,8 @@ namespace App
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
 
+
+            
         }
     }
 }
