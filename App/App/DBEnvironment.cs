@@ -81,5 +81,14 @@ namespace App
             sda.Fill(ds, "Customers");
             return ds;
         }
+
+        public static void RetrieveCustomers()
+        {
+            string qString = "SELECT * FROM customer";
+            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
+
+            DataSet customers = new DataSet();
+            adaptor.Fill(customers);
+        }
     }
 }
