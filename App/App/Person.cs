@@ -5,12 +5,32 @@ namespace App
     class Person
     {
         private int cid;
-        // name
-        // address
+        private UserName name;
+        private Address address;
         private string email;
         private string phoneNumber;
 
         /* Getters and Setters */
+        public UserName GetName()
+        {
+            return name;
+        }
+
+        public void SetName(UserName value)
+        {
+            name = value;
+        }
+
+        public Address GetAddress()
+        {
+            return address;
+        }
+
+        public void SetAddress(Address value)
+        {
+            address = value;
+        }
+
         public int GetCid()
         {
             return cid;

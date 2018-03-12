@@ -10,8 +10,10 @@ namespace App
         private string creditCard;
         private int rating;
 
-        public Customer(string newEmail, accountType newType)
+        public Customer(UserName newName, Address newAddress, string newEmail, accountType newType)
         {
+            SetAddress(newAddress);
+            SetName(newName);
             SetType(newType);
             SetEmail(newEmail);
         }

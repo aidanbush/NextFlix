@@ -4,13 +4,16 @@ namespace App
 {
     public class Employee : Person
     {
-        private string position;
+        enum Position {Employee, Manager};
+        private Position position;
         private float wage;
         private DateTime startDate;
         private string SIN;
 
-        public Employee(string newPosition, float newWage, DateTime newStart, string newSIN)
+        public Employee(UserName newName, Address newAddress, float newWage, DateTime newStart, string newSIN, Position newPosition)
         {
+            SetAddress(newAddress);
+            SetName(newName);
             SetPosition(newPosition);
             SetWage(newWage);
             SetStartDate(newStart);
