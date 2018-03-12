@@ -17,6 +17,8 @@ namespace App
         public static void ConnectToDB()
         {
             string conn = getConnectionString();
+            con = new SqlConnection(conn);
+            sda = new SqlDataAdapter("SELECT * FROM customer", conn);
         }
 
         private static string getConnectionString()
@@ -117,12 +119,23 @@ namespace App
                 
                 Customer customer = new Customer(name, address, (string)customerRow["email"], account);
 
-                //add creation date
-
                 customers.Add(customer);
             }
 
             return customers;
+        }
+
+        public static void UpdateRatings()
+        {
+            con.Open();
+
+            // setup stored procedure call
+            SqlCommand cmd = new SqlCommand("calc_cust_rating", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.ExecuteNonQuery();
+
+            con.Close();
         }
     }
 }

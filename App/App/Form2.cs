@@ -55,7 +55,9 @@ namespace App
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Debug.Write("hit btn1");
+            DBEnvironment.UpdateRatings();
+            // reload view
+            Debug.Write("Updated Ratings");
         }
     }
 }
