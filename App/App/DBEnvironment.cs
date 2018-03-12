@@ -120,6 +120,7 @@ namespace App
                 }
                 
                 Customer customer = new Customer(name, address, (string)customerRow["email"], account);
+                customer.SetCreationDate((DateTime)customerRow["creation_date"]);
 
                 customers.Add(customer);
             }

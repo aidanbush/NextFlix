@@ -48,5 +48,15 @@ namespace App
         {
             type = value;
         }
+
+        public DateTime GetCreationDate()
+        {
+            return creationDate;
+        }
+
+        public void SetCreationDate(DateTime value)
+        {
+            creationDate = value;
+        }
     }
 }
