@@ -52,15 +52,11 @@ namespace App
             
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-        }
-
         private void UpdateRatingsButton_Click(object sender, EventArgs e)
         {
             DBEnvironment.UpdateRatings();
             // reload view
-            Debug.Write("Updated Ratings");
+            Debug.WriteLine("Updated Ratings");
 
         }
     }
