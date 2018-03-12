@@ -4,7 +4,7 @@ namespace App
 {
     public class Employee : Person
     {
-        enum Position {Employee, Manager};
+        public enum Position {Employee, Manager};
         private Position position;
         private float wage;
         private DateTime startDate;
@@ -51,12 +51,12 @@ namespace App
             wage = value;
         }
 
-        public string GetPosition()
+        public Position GetPosition()
         {
             return position;
         }
 
-        public void SetPosition(string value)
+        public void SetPosition(Position value)
         {
             position = value;
         }

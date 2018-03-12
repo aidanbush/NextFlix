@@ -84,7 +84,7 @@ namespace App
 
         public static void RetrieveCustomers()
         {
-            Customer customer;
+            //Customer[] customer;
             string qString = "SELECT * FROM customer";
             SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
 

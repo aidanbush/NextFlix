@@ -4,13 +4,13 @@ namespace App
 {
     public class Customer : Person
     {
-        enum accountType {Limited, Bronze, Silver, Gold};
-        private accountType type;
+        public enum AccountType {Limited, Bronze, Silver, Gold};
+        private AccountType type;
         private DateTime creationDate;
         private string creditCard;
         private int rating;
 
-        public Customer(UserName newName, Address newAddress, string newEmail, accountType newType)
+        public Customer(UserName newName, Address newAddress, string newEmail, AccountType newType)
         {
             SetAddress(newAddress);
             SetName(newName);
@@ -39,12 +39,12 @@ namespace App
             creditCard = value;
         }
 
-        private accountType GetType()
+        public AccountType GetType()
         {
             return type;
         }
 
-        private void SetType(accountType value)
+        public void SetType(AccountType value)
         {
             type = value;
         }

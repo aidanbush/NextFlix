@@ -2,7 +2,7 @@
 
 namespace App
 {
-    class Person
+    public class Person
     {
         private int cid;
         private UserName name;
