@@ -14,54 +14,24 @@ namespace App
 
         public Customer(UserName newName, Address newAddress, ContactInformation contactInformation, AccountType newType)
         {
-            SetAddress(newAddress);
-            SetName(newName);
-            SetType(newType);
-            SetContactInformation(contactInformation);
+            Address = newAddress;
+            Name = newName;
+            Type = newType;
+            ContactInformation = contactInformation;
         }
 
         /* Getters and Setters */
-        public int GetRating()
+        public DateTime CreationDate { get => creationDate; set => creationDate = value; }
+        public int Rating { get => rating; set => rating = value; }
+        public string CreditCard { get => creditCard; set => creditCard = value; }
+        public AccountType Type { get => type; set => type = value; }
+
+        /* function Overrides */
+        public override string ToString()
         {
-            return rating;
+            return Id.ToString() + " " + Name.ToString() + " " + Type.ToString();
         }
-
-        public void SetRating(int value)
-        {
-            rating = value;
-        }
-
-        public string GetcreditCard()
-        {
-            return creditCard;
-        }
-
-        public void SetcreditCard(string value)
-        {
-            creditCard = value;
-        }
-
-        public AccountType GetType()
-        {
-            return type;
-        }
-
-        public void SetType(AccountType value)
-        {
-            type = value;
-        }
-
-        public DateTime GetCreationDate()
-        {
-            return creationDate;
-        }
-
-        public void SetCreationDate(DateTime value)
-        {
-            creationDate = value;
-        }
-
-
+        
         public bool Add(SqlConnection con)
         {
             con.Open();
@@ -72,18 +42,18 @@ namespace App
             {
                 try
                 {
-                    command.Parameters.AddWithValue("@first_name", this.GetName().GetFirstName());
-                    command.Parameters.AddWithValue("@last_name", this.GetName().GetLastName());
+                    command.Parameters.AddWithValue("@first_name", this.Name.GetFirstName());
+                    command.Parameters.AddWithValue("@last_name", this.Name.GetLastName());
                     command.Parameters.AddWithValue("@creation_date", DateTime.Now);
                     command.Parameters.AddWithValue("@account_type", this.GetType().ToString());
-                    command.Parameters.AddWithValue("@phone_number", this.GetPhoneNumber());
-                    command.Parameters.AddWithValue("@email", this.GetEmail());
-                    command.Parameters.AddWithValue("@suite_number", this.GetAddress().GetSuiteNumber());
-                    command.Parameters.AddWithValue("@street_number", this.GetAddress().GetStreetNumber());
-                    command.Parameters.AddWithValue("@house_number", this.GetAddress().GetHouseNumber());
-                    command.Parameters.AddWithValue("@postalcode", this.GetAddress().GetPostal());
-                    command.Parameters.AddWithValue("@city", this.GetAddress().GetCity());
-                    command.Parameters.AddWithValue("@province", this.GetAddress().GetProvince());
+                    command.Parameters.AddWithValue("@phone_number", this.ContactInformation.getPhoneNumber());
+                    command.Parameters.AddWithValue("@email", this.ContactInformation.getEmail());
+                    command.Parameters.AddWithValue("@suite_number", this.Address.GetSuiteNumber());
+                    command.Parameters.AddWithValue("@street_number", this.Address.GetStreetNumber());
+                    command.Parameters.AddWithValue("@house_number", this.Address.GetHouseNumber());
+                    command.Parameters.AddWithValue("@postalcode", this.Address.GetPostal());
+                    command.Parameters.AddWithValue("@city", this.Address.GetCity());
+                    command.Parameters.AddWithValue("@province", this.Address.GetProvince());
                     int err = command.ExecuteNonQuery();
                 }
                 catch (Exception e)

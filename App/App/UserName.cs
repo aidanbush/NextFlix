@@ -17,6 +17,11 @@ namespace App
             lastName = lName;
         }
 
+        public override string ToString()
+        {
+            return firstName + ", " + lastName;
+        }
+
         public String GetFirstName()
         {
             return firstName;

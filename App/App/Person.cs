@@ -10,50 +10,10 @@ namespace App
         private Address address;
 
         /* Getters and Setters */
-        public UserName GetName()
-        {
-            return name;
-        }
-
-        public void SetName(UserName value)
-        {
-            name = value;
-        }
-
-        public Address GetAddress()
-        {
-            return address;
-        }
-
-        public void SetAddress(Address value)
-        {
-            address = value;
-        }
-
-        public int GetID()
-        {
-            return id;
-        }
-
-        public void SetID(int value)
-        {
-            id = value;
-        }
-
-        public string GetPhoneNumber()
-        {
-            return contactInformation.getPhoneNumber();
-        }
-
-        public string GetEmail()
-        {
-            return contactInformation.getEmail();
-        }
-
-        public void SetContactInformation(ContactInformation value)
-        {
-            contactInformation = value;
-        }
+        public int Id { get => id; set => id = value; }
+        public UserName Name { get => name; set => name = value; }
+        public ContactInformation ContactInformation { get => contactInformation; set => contactInformation = value; }
+        public Address Address { get => address; set => address = value; }
     }
 
 }
