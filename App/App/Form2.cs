@@ -34,8 +34,11 @@ namespace App
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DBEnvironment.query();
-            dataGridView1.DataSource = DBEnvironment.getDataSet();
+          
+            //dataGridView1.DataSource = DBEnvironment.getDataSet();
+            AddCustomerForm AddUserForm = new AddCustomerForm();
+            AddUserForm.Show();
+            dataGridView1.Refresh();
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
