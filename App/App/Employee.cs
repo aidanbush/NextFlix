@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Data.SqlClient;
 
 namespace App
 {
-    public class Employee : Person
+    public class Employee : Person, IQuery
     {
         public enum Position {Employee, Manager};
         private Position position;
@@ -59,6 +60,21 @@ namespace App
         public void SetPosition(Position value)
         {
             position = value;
+        }
+
+        public bool Add(SqlConnection con)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Edit(SqlConnection con)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(SqlConnection con)
+        {
+            throw new NotImplementedException();
         }
     }
 }
