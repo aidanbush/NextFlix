@@ -34,6 +34,8 @@ namespace App
 
         private void button1_Click(object sender, EventArgs e)
         {
+            DBEnvironment.query();
+            dataGridView1.DataSource = DBEnvironment.getDataSet();
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)

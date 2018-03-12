@@ -16,10 +16,8 @@ namespace App
         public static DataSet ConnectToDB()
         {
             string conn = getConnectionString();
-            ds = new DataSet();
             con = new SqlConnection(conn);
             sda = new SqlDataAdapter("SELECT * FROM customer", conn);
-            sda.Fill(ds, "Customers");
             return ds;
         }
 
@@ -61,11 +59,8 @@ namespace App
                     Debug.Print("InserFailed");
                 }
             }
-
-            DataSet ds = new DataSet();
-            sda.Fill(ds, "Customers");
+            
             con.Close();
-            Debug.Print("QUERYING YO");
             return ds;
 
         }
