@@ -14,12 +14,9 @@ namespace App
         private static SqlDataAdapter sda;
         private static DataSet ds;
 
-        public static DataSet ConnectToDB()
+        public static void ConnectToDB()
         {
             string conn = getConnectionString();
-            con = new SqlConnection(conn);
-            sda = new SqlDataAdapter("SELECT * FROM customer", conn);
-            return ds;
         }
 
         private static string getConnectionString()
@@ -119,6 +116,8 @@ namespace App
                 }
                 
                 Customer customer = new Customer(name, address, (string)customerRow["email"], account);
+
+                //add creation date
 
                 customers.Add(customer);
             }
