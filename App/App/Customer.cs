@@ -8,11 +8,23 @@ namespace App
         private accountType type;
         private DateTime creationDate;
         private string creditCard;
+        private int rating;
 
         public Customer(string newEmail, accountType newType)
         {
             SetType(newType);
-            SetEmail(email);
+            SetEmail(newEmail);
+        }
+
+        /* Getters and Setters */
+        public int GetRating()
+        {
+            return rating;
+        }
+
+        public void SetRating(int value)
+        {
+            rating = value;
         }
 
         public string GetcreditCard()

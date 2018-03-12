@@ -10,6 +10,7 @@ namespace App
         private string email;
         private string phoneNumber;
 
+        /* Getters and Setters */
         public int GetCid()
         {
             return cid;
