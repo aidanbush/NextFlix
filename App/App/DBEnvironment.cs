@@ -102,6 +102,9 @@ namespace App
                 Customer.AccountType account = Customer.AccountType.Limited; ;
                 switch ((string)customerRow["account_type"])
                 {
+                    case "Disabled":
+                        account = Customer.AccountType.Disabled;
+                        break;
                     case "Limited":
                         account = Customer.AccountType.Limited;
                         break;

@@ -28,7 +28,7 @@ create table customer (
 	phone_number char(10) check(phone_number not like '%[^0-9]%'),
 	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
 	email varchar(320) check(email like '_%@_%._%'),
-	account_type varchar(10) not null check (account_type IN ('Limited', 'Bronze', 'Silver', 'Gold')),
+	account_type varchar(10) not null check (account_type IN ('Disabled', 'Limited', 'Bronze', 'Silver', 'Gold')),
 	creation_date date not null check(creation_date <= getdate()),
 	credit_card text, --doesn't always have 16 digits
 	rating int check(0 <= rating and rating <= 5) default 0 not null,
