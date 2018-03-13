@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace App
@@ -14,14 +15,23 @@ namespace App
         public ContactInformation(String eAddress, String phone)
         {
             email = eAddress;
-            phoneNumber = phone;
+            phoneNumber = CleanPhone(phone);
         }
+        private String CleanPhone(String phone)
+        {
+            if(phone.Length != 14)
+            {
+                throw new PhoneNumberException();
+            }
 
-        public String getEmail()
+            var stripped = Regex.Replace(phone, "[^0-9]", "");
+            return stripped.ToString();            
+        }
+        public String GetEmail()
         {
             return email;
         }
-        public String getPhoneNumber()
+        public String GetPhoneNumber()
         {
             return phoneNumber;
         }

@@ -55,8 +55,8 @@ namespace App
                     command.Parameters.AddWithValue("@last_name", name.GetLastName());
                     command.Parameters.AddWithValue("@creation_date", DateTime.Now);
                     command.Parameters.AddWithValue("@account_type", "Limited");
-                    command.Parameters.AddWithValue("@phone_number", info.getPhoneNumber());
-                    command.Parameters.AddWithValue("@email", info.getEmail());
+                    command.Parameters.AddWithValue("@phone_number", info.GetPhoneNumber());
+                    command.Parameters.AddWithValue("@email", info.GetEmail());
                     command.Parameters.AddWithValue("@suite_number", address.GetSuiteNumber());
                     command.Parameters.AddWithValue("@street_number", address.GetStreetNumber());
                     command.Parameters.AddWithValue("@house_number", address.GetHouseNumber());
