@@ -11,55 +11,11 @@ namespace App
         private string phoneNumber;
 
         /* Getters and Setters */
-        public UserName GetName()
-        {
-            return name;
-        }
-
-        public void SetName(UserName value)
-        {
-            name = value;
-        }
-
-        public Address GetAddress()
-        {
-            return address;
-        }
-
-        public void SetAddress(Address value)
-        {
-            address = value;
-        }
-
-        public int GetCid()
-        {
-            return cid;
-        }
-
-        public void SetCid(int value)
-        {
-            cid = value;
-        }
-
-        public string GetEmail()
-        {
-            return email;
-        }
-
-        public void SetEmail(string value)
-        {
-            email = value;
-        }
-
-        public string GetPhoneNumber()
-        {
-            return phoneNumber;
-        }
-
-        public void SetPhoneNumber(string value)
-        {
-            phoneNumber = value;
-        }
+        public int Cid { get => cid; set => cid = value; }
+        public UserName Name { get => name; set => name = value; }
+        public Address Address { get => address; set => address = value; }
+        public string Email { get => email; set => email = value; }
+        public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
     }
 
 }

@@ -16,10 +16,28 @@ namespace App
     {
         public ManagerForm()
         {
+            DBEnvironment.SetCustomers();
+            InitializeComponent();
+            BindingList<Customer> customers = DBEnvironment.GetCustomers();
+            dataGridView1.DataSource = customers;
+            dataGridView1.AutoGenerateColumns = true;
+
+            /*
+            DataGridViewTextBoxColumn cidCol = new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "cid",
+                HeaderText = "cid col",
+                Name = "cid"
+            };
+
+            dataGridView1.Columns.Add(cidCol);
+            */
+            /*
             InitializeComponent();
             dataGridView1.DataMember = "Customers";
             dataGridView1.DataSource = DBEnvironment.getDataSet();
             dataGridView1.AutoGenerateColumns = true;
+            */
         }
 
         private void Form2_Load(object sender, EventArgs e)

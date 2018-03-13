@@ -12,51 +12,23 @@ namespace App
 
         public Customer(UserName newName, Address newAddress, string newEmail, AccountType newType)
         {
-            SetAddress(newAddress);
-            SetName(newName);
-            SetType(newType);
-            SetEmail(newEmail);
+            Address = newAddress;
+            Name = newName;
+            Type = newType;
+            Email = newEmail;
         }
 
         /* Getters and Setters */
-        public int GetRating()
+        public DateTime CreationDate { get => creationDate; set => creationDate = value; }
+        public int Rating { get => rating; set => rating = value; }
+        public string CreditCard { get => creditCard; set => creditCard = value; }
+        public AccountType Type { get => type; set => type = value; }
+
+        /* function Overrides */
+        public override string ToString()
         {
-            return rating;
+            return Cid.ToString() + " " + Name.ToString() + " " + Type.ToString();
         }
 
-        public void SetRating(int value)
-        {
-            rating = value;
-        }
-
-        public string GetcreditCard()
-        {
-            return creditCard;
-        }
-
-        public void SetcreditCard(string value)
-        {
-            creditCard = value;
-        }
-
-        public AccountType GetType()
-        {
-            return type;
-        }
-
-        public void SetType(AccountType value)
-        {
-            type = value;
-        }
-
-        public DateTime GetCreationDate()
-        {
-            return creationDate;
-        }
-
-        public void SetCreationDate(DateTime value)
-        {
-            creationDate = value;
-        }
     }
 }

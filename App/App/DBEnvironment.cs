@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace App
 {
@@ -13,6 +14,17 @@ namespace App
         private static SqlConnection con; 
         private static SqlDataAdapter sda;
         private static DataSet ds;
+        private static BindingList<Customer> customers;
+
+        public static BindingList<Customer> GetCustomers()
+        {
+            return customers;
+        }
+
+        public static void SetCustomers()
+        {
+            customers = RetrieveCustomers();
+        }
 
         public static void ConnectToDB()
         {
@@ -84,9 +96,9 @@ namespace App
             return ds;
         }
 
-        public static List<Customer> RetrieveCustomers()
+        public static BindingList<Customer> RetrieveCustomers()
         {
-            List<Customer> customers = new List<Customer>();
+            BindingList<Customer> customers = new BindingList<Customer>();
 
             string qString = "SELECT * FROM customer";
             SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
@@ -95,12 +107,12 @@ namespace App
             adaptor.Fill(customerTable);
 
             foreach(DataRow customerRow in customerTable.Rows) {
-                UserName name = new UserName((string)customerRow["first_name"], (string)customerRow["last_name"]);
-                Address address = new Address((string)customerRow["suite_number"], (string)customerRow["street_number"],
-                                              (string)customerRow["house_number"], (string)customerRow["city"],
-                                              (string)customerRow["province"], (string)customerRow["postalcode"]);
+                UserName name = new UserName(customerRow["first_name"].ToString(), customerRow["last_name"].ToString());
+                Address address = new Address(customerRow["suite_number"].ToString(), customerRow["street_number"].ToString(),
+                                              customerRow["house_number"].ToString(), customerRow["city"].ToString(),
+                                              customerRow["province"].ToString(), customerRow["postalcode"].ToString());
                 Customer.AccountType account = Customer.AccountType.Limited; ;
-                switch ((string)customerRow["account_type"])
+                switch (customerRow["account_type"].ToString())
                 {
                     case "Disabled":
                         account = Customer.AccountType.Disabled;
@@ -122,12 +134,18 @@ namespace App
                         continue;
                 }
                 
-                Customer customer = new Customer(name, address, (string)customerRow["email"], account);
-                customer.SetCreationDate((DateTime)customerRow["creation_date"]);
+                Customer customer = new Customer(name, address, customerRow["email"].ToString(), account);
+                customer.CreationDate = (DateTime)customerRow["creation_date"];
+                customer.Cid = (int)customerRow["cid"];
 
                 customers.Add(customer);
             }
+            customers.Add(new Customer(new UserName("fname", "lname"), new Address("suite", "street", "house", "town", "prov", "P0S7A1"), "em@i.l", Customer.AccountType.Disabled));
 
+            foreach (Customer current in customers)
+            {
+                Debug.WriteLine(current);
+            }
             return customers;
         }
 

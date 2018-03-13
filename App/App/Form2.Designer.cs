@@ -144,6 +144,13 @@ namespace App
             this.DeleteButton.Text = "Delete";
             this.DeleteButton.UseVisualStyleBackColor = true;
             // 
+            // RatingUpdateButton
+            // 
+            this.RatingUpdateButton.Location = new System.Drawing.Point(0, 0);
+            this.RatingUpdateButton.Name = "RatingUpdateButton";
+            this.RatingUpdateButton.Size = new System.Drawing.Size(75, 23);
+            this.RatingUpdateButton.TabIndex = 0;
+            // 
             // UpdateRatingsButton
             // 
             this.UpdateRatingsButton.Location = new System.Drawing.Point(74, 291);
