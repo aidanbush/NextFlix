@@ -90,6 +90,7 @@ namespace App
                     command.Parameters.AddWithValue("@postalcode", address.PostalCode);
                     command.Parameters.AddWithValue("@city", address.City);
                     command.Parameters.AddWithValue("@province", address.Province);
+
                     int err = command.ExecuteNonQuery();
                 }
                 catch(Exception e)

@@ -17,13 +17,46 @@ namespace App
 
         public Address(String suite, String street, String house,String town, String prov, String postal)
         {
-            SuiteNumber = suite;
-            StreetNumber = street;
-            HouseNumber = house;
-            City = town;
-            Province = prov;
-            PostalCode = postal;
+
+            suiteNumber = suite;
+            streetNumber = street;
+            houseNumber = house;
+            city = town;
+            province = prov;
+            postalCode = CleanPostalCode(postal);
+            if(postalCode == null)
+            {
+                throw new PostalCodeException();
+            }
         }
+        private String CleanPostalCode(String postal)
+        {
+            Console.WriteLine(postal.Length);
+            if (postal.Length != 6 && postal.Length != 7)
+            {
+                Console.WriteLine("WRONGE SIZE");
+                return null;
+            }
+            String code = postal.Replace(" ", "");
+            //check if index 0, 2, 4 are numbers, if so, throw exception
+            for (int i = 0; i < code.Length; i += 2)
+            {
+                if(Char.IsDigit(code[i]) == true)
+                {
+                    return null;
+                }
+            }
+            //Check if index 1, 3, 5 are letters, if so, throw exception
+            for(int i = 1; i <code.Length; i += 2)
+            {
+                if (Char.IsDigit(code[i]) == false)
+                {
+                    return null;
+                }
+            }
+            return code;
+        }
+
 
         /* getters and setters */
         public string SuiteNumber { get => suiteNumber; set => suiteNumber = value; }
