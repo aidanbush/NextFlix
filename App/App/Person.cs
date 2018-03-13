@@ -2,20 +2,18 @@
 
 namespace App
 {
-    public class Person
+    public abstract class Person
     {
-        private int cid;
+        private int id;
         private UserName name;
+        private ContactInformation contactInformation;
         private Address address;
-        private string email;
-        private string phoneNumber;
 
         /* Getters and Setters */
-        public int Cid { get => cid; set => cid = value; }
+        public int Id { get => id; set => id = value; }
         public UserName Name { get => name; set => name = value; }
+        public ContactInformation ContactInformation { get => contactInformation; set => contactInformation = value; }
         public Address Address { get => address; set => address = value; }
-        public string Email { get => email; set => email = value; }
-        public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
     }
 
 }

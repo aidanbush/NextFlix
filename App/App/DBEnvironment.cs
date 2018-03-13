@@ -48,7 +48,22 @@ namespace App
 
             return connectionString;
         }
+        
+        
+        public static bool Add(IQuery queryObject)
+        {
+            return queryObject.Add(con);
+        }
+        public static bool Edit(IQuery queryObject)
+        {
+            return queryObject.Edit(con);
+        }
+        public static bool Delete(IQuery queryObject)
+        {
+            return queryObject.Delete(con);
+        }
 
+        //Depricated remove when meet with Jordan
         public static bool CustomerInsertionQuery(CustomerInsertionParameters parameters)
         {
             UserName name = parameters.GetUserName();
@@ -89,10 +104,10 @@ namespace App
             return true;
 
         }
-        public static DataSet getDataSet()
+        public static DataSet getDataSet(string dataSet)
         {
             DataSet ds = new DataSet();
-            sda.Fill(ds, "Customers");
+            sda.Fill(ds, dataSet);
             return ds;
         }
 
@@ -133,14 +148,15 @@ namespace App
                         Debug.Write("Read customer without account type.");
                         continue;
                 }
-                
-                Customer customer = new Customer(name, address, customerRow["email"].ToString(), account);
+
+                ContactInformation newContact = new ContactInformation(customerRow["email"].ToString(), customerRow["phone_number"].ToString());
+                Customer customer = new Customer(name, address, newContact, account);
                 customer.CreationDate = (DateTime)customerRow["creation_date"];
-                customer.Cid = (int)customerRow["cid"];
+                customer.Id = (int)customerRow["cid"];
 
                 customers.Add(customer);
             }
-            customers.Add(new Customer(new UserName("fname", "lname"), new Address("suite", "street", "house", "town", "prov", "P0S7A1"), "em@i.l", Customer.AccountType.Disabled));
+            customers.Add(new Customer(new UserName("fname", "lname"), new Address("suite", "street", "house", "town", "prov", "P0S7A1"), new ContactInformation("em@i.l", "7894561230"), Customer.AccountType.Disabled));
 
             foreach (Customer current in customers)
             {
