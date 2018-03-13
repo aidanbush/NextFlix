@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App
 {
-    class ContactInformation
+    public class ContactInformation
     { 
         private String email;
         private String phoneNumber;
@@ -23,17 +23,13 @@ namespace App
             {
                 throw new PhoneNumberException();
             }
-
             var stripped = Regex.Replace(phone, "[^0-9]", "");
             return stripped.ToString();            
         }
-        public String GetEmail()
-        {
-            return email;
-        }
-        public String GetPhoneNumber()
-        {
-            return phoneNumber;
-        }
+
+        /* getters and setters */
+        public String Email { get => email; set => email = value; }
+        public String PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
+
     }
 }

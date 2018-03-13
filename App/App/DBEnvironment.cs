@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace App
 {
@@ -13,6 +14,17 @@ namespace App
         private static SqlConnection con; 
         private static SqlDataAdapter sda;
         private static DataSet ds;
+        private static BindingList<Customer> customers;
+
+        public static BindingList<Customer> GetCustomers()
+        {
+            return customers;
+        }
+
+        public static void SetCustomers()
+        {
+            customers = RetrieveCustomers();
+        }
 
         public static void ConnectToDB()
         {
@@ -36,7 +48,22 @@ namespace App
 
             return connectionString;
         }
+        
+        
+        public static bool Add(IQuery queryObject)
+        {
+            return queryObject.Add(con);
+        }
+        public static bool Edit(IQuery queryObject)
+        {
+            return queryObject.Edit(con);
+        }
+        public static bool Delete(IQuery queryObject)
+        {
+            return queryObject.Delete(con);
+        }
 
+        //Depricated remove when meet with Jordan
         public static bool CustomerInsertionQuery(CustomerInsertionParameters parameters)
         {
             UserName name = parameters.GetUserName();
@@ -51,18 +78,19 @@ namespace App
             {
                 try
                 {
-                    command.Parameters.AddWithValue("@first_name", name.GetFirstName());
-                    command.Parameters.AddWithValue("@last_name", name.GetLastName());
+                    command.Parameters.AddWithValue("@first_name", name.FirstName);
+                    command.Parameters.AddWithValue("@last_name", name.LastName);
                     command.Parameters.AddWithValue("@creation_date", DateTime.Now);
-                    command.Parameters.AddWithValue("@account_type", "Limited");
-                    command.Parameters.AddWithValue("@phone_number", info.GetPhoneNumber());
-                    command.Parameters.AddWithValue("@email", info.GetEmail());
-                    command.Parameters.AddWithValue("@suite_number", address.GetSuiteNumber());
-                    command.Parameters.AddWithValue("@street_number", address.GetStreetNumber());
-                    command.Parameters.AddWithValue("@house_number", address.GetHouseNumber());
-                    command.Parameters.AddWithValue("@postalcode", address.GetPostal());
-                    command.Parameters.AddWithValue("@city", address.GetCity());
-                    command.Parameters.AddWithValue("@province", address.GetProvince());
+                    command.Parameters.AddWithValue("@account_type", Customer.AccountType.Limited);
+                    command.Parameters.AddWithValue("@phone_number", info.PhoneNumber);
+                    command.Parameters.AddWithValue("@email", info.Email);
+                    command.Parameters.AddWithValue("@suite_number", address.SuiteNumber);
+                    command.Parameters.AddWithValue("@street_number", address.StreetNumber);
+                    command.Parameters.AddWithValue("@house_number", address.HouseNumber);
+                    command.Parameters.AddWithValue("@postalcode", address.PostalCode);
+                    command.Parameters.AddWithValue("@city", address.City);
+                    command.Parameters.AddWithValue("@province", address.Province);
+
                     int err = command.ExecuteNonQuery();
                 }
                 catch(Exception e)
@@ -77,16 +105,16 @@ namespace App
             return true;
 
         }
-        public static DataSet getDataSet()
+        public static DataSet getDataSet(string dataSet)
         {
             DataSet ds = new DataSet();
-            sda.Fill(ds, "Customers");
+            sda.Fill(ds, dataSet);
             return ds;
         }
 
-        public static List<Customer> RetrieveCustomers()
+        public static BindingList<Customer> RetrieveCustomers()
         {
-            List<Customer> customers = new List<Customer>();
+            BindingList<Customer> customers = new BindingList<Customer>();
 
             string qString = "SELECT * FROM customer";
             SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
@@ -95,12 +123,12 @@ namespace App
             adaptor.Fill(customerTable);
 
             foreach(DataRow customerRow in customerTable.Rows) {
-                UserName name = new UserName((string)customerRow["first_name"], (string)customerRow["last_name"]);
-                Address address = new Address((string)customerRow["suite_number"], (string)customerRow["street_number"],
-                                              (string)customerRow["house_number"], (string)customerRow["city"],
-                                              (string)customerRow["province"], (string)customerRow["postalcode"]);
+                UserName name = new UserName(customerRow["first_name"].ToString(), customerRow["last_name"].ToString());
+                Address address = new Address(customerRow["suite_number"].ToString(), customerRow["street_number"].ToString(),
+                                              customerRow["house_number"].ToString(), customerRow["city"].ToString(),
+                                              customerRow["province"].ToString(), customerRow["postalcode"].ToString());
                 Customer.AccountType account = Customer.AccountType.Limited; ;
-                switch ((string)customerRow["account_type"])
+                switch (customerRow["account_type"].ToString())
                 {
                     case "Disabled":
                         account = Customer.AccountType.Disabled;
@@ -121,9 +149,11 @@ namespace App
                         Debug.Write("Read customer without account type.");
                         continue;
                 }
-                
-                Customer customer = new Customer(name, address, (string)customerRow["email"], account);
-                customer.SetCreationDate((DateTime)customerRow["creation_date"]);
+
+                ContactInformation newContact = new ContactInformation(customerRow["email"].ToString(), customerRow["phone_number"].ToString());
+                Customer customer = new Customer(name, address, newContact, account);
+                customer.CreationDate = (DateTime)customerRow["creation_date"];
+                customer.Id = (int)customerRow["cid"];
 
                 customers.Add(customer);
             }

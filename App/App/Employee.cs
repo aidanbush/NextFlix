@@ -1,64 +1,45 @@
 ﻿using System;
+using System.Data.SqlClient;
 
 namespace App
 {
-    public class Employee : Person
+    public class Employee : Person, IQuery
     {
         public enum Position {Employee, Manager};
         private Position position;
         private float wage;
         private DateTime startDate;
-        private string SIN;
-
+        private string sin;
+        
         public Employee(UserName newName, Address newAddress, float newWage, DateTime newStart, string newSIN, Position newPosition)
         {
-            SetAddress(newAddress);
-            SetName(newName);
-            SetPosition(newPosition);
-            SetWage(newWage);
-            SetStartDate(newStart);
-            SetSIN(newSIN);
+            Address = newAddress;
+            Name =newName;
+            EmployeePosition = newPosition;
+            Wage = newWage;
+            StartDate = newStart;
+            SIN = newSIN;
         }
 
         /* Getters and Setters */
-        public string GetSIN()
+        public Position EmployeePosition { get => position; set => position = value; }
+        public float Wage { get => wage; set => wage = value; }
+        public DateTime StartDate { get => startDate; set => startDate = value; }
+        public string SIN { get => sin; set => sin = value; }
+        
+        public bool Add(SqlConnection con)
         {
-            return SIN;
+            throw new NotImplementedException();
         }
 
-        public void SetSIN(string value)
+        public bool Edit(SqlConnection con)
         {
-            SIN = value;
+            throw new NotImplementedException();
         }
 
-        public DateTime GetStartDate()
+        public bool Delete(SqlConnection con)
         {
-            return startDate;
-        }
-
-        public void SetStartDate(DateTime value)
-        {
-            startDate = value;
-        }
-
-        public float GetWage()
-        {
-            return wage;
-        }
-
-        public void SetWage(float value)
-        {
-            wage = value;
-        }
-
-        public Position GetPosition()
-        {
-            return position;
-        }
-
-        public void SetPosition(Position value)
-        {
-            position = value;
+            throw new NotImplementedException();
         }
     }
 }
