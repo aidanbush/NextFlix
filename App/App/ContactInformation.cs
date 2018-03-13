@@ -19,7 +19,11 @@ namespace App
         }
         private String CleanPhone(String phone)
         {
-            if(phone.Length != 14)
+            if (phone == "")
+            {
+                return phone;
+            }
+            if(phone.Length != 10)
             {
                 throw new PhoneNumberException();
             }
