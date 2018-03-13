@@ -17,38 +17,20 @@ namespace App
 
         public Address(String suite, String street, String house,String town, String prov, String postal)
         {
-            suiteNumber = suite;
-            streetNumber = street;
-            houseNumber = house;
-            city = town;
-            province = prov;
-            postalCode = postal;
+            SuiteNumber = suite;
+            StreetNumber = street;
+            HouseNumber = house;
+            City = town;
+            Province = prov;
+            PostalCode = postal;
         }
 
-        public String GetSuiteNumber()
-        {
-            return suiteNumber;
-        }
-        public String GetStreetNumber()
-        {
-            return streetNumber;
-        }
-        public String GetHouseNumber()
-        {
-            return houseNumber;
-        }
-        public String GetCity()
-        {
-            return city;
-        }
-        public String GetProvince()
-        {
-            return province;
-        }
-        public String GetPostal()
-        {
-            return postalCode;
-        }
-
+        /* getters and setters */
+        public string SuiteNumber { get => suiteNumber; set => suiteNumber = value; }
+        public string StreetNumber { get => streetNumber; set => streetNumber = value; }
+        public string HouseNumber { get => houseNumber; set => houseNumber = value; }
+        public string City { get => city; set => city = value; }
+        public string Province { get => province; set => province = value; }
+        public string PostalCode { get => postalCode; set => postalCode = value; }
     }
 }

@@ -13,23 +13,18 @@ namespace App
 
         public UserName(String fName, String lName)
         {
-            firstName = fName;
-            lastName = lName;
+            FirstName = fName;
+            LastName = lName;
         }
 
+        /* Getters and Setters */
+        public string FirstName { get => firstName; set => firstName = value; }
+        public string LastName { get => lastName; set => lastName = value; }
+
+        /* function Overrides */
         public override string ToString()
         {
-            return firstName + ", " + lastName;
-        }
-
-        public String GetFirstName()
-        {
-            return firstName;
-        }
-
-        public String GetLastName()
-        {
-            return lastName;
+            return FirstName + ", " + LastName;
         }
     }
 }
