@@ -42,18 +42,18 @@ namespace App
             {
                 try
                 {
-                    command.Parameters.AddWithValue("@first_name", this.Name.GetFirstName());
-                    command.Parameters.AddWithValue("@last_name", this.Name.GetLastName());
+                    command.Parameters.AddWithValue("@first_name", this.Name.FirstName);
+                    command.Parameters.AddWithValue("@last_name", this.Name.LastName);
                     command.Parameters.AddWithValue("@creation_date", DateTime.Now);
                     command.Parameters.AddWithValue("@account_type", this.GetType().ToString());
                     command.Parameters.AddWithValue("@phone_number", this.ContactInformation.PhoneNumber);
                     command.Parameters.AddWithValue("@email", this.ContactInformation.Email);
-                    command.Parameters.AddWithValue("@suite_number", this.Address.GetSuiteNumber());
-                    command.Parameters.AddWithValue("@street_number", this.Address.GetStreetNumber());
-                    command.Parameters.AddWithValue("@house_number", this.Address.GetHouseNumber());
-                    command.Parameters.AddWithValue("@postalcode", this.Address.GetPostal());
-                    command.Parameters.AddWithValue("@city", this.Address.GetCity());
-                    command.Parameters.AddWithValue("@province", this.Address.GetProvince());
+                    command.Parameters.AddWithValue("@suite_number", this.Address.SuiteNumber);
+                    command.Parameters.AddWithValue("@street_number", this.Address.StreetNumber);
+                    command.Parameters.AddWithValue("@house_number", this.Address.HouseNumber);
+                    command.Parameters.AddWithValue("@postalcode", this.Address.PostalCode);
+                    command.Parameters.AddWithValue("@city", this.Address.City);
+                    command.Parameters.AddWithValue("@province", this.Address.Province);
                     int err = command.ExecuteNonQuery();
                 }
                 catch (Exception e)

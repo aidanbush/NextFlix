@@ -78,18 +78,18 @@ namespace App
             {
                 try
                 {
-                    command.Parameters.AddWithValue("@first_name", name.GetFirstName());
-                    command.Parameters.AddWithValue("@last_name", name.GetLastName());
+                    command.Parameters.AddWithValue("@first_name", name.FirstName);
+                    command.Parameters.AddWithValue("@last_name", name.LastName);
                     command.Parameters.AddWithValue("@creation_date", DateTime.Now);
                     command.Parameters.AddWithValue("@account_type", Customer.AccountType.Limited);
                     command.Parameters.AddWithValue("@phone_number", info.PhoneNumber);
                     command.Parameters.AddWithValue("@email", info.Email);
-                    command.Parameters.AddWithValue("@suite_number", address.GetSuiteNumber());
-                    command.Parameters.AddWithValue("@street_number", address.GetStreetNumber());
-                    command.Parameters.AddWithValue("@house_number", address.GetHouseNumber());
-                    command.Parameters.AddWithValue("@postalcode", address.GetPostal());
-                    command.Parameters.AddWithValue("@city", address.GetCity());
-                    command.Parameters.AddWithValue("@province", address.GetProvince());
+                    command.Parameters.AddWithValue("@suite_number", address.SuiteNumber);
+                    command.Parameters.AddWithValue("@street_number", address.StreetNumber);
+                    command.Parameters.AddWithValue("@house_number", address.HouseNumber);
+                    command.Parameters.AddWithValue("@postalcode", address.PostalCode);
+                    command.Parameters.AddWithValue("@city", address.City);
+                    command.Parameters.AddWithValue("@province", address.Province);
                     int err = command.ExecuteNonQuery();
                 }
                 catch(Exception e)
