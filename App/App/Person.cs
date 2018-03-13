@@ -2,12 +2,11 @@
 
 namespace App
 {
-    public class Person
+    public abstract class Person
     {
-        private int cid;
+        private int id;
         private UserName name;
         private Address address;
-        private string email;
         private string phoneNumber;
 
         /* Getters and Setters */
@@ -33,23 +32,14 @@ namespace App
 
         public int GetCid()
         {
-            return cid;
+            return id;
         }
 
         public void SetCid(int value)
         {
-            cid = value;
+            id = value;
         }
 
-        public string GetEmail()
-        {
-            return email;
-        }
-
-        public void SetEmail(string value)
-        {
-            email = value;
-        }
 
         public string GetPhoneNumber()
         {

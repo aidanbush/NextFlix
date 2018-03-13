@@ -18,7 +18,7 @@ namespace App
         {
             InitializeComponent();
             dataGridView1.DataMember = "Customers";
-            dataGridView1.DataSource = DBEnvironment.getDataSet();
+            dataGridView1.DataSource = DBEnvironment.getDataSet("Customers");
             dataGridView1.AutoGenerateColumns = true;
         }
 
@@ -34,10 +34,16 @@ namespace App
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
+            /*
+            UserName user = new UserName("STUFF", "Last Name");
+            Address userAddress = new Address("123", "some Streeet", "some more txt", "crap", "AB", "t5t5t5");
+            Customer c = new Customer(user, userAddress, "emasdf@asd.ca", "0021233487", Customer.AccountType.Bronze);
+            DBEnvironment.Add(c);
+            */
             AddCustomerForm AddUserForm = new AddCustomerForm(this);
             AddUserForm.Show();
-            
+
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)

@@ -36,7 +36,14 @@ namespace App
 
             return connectionString;
         }
+        
+        
+        public static bool Add(IQuery queryObject)
+        {
+            return queryObject.Add(con);
+        }
 
+        //Depricated
         public static bool CustomerInsertionQuery(CustomerInsertionParameters parameters)
         {
             UserName name = parameters.GetUserName();
@@ -77,10 +84,10 @@ namespace App
             return true;
 
         }
-        public static DataSet getDataSet()
+        public static DataSet getDataSet(string dataSet)
         {
             DataSet ds = new DataSet();
-            sda.Fill(ds, "Customers");
+            sda.Fill(ds, dataSet);
             return ds;
         }
 
