@@ -6,8 +6,8 @@ namespace App
     {
         private int id;
         private UserName name;
+        private ContactInformation contactInformation;
         private Address address;
-        private string phoneNumber;
 
         /* Getters and Setters */
         public UserName GetName()
@@ -30,25 +30,29 @@ namespace App
             address = value;
         }
 
-        public int GetCid()
+        public int GetID()
         {
             return id;
         }
 
-        public void SetCid(int value)
+        public void SetID(int value)
         {
             id = value;
         }
 
-
         public string GetPhoneNumber()
         {
-            return phoneNumber;
+            return contactInformation.getPhoneNumber();
         }
 
-        public void SetPhoneNumber(string value)
+        public string GetEmail()
         {
-            phoneNumber = value;
+            return contactInformation.getEmail();
+        }
+
+        public void SetContactInformation(ContactInformation value)
+        {
+            contactInformation = value;
         }
     }
 

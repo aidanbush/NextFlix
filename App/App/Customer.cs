@@ -11,15 +11,13 @@ namespace App
         private DateTime creationDate;
         private string creditCard;
         private int rating;
-        private string email;
 
-        public Customer(UserName newName, Address newAddress, string newEmail, string phoneNumber, AccountType newType)
+        public Customer(UserName newName, Address newAddress, ContactInformation contactInformation, AccountType newType)
         {
             SetAddress(newAddress);
             SetName(newName);
             SetType(newType);
-            SetEmail(newEmail);
-            SetPhoneNumber(phoneNumber);
+            SetContactInformation(contactInformation);
         }
 
         /* Getters and Setters */
@@ -63,16 +61,6 @@ namespace App
             creationDate = value;
         }
 
-
-        public string GetEmail()
-        {
-            return email;
-        }
-
-        public void SetEmail(string value)
-        {
-            email = value;
-        }
 
         public bool Add(SqlConnection con)
         {

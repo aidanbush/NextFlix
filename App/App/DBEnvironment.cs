@@ -42,8 +42,16 @@ namespace App
         {
             return queryObject.Add(con);
         }
+        public static bool Edit(IQuery queryObject)
+        {
+            return queryObject.Edit(con);
+        }
+        public static bool Delete(IQuery queryObject)
+        {
+            return queryObject.Delete(con);
+        }
 
-        //Depricated
+        //Depricated remove when meet with Jordan
         public static bool CustomerInsertionQuery(CustomerInsertionParameters parameters)
         {
             UserName name = parameters.GetUserName();
@@ -128,8 +136,9 @@ namespace App
                         Debug.Write("Read customer without account type.");
                         continue;
                 }
-                
-                Customer customer = new Customer(name, address, (string)customerRow["email"], account);
+
+                ContactInformation newContact = new ContactInformation("asd@asd.ca", "1234567891");
+                Customer customer = new Customer(name, address, newContact, account);
                 customer.SetCreationDate((DateTime)customerRow["creation_date"]);
 
                 customers.Add(customer);
