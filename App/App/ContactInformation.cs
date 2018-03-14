@@ -13,17 +13,12 @@ namespace App
 
         public ContactInformation(String eAddress, String phone)
         {
-            email = eAddress;
-            phoneNumber = phone;
+            Email = eAddress;
+            PhoneNumber = phone;
         }
 
-        public String getEmail()
-        {
-            return email;
-        }
-        public String getPhoneNumber()
-        {
-            return phoneNumber;
-        }
+        /* getters and setters */
+        public String Email { get => email; set => email = value; }
+        public String PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
     }
 }
