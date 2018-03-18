@@ -19,7 +19,7 @@ namespace App
             parent = frm;
             InitializeComponent();
         }
-        private bool CheckNameBoxes()
+        private bool NameBoxesValid()
         {
             if (FirstNameBox.Text == "" && LastNameBox.Text == "")
             {
@@ -45,51 +45,102 @@ namespace App
                 return true;
             }
         }
-        private bool InsertUser()
+        private Customer.AccountType GetAccountType()
         {
-            String type;
+            Customer.AccountType type;
+            
             if (TypeBox.SelectedItem == null)
             {
-                MessageBox.Show("Choose an account type");
-                return false;
+                throw new AccountTypeException();
             }
-            else
+            String selection = TypeBox.SelectedItem.ToString();
+            switch (selection)
+            { 
+                case ("Limited"):
+                    type = Customer.AccountType.Limited;
+                    break;
+                case ("Bronze"):
+                    type = Customer.AccountType.Bronze;
+                    break;
+                case ("Silver"):
+                    type = Customer.AccountType.Silver;
+                    break;
+                case ("Gold"):
+                    type = Customer.AccountType.Gold;
+                    break;
+                default:
+                    type = Customer.AccountType.Disabled;
+                    break;
+            }
+            return type;
+        }
+        private void HandleException(Exception Ex)
+        {
+            if (Ex is AccountTypeException)
             {
-                type = TypeBox.SelectedItem.ToString();
+                MessageBox.Show("Choose an account type.");
+                return;
             }
+            if (Ex is PostalCodeException)
+            {
+                MessageBox.Show("Invalid postal code.");
+                return;
+            }
+            else if (Ex is PhoneNumberException)
+            {
+                MessageBox.Show("Invalid Phone Number.");
+                return;
+            }
+        }
+        private String CheckBlankBoxes(TextBox box)
+        {
+            String outString;
+            switch (box.Text)
+            {
+                case ("eg t1t1t1"):
+                    outString = "";
+                    break;
+                case ("eg username@email.com"):
+                    outString = "";
+                    break;
+                default:
+                    outString = box.Text;
+                    break;
+            }
+            return outString;
+        }
+        private Customer CreateCustomer()
+        {
+            String postal = CheckBlankBoxes(PostalBox);
+            String email = CheckBlankBoxes(EmailBox);
 
+            Customer.AccountType type = GetAccountType();
+            UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
+            Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, postal);
+            ContactInformation userInfo = new ContactInformation(email, PhoneBox.Text);
+            Customer newCustomer = new Customer(user, userAddress, userInfo, type);
+
+            return newCustomer;
+        }
+        private bool InsertUser()
+        { 
             if ((MessageBox.Show("Add new Customer with current information?", "Confirm",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
                 try
                 {
-                    UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
-                    Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, PostalBox.Text);
-                    ContactInformation userInfo = new ContactInformation(EmailBox.Text, PhoneBox.Text);
-                    CustomerInsertionParameters parameters = new CustomerInsertionParameters(user, userAddress, userInfo);
-                    bool insert = DBEnvironment.CustomerInsertionQuery(parameters);
+                    Customer newCustomer = CreateCustomer();
+                    DBEnvironment.Add(newCustomer);
                     MessageBox.Show("Customer successfully added!");
                     parent.Refresh();
+
                     return true;
                 }
                 catch (Exception Ex)
                 {
-                    if (Ex is PostalCodeException)
-                    {
-                        MessageBox.Show("Invalid postal code.");
-                        return false;
-                    }
-                    else if (Ex is PhoneNumberException)
-                    {
-                        MessageBox.Show("Invalid Phone Number.");
-                        return false;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid postal code and Phone Number.");
-                        return false;
-                    }
+                    HandleException(Ex);
+                    return false;
                 }
             }
             else
@@ -99,7 +150,7 @@ namespace App
         }
         private void AddUserButton_Click(object sender, EventArgs e)
         {
-            if (CheckNameBoxes() == true)
+            if (NameBoxesValid() == true)
             {
                 if (InsertUser() == true)
                 {
@@ -120,8 +171,6 @@ namespace App
         {
             this.PostalBox.Enter += new EventHandler(PostalBox_Enter);
             this.PostalBox.Leave += new EventHandler(PostalBox_Leave);
-            this.PhoneBox.Enter += new EventHandler(PhoneBox_Enter);
-            this.PhoneBox.Leave += new EventHandler(PhoneBox_Leave);
             this.EmailBox.Enter += new EventHandler(EmailBox_Enter);
             this.EmailBox.Leave += new EventHandler(EmailBox_Leave);
             defaultSetText();
@@ -129,8 +178,7 @@ namespace App
         }
         protected void defaultSetText()
         {
-            this.PhoneBox.Text = ("(xxx) xxx-xxxx");
-            PhoneBox.ForeColor = Color.Gray;
+
             this.PostalBox.Text = "eg t1t1t1";
             PostalBox.ForeColor = Color.Gray;
             this.EmailBox.Text = "eg username@email.com";
@@ -148,23 +196,7 @@ namespace App
             if (PostalBox.Text.Trim() == "")
                 defaultSetText();
         }
-        protected void PhoneBoxSetText()
-        {
-            this.PhoneBox.Text = ("(xxx) xxx-xxxx");
-            PhoneBox.ForeColor = Color.Gray;
-        }
-        private void PhoneBox_Enter(object sender, EventArgs e)
-        {
-            if (PhoneBox.ForeColor == Color.Black)
-                return;
-            PhoneBox.Text = "";
-            PhoneBox.ForeColor = Color.Black;
-        }
-        private void PhoneBox_Leave(object sender, EventArgs e)
-        {
-            if (PhoneBox.Text.Trim() == "")
-                defaultSetText();
-        }
+  
         private void EmailBox_Enter(object sender, EventArgs e)
         {
             if (EmailBox.ForeColor == Color.Black)

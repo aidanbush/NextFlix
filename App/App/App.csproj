@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountTypeException.cs" />
     <Compile Include="Address.cs" />
     <Compile Include="ContactInformation.cs" />
     <Compile Include="CustomerInsertionParameters.cs" />

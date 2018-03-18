@@ -48,8 +48,7 @@ namespace App
 
             return connectionString;
         }
-        
-        
+
         public static bool Add(IQuery queryObject)
         {
             return queryObject.Add(con);
@@ -62,7 +61,6 @@ namespace App
         {
             return queryObject.Delete(con);
         }
-
         //Depricated remove when meet with Jordan
         public static bool CustomerInsertionQuery(CustomerInsertionParameters parameters)
         {
