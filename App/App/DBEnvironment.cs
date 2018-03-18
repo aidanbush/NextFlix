@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace App
 {
@@ -13,8 +14,8 @@ namespace App
     {
         private static SqlConnection con; 
         private static SqlDataAdapter sda;
-        private static DataSet ds;
         private static BindingList<Customer> customers;
+        private static BindingList<Employee> employees;
 
         public static BindingList<Customer> GetCustomers()
         {
@@ -24,6 +25,15 @@ namespace App
         public static void SetCustomers()
         {
             customers = RetrieveCustomers();
+        }
+
+        public static void SetEmployees()
+        {
+            employees = RetrieveEmployees();
+        }
+        public static BindingList<Employee> GetEmployees()
+        {
+            return employees;
         }
 
         public static void ConnectToDB()
@@ -103,12 +113,6 @@ namespace App
             return true;
 
         }
-        public static DataSet getDataSet(string dataSet)
-        {
-            DataSet ds = new DataSet();
-            sda.Fill(ds, dataSet);
-            return ds;
-        }
 
         public static BindingList<Customer> RetrieveCustomers()
         {
@@ -158,6 +162,43 @@ namespace App
 
             return customers;
         }
+
+        private static BindingList<Employee>  RetrieveEmployees()
+        {
+
+
+            BindingList<Employee> employeeList = new BindingList<Employee>();
+
+            string qString = "SELECT * FROM employee";
+            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
+
+            DataTable employeeTable = new DataTable();
+            adaptor.Fill(employeeTable);
+
+            foreach (DataRow employeeRow in employeeTable.Rows)
+            {
+                
+                UserName name = new UserName(employeeRow["first_name"].ToString(), employeeRow["last_name"].ToString());
+
+                Address address = new Address(employeeRow["suite_number"].ToString(), employeeRow["street_number"].ToString(),
+                                              employeeRow["house_number"].ToString(), employeeRow["city"].ToString(),
+                                              employeeRow["province"].ToString(), employeeRow["postalcode"].ToString());
+
+
+                ContactInformation contactInfo = new ContactInformation(null, employeeRow["phone_number"].ToString());
+                Employee.Position position = Employee.Position.Employee;
+                if (employeeRow["position"].ToString() == "Manager")
+                {
+                    position = Employee.Position.Manager;
+                }
+                Employee e = new Employee(name, address, contactInfo, float.Parse(employeeRow["wage"].ToString(), CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, employeeRow["social_insurance_num"].ToString(), position);
+
+                employeeList.Add(e);
+            }
+
+            return employeeList;
+        }
+
 
         public static void UpdateRatings()
         {
