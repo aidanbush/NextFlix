@@ -18,6 +18,7 @@ namespace App
         {
             DBEnvironment.SetCustomers();
             InitializeComponent();
+            FormNavigator.AddForm(this, "customersManagerForm");
             BindingList<Customer> customers = DBEnvironment.GetCustomers();
             dataGridView1.DataSource = customers;
             dataGridView1.AutoGenerateColumns = true;
