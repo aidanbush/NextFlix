@@ -17,7 +17,6 @@ namespace App
 
         public Address(String suite, String street, String house,String town, String prov, String postal)
         {
-
             suiteNumber = suite;
             streetNumber = street;
             houseNumber = house;
@@ -31,13 +30,20 @@ namespace App
         }
         private String CleanPostalCode(String postal)
         {
+            String code;
+
             Console.WriteLine(postal.Length);
+            if (postal == "")
+            {
+                return postal; 
+            }
             if (postal.Length != 6 && postal.Length != 7)
             {
-                Console.WriteLine("WRONGE SIZE");
+                
+                Console.WriteLine("WRONGE SIZE: " + postal.Length);
                 return null;
             }
-            String code = postal.Replace(" ", "");
+            code = postal.Replace(" ", "");
             //check if index 0, 2, 4 are numbers, if so, throw exception
             for (int i = 0; i < code.Length; i += 2)
             {
