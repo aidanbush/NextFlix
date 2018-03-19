@@ -69,5 +69,10 @@ namespace App
         public string City { get => city; set => city = value; }
         public string Province { get => province; set => province = value; }
         public string PostalCode { get => postalCode; set => postalCode = value; }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }
