@@ -90,7 +90,7 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
-            String q = "UPDATE customer SET first_name=@first_name, last_name=@last_name" +
+            String q = "UPDATE customer SET first_name=@first_name, last_name=@last_name, phone_number=@phone_number, email=@email, suite_number=@suite_number, street_number=@street_number, house_number=@house_number, postalcode=@postalcode, city=@city, province=@province " +
                     " WHERE cid=@cid";
             Console.WriteLine("ACCOUNT ID = " + this.Id);
             if (AddEdit(q, con))

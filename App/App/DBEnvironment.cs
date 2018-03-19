@@ -139,7 +139,6 @@ namespace App
 
         private static BindingList<Employee>  RetrieveEmployees()
         {
-
             BindingList<Employee> employeeList = new BindingList<Employee>();
 
             string qString = "SELECT * FROM employee";
@@ -150,7 +149,6 @@ namespace App
 
             foreach (DataRow employeeRow in employeeTable.Rows)
             {
-                
                 UserName name = new UserName(employeeRow["first_name"].ToString(), employeeRow["last_name"].ToString());
 
                 Address address = new Address(employeeRow["suite_number"].ToString(), employeeRow["street_number"].ToString(),

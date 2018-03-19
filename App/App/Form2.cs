@@ -14,22 +14,40 @@ namespace App
 {
     public partial class ManagerForm : Form
     {
-
         private int index;
         private BindingList<Customer> customers;
+        private BindingList<Movie> movies;
         private enum FormType { customer, employee, movie, manager};
         private FormType currentFormType;
         public ManagerForm()
         {
             InitializeComponent();
+            currentFormType = FormType.customer;
             FillTable();
-            currentFormType = FormType.movie;
         }
         public void FillTable()
         {
-            DBEnvironment.SetCustomers();
-            customers = DBEnvironment.GetCustomers();
-            dataGridView1.DataSource = customers;
+            switch (currentFormType)
+            {
+                case (FormType.customer):
+                    Console.WriteLine("FORM SET TO CUSTOMERS");
+                    DBEnvironment.SetCustomers();
+                    customers = DBEnvironment.GetCustomers();
+                    dataGridView1.DataSource = customers;
+                    break;
+
+                case (FormType.movie):
+                    Console.WriteLine("FORM SET TO MOVIES");
+                    DBEnvironment.SetMovies();
+                    movies = DBEnvironment.GetMovies();
+                    dataGridView1.DataSource = movies;
+                    break;
+
+                default:
+                    this.Close();
+                    break;
+            }
+
             dataGridView1.AutoGenerateColumns = true;
         }
 
@@ -60,8 +78,6 @@ namespace App
                 movies = DBEnvironment.GetMovies();
                 dataGridView1.DataSource = movies;
             }
-
-
             dataGridView1.AutoGenerateColumns = true;
         }
 
