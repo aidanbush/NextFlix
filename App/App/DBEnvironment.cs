@@ -16,32 +16,43 @@ namespace App
         private static SqlDataAdapter sda;
         private static BindingList<Customer> customers;
         private static BindingList<Employee> employees;
+        private static BindingList<Movie> movies;
+
 
         public static BindingList<Customer> GetCustomers()
         {
             return customers;
         }
-
         public static void SetCustomers()
         {
             customers = RetrieveCustomers();
         }
 
+        public static BindingList<Employee> GetEmployees()
+        {
+            return employees;
+        }
         public static void SetEmployees()
         {
             employees = RetrieveEmployees();
         }
-        public static BindingList<Employee> GetEmployees()
+
+        internal static BindingList<Movie> GetMovies()
         {
-            return employees;
+            return movies;
+        }
+   
+        internal static void SetMovies()
+        {
+            movies = RetrieveMovies();
         }
 
         public static void ConnectToDB()
         {
             string conn = getConnectionString();
             con = new SqlConnection(conn);
-            sda = new SqlDataAdapter("SELECT * FROM customer", conn);
         }
+
 
         private static string getConnectionString()
         {
@@ -58,7 +69,7 @@ namespace App
 
             return connectionString;
         }
-
+        
         public static bool Add(IQuery queryObject)
         {
             return queryObject.Add(con);
@@ -70,48 +81,6 @@ namespace App
         public static bool Delete(IQuery queryObject)
         {
             return queryObject.Delete(con);
-        }
-        //Depricated remove when meet with Jordan
-        public static bool CustomerInsertionQuery(CustomerInsertionParameters parameters)
-        {
-            UserName name = parameters.GetUserName();
-            Address address = parameters.GetAddress();
-            ContactInformation info = parameters.GetContactInformation();
-
-            con.Open();
-            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province)" +
-               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province)";
-
-            using (SqlCommand command = new SqlCommand(q, con))
-            {
-                try
-                {
-                    command.Parameters.AddWithValue("@first_name", name.FirstName);
-                    command.Parameters.AddWithValue("@last_name", name.LastName);
-                    command.Parameters.AddWithValue("@creation_date", DateTime.Now);
-                    command.Parameters.AddWithValue("@account_type", Customer.AccountType.Limited);
-                    command.Parameters.AddWithValue("@phone_number", info.PhoneNumber);
-                    command.Parameters.AddWithValue("@email", info.Email);
-                    command.Parameters.AddWithValue("@suite_number", address.SuiteNumber);
-                    command.Parameters.AddWithValue("@street_number", address.StreetNumber);
-                    command.Parameters.AddWithValue("@house_number", address.HouseNumber);
-                    command.Parameters.AddWithValue("@postalcode", address.PostalCode);
-                    command.Parameters.AddWithValue("@city", address.City);
-                    command.Parameters.AddWithValue("@province", address.Province);
-
-                    int err = command.ExecuteNonQuery();
-                }
-                catch(Exception e)
-                {
-                    Debug.Print(e.ToString());
-                    con.Close();
-                    return false;
-                }
-              
-            }           
-            con.Close();
-            return true;
-
         }
 
         public static BindingList<Customer> RetrieveCustomers()
@@ -129,7 +98,7 @@ namespace App
                 Address address = new Address(customerRow["suite_number"].ToString(), customerRow["street_number"].ToString(),
                                               customerRow["house_number"].ToString(), customerRow["city"].ToString(),
                                               customerRow["province"].ToString(), customerRow["postalcode"].ToString());
-                Customer.AccountType account = Customer.AccountType.Limited; ;
+                Customer.AccountType account = Customer.AccountType.Limited;
                 switch (customerRow["account_type"].ToString())
                 {
                     case "Disabled":
@@ -166,7 +135,6 @@ namespace App
         private static BindingList<Employee>  RetrieveEmployees()
         {
 
-
             BindingList<Employee> employeeList = new BindingList<Employee>();
 
             string qString = "SELECT * FROM employee";
@@ -192,11 +160,40 @@ namespace App
                     position = Employee.Position.Manager;
                 }
                 Employee e = new Employee(name, address, contactInfo, float.Parse(employeeRow["wage"].ToString(), CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, employeeRow["social_insurance_num"].ToString(), position);
+                e.Id = int.Parse(employeeRow["eid"].ToString());
 
                 employeeList.Add(e);
             }
 
             return employeeList;
+        }
+
+        private static BindingList<Movie> RetrieveMovies()
+        {
+            string qString = "SELECT * FROM movie";
+            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
+            DataTable movieTable = new DataTable();
+            adaptor.Fill(movieTable);
+            BindingList<Movie> movies = new BindingList<Movie>();
+
+            foreach (DataRow movieRow in movieTable.Rows)
+            {
+
+                string name = movieRow["name"].ToString();
+                string genre = movieRow["genre"].ToString();
+                float fees = float.Parse(movieRow["fees"].ToString());
+                int num_copies = int.Parse(movieRow["num_copies"].ToString());
+                int copies = int.Parse(movieRow["copies_available"].ToString());
+                
+                //rating don't work?
+                //movieRow["rating"].ToString();
+
+                Movie m = new Movie(name, genre, fees, num_copies, copies, 1);
+      
+                movies.Add(m);
+                
+            }
+            return movies;
         }
 
 

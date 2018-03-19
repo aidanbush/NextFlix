@@ -72,6 +72,7 @@
       <DependentUpon>AddCustomerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FormNavigator.cs" />
+    <Compile Include="Movie.cs" />
     <Compile Include="PhoneNumberException.cs" />
     <Compile Include="PostalCodeException.cs" />
     <Compile Include="Program.cs" />
