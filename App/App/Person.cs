@@ -14,6 +14,18 @@ namespace App
         public UserName Name { get => name; set => name = value; }
         public ContactInformation ContactInformation { get => contactInformation; set => contactInformation = value; }
         public Address Address { get => address; set => address = value; }
+
+        /* name getters */
+        public string FirstName { get => name.FirstName; }
+        public string LastName { get => name.LastName; }
+
+        /* address getters */
+        public string SuiteNumber { get => address.SuiteNumber; }
+        public string StreetNumber { get => address.StreetNumber; }
+        public string HouseNumber { get => address.HouseNumber; }
+        public string City { get => address.City; }
+        public string Province { get => address.Province; }
+        public string PostalCode { get => address.PostalCode; }
     }
 
 }

@@ -31,6 +31,10 @@ namespace App
                 DBEnvironment.SetCustomers();
                 customers = DBEnvironment.GetCustomers();
                 dataGridView1.DataSource = customers;
+                // refactor to specify all columns
+                dataGridView1.Columns.Remove("Address");
+                dataGridView1.Columns.Remove("Name");
+                dataGridView1.Columns.Remove("ContactInformation");
             }
             else if (this.currentFormType == FormType.employee)
             {
