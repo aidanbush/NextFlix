@@ -71,6 +71,7 @@ namespace App
             Console.WriteLine("Database edit successful");
             return true;
         }
+
         public bool Add(SqlConnection con)
         {
 
@@ -90,8 +91,17 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
-            String q = "UPDATE customer SET first_name=@first_name, last_name=@last_name, phone_number=@phone_number, email=@email, suite_number=@suite_number, street_number=@street_number, house_number=@house_number, postalcode=@postalcode, city=@city, province=@province " +
-                    " WHERE cid=@cid";
+            String q = "UPDATE customer SET first_name=@first_name, " + 
+                    "last_name=@last_name, " + 
+                    "phone_number=@phone_number, " + 
+                    "email=@email, " + 
+                    "suite_number=@suite_number, " + 
+                    "street_number=@street_number, " + "house_number=@house_number, " +
+                    "postalcode=@postalcode, " +
+                    "city=@city, " +
+                    "province=@province, " +
+                    "account_type=@account_type " +
+                    "WHERE cid=@cid";
             Console.WriteLine("ACCOUNT ID = " + this.Id);
             if (AddEdit(q, con))
             {
