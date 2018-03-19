@@ -51,19 +51,9 @@ namespace App
 
         private void button1_Click(object sender, EventArgs e)
         {
-            UserName name = new UserName("first_name", "last_name");
 
-            Address address = new Address("suite_number", "street_number", "house_number", "city", "AB", "t1t1t1");
-
-            ContactInformation contactInfo = new ContactInformation("email@email.ca", "1234567890");
-
-            Employee.Position position = Employee.Position.Employee;
-
-            Employee employee = new Employee(name, address, contactInfo, (float)123, DateTime.Now, "123412344", position);
-
-            DBEnvironment.Add(employee);
-            //AddCustomerForm AddUserForm = new AddCustomerForm(this);
-            //AddUserForm.Show();
+            AddCustomerForm AddUserForm = new AddCustomerForm(this);
+            AddUserForm.Show();
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
