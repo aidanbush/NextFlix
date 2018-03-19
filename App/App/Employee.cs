@@ -33,8 +33,8 @@ namespace App
         {
 
             con.Open();
-            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province, wage, start, social_insurance_num)" +
-               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province, @wage, @start, @social_insurance_num)";
+            String q = "insert into employee(first_name, last_name, phone_number, suite_number, street_number, house_number, postalcode, city, province, start, wage, social_insurance_num, position)" +
+               "values (@first_name, @last_name, @phone_number, @suite_number, @street_number, @house_number, @postalcode, @city, @province, @start, @wage, @social_insurance_num, @position)";
 
             using (SqlCommand command = new SqlCommand(q, con))
             {
@@ -42,7 +42,6 @@ namespace App
                 {
                     command.Parameters.AddWithValue("@first_name", this.Name.FirstName);
                     command.Parameters.AddWithValue("@last_name", this.Name.LastName);
-                    command.Parameters.AddWithValue("@creation_date", DateTime.Now);
                     command.Parameters.AddWithValue("@phone_number", this.ContactInformation.PhoneNumber);
                     command.Parameters.AddWithValue("@suite_number", this.Address.SuiteNumber);
                     command.Parameters.AddWithValue("@street_number", this.Address.StreetNumber);
@@ -53,6 +52,7 @@ namespace App
                     command.Parameters.AddWithValue("@start", this.startDate);
                     command.Parameters.AddWithValue("@province", this.Address.Province);
                     command.Parameters.AddWithValue("@social_insurance_num", this.SIN);
+                    command.Parameters.AddWithValue("@position", this.position.ToString());
 
                     int err = command.ExecuteNonQuery();
                 }

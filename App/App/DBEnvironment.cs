@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace App
 {
@@ -184,13 +185,13 @@ namespace App
                                               employeeRow["province"].ToString(), employeeRow["postalcode"].ToString());
 
 
-                ContactInformation contactInfo = new ContactInformation(employeeRow["email"].ToString(), employeeRow["phone_number"].ToString());
+                ContactInformation contactInfo = new ContactInformation(null, employeeRow["phone_number"].ToString());
                 Employee.Position position = Employee.Position.Employee;
                 if (employeeRow["position"].ToString() == "Manager")
                 {
                     position = Employee.Position.Manager;
                 }
-                Employee e = new Employee(name, address, contactInfo, (float)employeeRow["wage"], (DateTime)employeeRow["start"], employeeRow["phone_number"].ToString(), position);
+                Employee e = new Employee(name, address, contactInfo, float.Parse(employeeRow["wage"].ToString(), CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, employeeRow["social_insurance_num"].ToString(), position);
 
                 employeeList.Add(e);
             }
