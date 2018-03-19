@@ -20,8 +20,20 @@ namespace App
             customer = selectedCustomer;
             parent = form;
             InitializeComponent();
+            FillTextBoxes();
+        }
+        private void FillTextBoxes()
+        {
             FirstNameBox.Text = customer.Name.FirstName;
             LastNameBox.Text = customer.Name.LastName;
+            SuiteBox.Text = customer.Address.SuiteNumber;
+            StreetBox.Text = customer.Address.StreetNumber;
+            ProvinceBox.Text = customer.Address.Province;
+            PostalBox.Text = customer.Address.PostalCode;
+            CityBox.Text = customer.Address.City;
+            HouseBox.Text = customer.Address.HouseNumber;
+            PhoneBox.Text = customer.ContactInformation.PhoneNumber;
+            EmailBox.Text = customer.ContactInformation.Email;
             TypeBox.SelectedItem = customer.Type.ToString();
         }
         private Customer.AccountType GetAccountType()
@@ -63,10 +75,10 @@ namespace App
             if (customer.Name.LastName != LastNameBox.Text)
             {
                 updatedCustomer.Name.LastName = LastNameBox.Text;
-                Console.WriteLine("CHANGING LAST FROM " + updatedCustomer.Name.LastName + " to " + FirstNameBox.Text);
             }
             if (customer.Address.City != CityBox.Text)
             {
+                Console.WriteLine("CHANGE ADDY");
                 updatedCustomer.Address.City = CityBox.Text;
             }
             if (customer.Address.HouseNumber != HouseBox.Text)
