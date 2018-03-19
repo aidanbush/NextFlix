@@ -20,28 +20,34 @@ namespace App
         public ManagerForm()
         {
             InitializeComponent();
-            currentFormType = FormType.customer;
+            currentFormType = FormType.movie;
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            BindingList<Customer> customers;
-            BindingList<Employee> employees;
-
             if (this.currentFormType == FormType.customer)
             {
+                BindingList<Customer> customers;
                 DBEnvironment.SetCustomers();
                 customers = DBEnvironment.GetCustomers();
                 dataGridView1.DataSource = customers;
             }
             else if (this.currentFormType == FormType.employee)
             {
+                BindingList<Employee> employees;
                 DBEnvironment.SetEmployees();
                 employees = DBEnvironment.GetEmployees();
                 dataGridView1.DataSource = employees;
             }
+            else if (this.currentFormType == FormType.movie)
+            {
+                BindingList<Movie> movies;
+                DBEnvironment.SetMovies();
+                movies = DBEnvironment.GetMovies();
+                dataGridView1.DataSource = movies;
+            }
 
-            
+
             dataGridView1.AutoGenerateColumns = true;
         }
 
