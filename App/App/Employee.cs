@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace App
 {
@@ -10,8 +11,8 @@ namespace App
         private float wage;
         private DateTime startDate;
         private string sin;
-        
-        public Employee(UserName newName, Address newAddress, float newWage, DateTime newStart, string newSIN, Position newPosition)
+
+        public Employee(UserName newName, Address newAddress, ContactInformation contact, float newWage, DateTime newStart, string newSIN, Position newPosition)
         {
             Address = newAddress;
             Name =newName;
@@ -19,6 +20,7 @@ namespace App
             Wage = newWage;
             StartDate = newStart;
             SIN = newSIN;
+            ContactInformation = contact;
         }
 
         /* Getters and Setters */
@@ -29,7 +31,42 @@ namespace App
         
         public bool Add(SqlConnection con)
         {
-            throw new NotImplementedException();
+
+            con.Open();
+            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province, wage, start, social_insurance_num)" +
+               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province, @wage, @start, @social_insurance_num)";
+
+            using (SqlCommand command = new SqlCommand(q, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@first_name", this.Name.FirstName);
+                    command.Parameters.AddWithValue("@last_name", this.Name.LastName);
+                    command.Parameters.AddWithValue("@creation_date", DateTime.Now);
+                    command.Parameters.AddWithValue("@phone_number", this.ContactInformation.PhoneNumber);
+                    command.Parameters.AddWithValue("@suite_number", this.Address.SuiteNumber);
+                    command.Parameters.AddWithValue("@street_number", this.Address.StreetNumber);
+                    command.Parameters.AddWithValue("@house_number", this.Address.HouseNumber);
+                    command.Parameters.AddWithValue("@postalcode", this.Address.PostalCode);
+                    command.Parameters.AddWithValue("@city", this.Address.City);
+                    command.Parameters.AddWithValue("@wage", this.wage);
+                    command.Parameters.AddWithValue("@start", this.startDate);
+                    command.Parameters.AddWithValue("@province", this.Address.Province);
+                    command.Parameters.AddWithValue("@social_insurance_num", this.SIN);
+
+                    int err = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Debug.Print(e.ToString());
+                    con.Close();
+                    return false;
+                }
+
+            }
+            con.Close();
+            return true;
+            
         }
 
         public bool Edit(SqlConnection con)
