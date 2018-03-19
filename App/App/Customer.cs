@@ -12,7 +12,7 @@ namespace App
         private string creditCard;
         private int rating;
 
-        public Customer(UserName newName, Address newAddress, ContactInformation contactInformation, AccountType newType)
+        public Customer(UserName newName, Address newAddress, ContactInformation contactInformation, Customer.AccountType newType)
         {
             Address = newAddress;
             Name = newName;
@@ -25,20 +25,17 @@ namespace App
         public int Rating { get => rating; set => rating = value; }
         public string CreditCard { get => creditCard; set => creditCard = value; }
         public AccountType Type { get => type; set => type = value; }
-
         /* function Overrides */
         public override string ToString()
         {
             return Id.ToString() + " " + Name.ToString() + " " + Type.ToString();
         }
-        
-        public bool Add(SqlConnection con)
+        public bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
-            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province)" +
-               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province)";
-
-            using (SqlCommand command = new SqlCommand(q, con))
+            bool flag = true;
+            Console.WriteLine(this.Name.LastName);
+            using (SqlCommand command = new SqlCommand(queryString, con))
             {
                 try
                 {
@@ -54,10 +51,16 @@ namespace App
                     command.Parameters.AddWithValue("@postalcode", this.Address.PostalCode);
                     command.Parameters.AddWithValue("@city", this.Address.City);
                     command.Parameters.AddWithValue("@province", this.Address.Province);
+                    if (flag == true)
+                    {
+                        Console.WriteLine("GETTING ID");
+                        command.Parameters.AddWithValue("@cid", this.Id);
+                    }
                     int err = command.ExecuteNonQuery();
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.ToString());
                     Debug.Print(e.ToString());
                     con.Close();
                     return false;
@@ -65,12 +68,42 @@ namespace App
 
             }
             con.Close();
+            Console.WriteLine("Database edit successful");
             return true;
+        }
+        public bool Add(SqlConnection con)
+        {
+
+            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province)" +
+               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province)";
+
+            if(AddEdit(q, con))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         public bool Edit(SqlConnection con)
         {
-            throw new NotImplementedException();
+            String q = "UPDATE customer SET first_name=@first_name, last_name=@last_name" +
+                    " WHERE cid=@cid";
+            Console.WriteLine("ACCOUNT ID = " + this.Id);
+            if (AddEdit(q, con))
+            {
+
+                Console.WriteLine("User updated");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("User could not be updated");
+                return false;
+            }
         }
 
         public bool Delete(SqlConnection con)

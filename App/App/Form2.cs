@@ -14,15 +14,21 @@ namespace App
 {
     public partial class ManagerForm : Form
     {
+        private int index;
+        private BindingList<Customer> customers;
         public ManagerForm()
         {
-            DBEnvironment.SetCustomers();
             InitializeComponent();
-            BindingList<Customer> customers = DBEnvironment.GetCustomers();
+            FillTable();
+        }
+        public void FillTable()
+        {
+            DBEnvironment.SetCustomers();
+            customers = DBEnvironment.GetCustomers();
             dataGridView1.DataSource = customers;
             dataGridView1.AutoGenerateColumns = true;
-        }
 
+        }
         private void Form2_Load(object sender, EventArgs e)
         {
 
@@ -58,7 +64,17 @@ namespace App
             DBEnvironment.UpdateRatings();
             // reload view
             Debug.WriteLine("Updated Ratings");
+        }
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            Customer selectedCustomer = customers.ElementAt(index);
+            EditCustomerForm editCustomerForm = new EditCustomerForm(selectedCustomer, this);
+            editCustomerForm.Show();
+        }
 
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index = e.RowIndex;
         }
     }
 }

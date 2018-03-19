@@ -61,48 +61,7 @@ namespace App
         {
             return queryObject.Delete(con);
         }
-        //Depricated remove when meet with Jordan
-        public static bool CustomerInsertionQuery(CustomerInsertionParameters parameters)
-        {
-            UserName name = parameters.GetUserName();
-            Address address = parameters.GetAddress();
-            ContactInformation info = parameters.GetContactInformation();
-
-            con.Open();
-            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province)" +
-               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province)";
-
-            using (SqlCommand command = new SqlCommand(q, con))
-            {
-                try
-                {
-                    command.Parameters.AddWithValue("@first_name", name.FirstName);
-                    command.Parameters.AddWithValue("@last_name", name.LastName);
-                    command.Parameters.AddWithValue("@creation_date", DateTime.Now);
-                    command.Parameters.AddWithValue("@account_type", Customer.AccountType.Limited);
-                    command.Parameters.AddWithValue("@phone_number", info.PhoneNumber);
-                    command.Parameters.AddWithValue("@email", info.Email);
-                    command.Parameters.AddWithValue("@suite_number", address.SuiteNumber);
-                    command.Parameters.AddWithValue("@street_number", address.StreetNumber);
-                    command.Parameters.AddWithValue("@house_number", address.HouseNumber);
-                    command.Parameters.AddWithValue("@postalcode", address.PostalCode);
-                    command.Parameters.AddWithValue("@city", address.City);
-                    command.Parameters.AddWithValue("@province", address.Province);
-
-                    int err = command.ExecuteNonQuery();
-                }
-                catch(Exception e)
-                {
-                    Debug.Print(e.ToString());
-                    con.Close();
-                    return false;
-                }
-              
-            }           
-            con.Close();
-            return true;
-
-        }
+     
         public static DataSet getDataSet(string dataSet)
         {
             DataSet ds = new DataSet();

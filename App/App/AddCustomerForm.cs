@@ -23,19 +23,19 @@ namespace App
         {
             if (FirstNameBox.Text == "" && LastNameBox.Text == "")
             {
-                Console.WriteLine();
+
                 MessageBox.Show("The customer's first and last name cannot be blank");
                 return false;
             }
             else if(FirstNameBox.Text == "")
             {
-                Console.WriteLine("First");
+
                 MessageBox.Show("The customer's first name cannot be blank.");
                 return false;
             }
             else if(LastNameBox.Text == "")
             {
-                Console.WriteLine("Last");
+
                 MessageBox.Show("The customer's last name cannot be blank");
                 return false;
             }
@@ -154,6 +154,7 @@ namespace App
             {
                 if (InsertUser() == true)
                 {
+                    parent.FillTable();
                     this.Close();
                 }
             }
