@@ -20,7 +20,7 @@ namespace App
         public ManagerForm()
         {
             InitializeComponent();
-            currentFormType = FormType.employee;
+            currentFormType = FormType.customer;
         }
 
         private void Form2_Load(object sender, EventArgs e)
