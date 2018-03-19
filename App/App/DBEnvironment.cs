@@ -82,7 +82,12 @@ namespace App
         {
             return queryObject.Delete(con);
         }
-
+        public static DataSet getDataSet(string dataSet)
+        {
+            DataSet ds = new DataSet();
+            sda.Fill(ds, dataSet);
+            return ds;
+        }
         public static BindingList<Customer> RetrieveCustomers()
         {
             BindingList<Customer> customers = new BindingList<Customer>();

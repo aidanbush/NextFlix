@@ -53,6 +53,12 @@
     <Compile Include="ContactInformation.cs" />
     <Compile Include="CustomerInsertionParameters.cs" />
     <Compile Include="DBEnvironment.cs" />
+    <Compile Include="EditCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditCustomerForm.Designer.cs">
+      <DependentUpon>EditCustomerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,9 @@
     <Compile Include="Person.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Customer.cs" />
+    <EmbeddedResource Include="EditCustomerForm.resx">
+      <DependentUpon>EditCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

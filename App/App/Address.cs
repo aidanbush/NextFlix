@@ -32,15 +32,13 @@ namespace App
         {
             String code;
 
-            Console.WriteLine(postal.Length);
+
             if (postal == "")
             {
                 return postal; 
             }
             if (postal.Length != 6 && postal.Length != 7)
             {
-                
-                Console.WriteLine("WRONGE SIZE: " + postal.Length);
                 return null;
             }
             code = postal.Replace(" ", "");
