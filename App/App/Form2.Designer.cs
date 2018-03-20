@@ -40,7 +40,6 @@ namespace App
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
-            this.RatingUpdateButton = new System.Windows.Forms.Button();
             this.UpdateRatingsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -154,13 +153,6 @@ namespace App
             this.DeleteButton.Text = "Delete";
             this.DeleteButton.UseVisualStyleBackColor = true;
             // 
-            // RatingUpdateButton
-            // 
-            this.RatingUpdateButton.Location = new System.Drawing.Point(0, 0);
-            this.RatingUpdateButton.Name = "RatingUpdateButton";
-            this.RatingUpdateButton.Size = new System.Drawing.Size(75, 23);
-            this.RatingUpdateButton.TabIndex = 0;
-            // 
             // UpdateRatingsButton
             // 
             this.UpdateRatingsButton.Location = new System.Drawing.Point(74, 291);
@@ -209,7 +201,6 @@ namespace App
         private System.Windows.Forms.ToolStripMenuItem salesReportsToolStripMenuItem;
         private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button DeleteButton;
-        private System.Windows.Forms.Button RatingUpdateButton;
         private System.Windows.Forms.Button UpdateRatingsButton;
     }
 }

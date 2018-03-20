@@ -19,6 +19,9 @@ namespace App
         private BindingList<Movie> movies;
         private enum FormType { customer, employee, movie, manager};
         private FormType currentFormType;
+
+        private System.Windows.Forms.Button button2;
+
         public ManagerForm()
         {
             DBEnvironment.SetCustomers();
@@ -27,7 +30,9 @@ namespace App
             InitializeComponent();
             currentFormType = FormType.customer;
             FillTable();
+            button2 = AddButton;
         }
+
         public void FillTable()
         {
             switch (currentFormType)
@@ -52,6 +57,54 @@ namespace App
             }
 
             dataGridView1.AutoGenerateColumns = true;
+        }
+
+        private void ChangeView()
+        {
+            Debug.WriteLine("ChangeView");
+            // hide buttons
+            AddButton.Hide();
+            EditButton.Hide();
+            DeleteButton.Hide();
+            UpdateRatingsButton.Hide();
+            
+            switch (currentFormType)
+            {
+                case FormType.customer:
+                    Debug.WriteLine("formtype.customer");
+                    // show buttons
+                    AddButton.Show();
+                    EditButton.Show();
+                    DeleteButton.Show();
+                    UpdateRatingsButton.Show();
+                    break;
+                case FormType.employee:
+                    Debug.WriteLine("formtype.employee");
+                    // show buttons
+                    AddButton.Show();
+                    EditButton.Show();
+                    DeleteButton.Show();
+                    break;
+                case FormType.manager:
+                    Debug.WriteLine("formtype.manager");
+                    // show buttons
+                    AddButton.Show();
+                    EditButton.Show();
+                    DeleteButton.Show();
+                    break;
+                case FormType.movie:
+                    Debug.WriteLine("formtype.movie");
+                    // show buttons
+                    AddButton.Show();
+                    EditButton.Show();
+                    DeleteButton.Show();
+                    break;
+                default:
+                    Debug.WriteLine("default");
+                    break;
+            }
+
+            Refresh();
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -83,21 +136,23 @@ namespace App
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             AddCustomerForm AddUserForm = new AddCustomerForm(this);
             AddUserForm.Show();
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+
         }
 
         private void toolStripComboBox1_Click(object sender, EventArgs e)
         {
+
         }
 
         private void UpdateRatingsButton_Click(object sender, EventArgs e)
@@ -106,6 +161,7 @@ namespace App
             // reload view
             Debug.WriteLine("Updated Ratings");
         }
+
         private void EditButton_Click(object sender, EventArgs e)
         {
             Customer selectedCustomer = customers.ElementAt(index);
@@ -120,22 +176,30 @@ namespace App
 
         private void CustomerLoad(object sender, EventArgs e)
         {
+            Debug.WriteLine("CustomerLoad");
             currentFormType = FormType.customer;
+            ChangeView();
         }
 
         private void CustomerRepLoad(object sender, EventArgs e)
         {
+            Debug.WriteLine("CustomerRepLoad");
             currentFormType = FormType.employee;
+            ChangeView();
         }
 
         private void MoviesLoad(object sender, EventArgs e)
         {
+            Debug.WriteLine("MoviesLoad");
             currentFormType = FormType.movie;
+            ChangeView();
         }
 
         private void SalesRepotsLoad(object sender, EventArgs e)
         {
+            Debug.WriteLine("SalesReportsLoad");
 
+            ChangeView();
         }
     }
 }
