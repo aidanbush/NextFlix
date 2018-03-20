@@ -7,6 +7,7 @@ namespace App
 {
     internal class Movie : IQuery
     {
+        private int id;
         private string name;
         private string genre;
         private float fees;
@@ -14,6 +15,7 @@ namespace App
         private int copies_available;
         private int rating;
 
+        public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Genre { get => genre; set => genre = value; }
         public float Fees { get => fees; set => fees = value; }
