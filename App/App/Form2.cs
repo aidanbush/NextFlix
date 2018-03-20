@@ -21,9 +21,12 @@ namespace App
         private FormType currentFormType;
         public ManagerForm()
         {
+            DBEnvironment.SetCustomers();
+            customers = DBEnvironment.GetCustomers();
+
             InitializeComponent();
             FillTable();
-            currentFormType = FormType.movie;
+            currentFormType = FormType.customer;
         }
         public void FillTable()
         {
@@ -37,9 +40,6 @@ namespace App
         {
             if (this.currentFormType == FormType.customer)
             {
-                BindingList<Customer> customers;
-                DBEnvironment.SetCustomers();
-                customers = DBEnvironment.GetCustomers();
                 dataGridView1.DataSource = customers;
                 // refactor to specify all columns
                 dataGridView1.Columns.Remove("Address");
@@ -104,17 +104,17 @@ namespace App
 
         private void CustomerLoad(object sender, EventArgs e)
         {
-
+            currentFormType = FormType.customer;
         }
 
         private void CustomerRepLoad(object sender, EventArgs e)
         {
-
+            currentFormType = FormType.employee;
         }
 
         private void MoviesLoad(object sender, EventArgs e)
         {
-
+            currentFormType = FormType.movie;
         }
 
         private void SalesRepotsLoad(object sender, EventArgs e)
