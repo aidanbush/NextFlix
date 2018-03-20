@@ -31,7 +31,7 @@ namespace App
 
             InitializeComponent();
             dataGridView1.AutoGenerateColumns = true;
-            currentFormType = FormType.manager;
+            currentFormType = FormType.customer;
             ChangeView();
         }
 
@@ -81,11 +81,14 @@ namespace App
         private void ChangeView()
         {
             Debug.WriteLine("ChangeView");
-            // hide buttons
+            // hide elements
+            // buttons
             AddButton.Hide();
             EditButton.Hide();
             DeleteButton.Hide();
             UpdateRatingsButton.Hide();
+            // other
+            dataGridView1.Hide();
 
             switch (currentFormType)
             {
@@ -114,11 +117,14 @@ namespace App
         private void ShowCustomerView()
         {
             Debug.WriteLine("ShowCustomerView");
-            // show buttons
+            // show elements
+            // buttons
             AddButton.Show();
             EditButton.Show();
             DeleteButton.Show();
             UpdateRatingsButton.Show();
+            // other
+            dataGridView1.Show();
 
             // setup dataGridView
             DBEnvironment.SetCustomers();
@@ -135,11 +141,14 @@ namespace App
         private void ShowEmployeeView()
         {
             Debug.WriteLine("ShowEmployeeView");
-            // show buttons
+            // show elements
+            // buttons
             AddButton.Show();
             EditButton.Show();
             DeleteButton.Show();
-            
+            // other
+            dataGridView1.Show();
+
             // setup dataGridView
             DBEnvironment.SetEmployees();
             employees = DBEnvironment.GetEmployees();
@@ -150,13 +159,10 @@ namespace App
 
         private void ShowManagerView()
         {
-            // show buttons
-            AddButton.Show();
-            EditButton.Show();
-            DeleteButton.Show();
+            // show elements
 
-            //fill with nothing
-            dataGridView1.DataSource = new BindingList<string>();
+            // fill with nothing
+            dataGridView1.DataSource = null;
 
             Refresh();
         }
@@ -164,10 +170,13 @@ namespace App
         private void ShowMovieView()
         {
             Debug.WriteLine("ShowMovieView");
-            // show buttons
+            // show elements
+            // buttons
             AddButton.Show();
             EditButton.Show();
             DeleteButton.Show();
+            // other
+            dataGridView1.Show();
 
             // setup dataGridView
             DBEnvironment.SetMovies();
@@ -241,7 +250,7 @@ namespace App
         private void SalesRepotsLoad(object sender, EventArgs e)
         {
             Debug.WriteLine("SalesReportsLoad");
-
+            currentFormType = FormType.manager;
             ChangeView();
         }
     }
