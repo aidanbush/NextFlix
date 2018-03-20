@@ -23,6 +23,7 @@ namespace App
         {
             return customers;
         }
+
         public static void SetCustomers()
         {
             customers = RetrieveCustomers();
@@ -32,6 +33,7 @@ namespace App
         {
             return employees;
         }
+
         public static void SetEmployees()
         {
             employees = RetrieveEmployees();
@@ -74,20 +76,24 @@ namespace App
         {
             return queryObject.Add(con);
         }
+
         public static bool Edit(IQuery queryObject)
         {
             return queryObject.Edit(con);
         }
+
         public static bool Delete(IQuery queryObject)
         {
             return queryObject.Delete(con);
         }
+
         public static DataSet getDataSet(string dataSet)
         {
             DataSet ds = new DataSet();
             sda.Fill(ds, dataSet);
             return ds;
         }
+
         public static BindingList<Customer> RetrieveCustomers()
         {
             BindingList<Customer> customers = new BindingList<Customer>();

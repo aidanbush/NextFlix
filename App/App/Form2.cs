@@ -15,22 +15,24 @@ namespace App
     public partial class ManagerForm : Form
     {
         private int index;
-        private BindingList<Customer> customers;
-        private BindingList<Movie> movies;
         private enum FormType { customer, employee, movie, manager};
         private FormType currentFormType;
 
-        private System.Windows.Forms.Button button2;
+        // binding lists
+        private BindingList<Customer> customers;
+        private BindingList<Movie> movies;
+        private BindingList<Employee> employees;
 
         public ManagerForm()
         {
-            DBEnvironment.SetCustomers();
             customers = DBEnvironment.GetCustomers();
+            movies = DBEnvironment.GetMovies();
+            employees = DBEnvironment.GetEmployees();
 
             InitializeComponent();
-            currentFormType = FormType.customer;
-            FillTable();
-            button2 = AddButton;
+            dataGridView1.AutoGenerateColumns = true;
+            currentFormType = FormType.manager;
+            ChangeView();
         }
 
         public void FillTable()
@@ -38,17 +40,16 @@ namespace App
             switch (currentFormType)
             {
                 case (FormType.customer):
-                    Console.WriteLine("FORM SET TO CUSTOMERS");
-                    DBEnvironment.SetCustomers();
-                    customers = DBEnvironment.GetCustomers();
-                    dataGridView1.DataSource = customers;
+                    ShowCustomerView();
                     break;
 
                 case (FormType.movie):
                     Console.WriteLine("FORM SET TO MOVIES");
-                    DBEnvironment.SetMovies();
-                    movies = DBEnvironment.GetMovies();
-                    dataGridView1.DataSource = movies;
+                    ShowMovieView();
+                    break;
+
+                case (FormType.employee):
+                    ShowEmployeeView();
                     break;
 
                 default:
@@ -59,6 +60,24 @@ namespace App
             dataGridView1.AutoGenerateColumns = true;
         }
 
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            switch (currentFormType)
+            {
+                case FormType.customer:
+                    ShowCustomerView();
+                    break;
+
+                case FormType.employee:
+                    ShowEmployeeView();
+                    break;
+
+                case FormType.movie:
+                    ShowMovieView();
+                    break;
+            }
+        }
+
         private void ChangeView()
         {
             Debug.WriteLine("ChangeView");
@@ -67,71 +86,95 @@ namespace App
             EditButton.Hide();
             DeleteButton.Hide();
             UpdateRatingsButton.Hide();
-            
+
             switch (currentFormType)
             {
                 case FormType.customer:
                     Debug.WriteLine("formtype.customer");
-                    // show buttons
-                    AddButton.Show();
-                    EditButton.Show();
-                    DeleteButton.Show();
-                    UpdateRatingsButton.Show();
+                    ShowCustomerView();
                     break;
                 case FormType.employee:
                     Debug.WriteLine("formtype.employee");
-                    // show buttons
-                    AddButton.Show();
-                    EditButton.Show();
-                    DeleteButton.Show();
+                    ShowEmployeeView();
                     break;
                 case FormType.manager:
                     Debug.WriteLine("formtype.manager");
-                    // show buttons
-                    AddButton.Show();
-                    EditButton.Show();
-                    DeleteButton.Show();
+                    ShowManagerView();
                     break;
                 case FormType.movie:
                     Debug.WriteLine("formtype.movie");
-                    // show buttons
-                    AddButton.Show();
-                    EditButton.Show();
-                    DeleteButton.Show();
+                    ShowMovieView();
                     break;
                 default:
                     Debug.WriteLine("default");
                     break;
             }
+        }
+
+        private void ShowCustomerView()
+        {
+            Debug.WriteLine("ShowCustomerView");
+            // show buttons
+            AddButton.Show();
+            EditButton.Show();
+            DeleteButton.Show();
+            UpdateRatingsButton.Show();
+
+            // setup dataGridView
+            DBEnvironment.SetCustomers();
+            customers = DBEnvironment.GetCustomers();
+            dataGridView1.DataSource = customers;
+            // refactor to specify all columns
+            dataGridView1.Columns.Remove("Address");
+            dataGridView1.Columns.Remove("Name");
+            dataGridView1.Columns.Remove("ContactInformation");
+            
+            Refresh();
+        }
+
+        private void ShowEmployeeView()
+        {
+            Debug.WriteLine("ShowEmployeeView");
+            // show buttons
+            AddButton.Show();
+            EditButton.Show();
+            DeleteButton.Show();
+            
+            // setup dataGridView
+            DBEnvironment.SetEmployees();
+            employees = DBEnvironment.GetEmployees();
+            dataGridView1.DataSource = employees;
+            
+            Refresh();
+        }
+
+        private void ShowManagerView()
+        {
+            // show buttons
+            AddButton.Show();
+            EditButton.Show();
+            DeleteButton.Show();
+
+            //fill with nothing
+            dataGridView1.DataSource = new BindingList<string>();
 
             Refresh();
         }
 
-        private void Form2_Load(object sender, EventArgs e)
+        private void ShowMovieView()
         {
-            if (this.currentFormType == FormType.customer)
-            {
-                dataGridView1.DataSource = customers;
-                // refactor to specify all columns
-                dataGridView1.Columns.Remove("Address");
-                dataGridView1.Columns.Remove("Name");
-                dataGridView1.Columns.Remove("ContactInformation");
-            }
-            else if (this.currentFormType == FormType.employee)
-            {
-                BindingList<Employee> employees;
-                DBEnvironment.SetEmployees();
-                employees = DBEnvironment.GetEmployees();
-                dataGridView1.DataSource = employees;
-            }
-            else if (this.currentFormType == FormType.movie)
-            {
-                BindingList<Movie> movies;
-                DBEnvironment.SetMovies();
-                movies = DBEnvironment.GetMovies();
-                dataGridView1.DataSource = movies;
-            }
-            dataGridView1.AutoGenerateColumns = true;
+            Debug.WriteLine("ShowMovieView");
+            // show buttons
+            AddButton.Show();
+            EditButton.Show();
+            DeleteButton.Show();
+
+            // setup dataGridView
+            DBEnvironment.SetMovies();
+            movies = DBEnvironment.GetMovies();
+            dataGridView1.DataSource = movies;
+
+            Refresh();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
