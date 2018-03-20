@@ -101,5 +101,25 @@ namespace App
         {
             index = e.RowIndex;
         }
+
+        private void CustomerLoad(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CustomerRepLoad(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MoviesLoad(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SalesRepotsLoad(object sender, EventArgs e)
+        {
+
+        }
     }
 }
