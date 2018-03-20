@@ -188,6 +188,7 @@ namespace App
             foreach (DataRow movieRow in movieTable.Rows)
             {
 
+                int id = int.Parse(movieRow["mid"].ToString());
                 string name = movieRow["name"].ToString();
                 string genre = movieRow["genre"].ToString();
                 float fees = float.Parse(movieRow["fees"].ToString());
@@ -198,6 +199,7 @@ namespace App
                 //movieRow["rating"].ToString();
 
                 Movie m = new Movie(name, genre, fees, num_copies, copies, 1);
+                m.Id = id;
       
                 movies.Add(m);
                 
