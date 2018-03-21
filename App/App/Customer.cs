@@ -51,11 +51,10 @@ namespace App
                     command.Parameters.AddWithValue("@postalcode", this.Address.PostalCode);
                     command.Parameters.AddWithValue("@city", this.Address.City);
                     command.Parameters.AddWithValue("@province", this.Address.Province);
-                    if (flag == true)
-                    {
-                        Console.WriteLine("GETTING ID");
-                        command.Parameters.AddWithValue("@cid", this.Id);
-                    }
+               
+                    
+                    command.Parameters.AddWithValue("@cid", this.Id);
+                    
                     int err = command.ExecuteNonQuery();
                 }
                 catch (Exception e)

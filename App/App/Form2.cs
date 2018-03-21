@@ -22,7 +22,7 @@ namespace App
         public ManagerForm()
         {
             InitializeComponent();
-            currentFormType = FormType.customer;
+            currentFormType = FormType.movie;
             FillTable();
         }
         public void FillTable()
@@ -87,9 +87,16 @@ namespace App
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            AddCustomerForm AddUserForm = new AddCustomerForm(this);
-            AddUserForm.Show();
+            if (this.currentFormType == FormType.movie)
+            {
+                AddMovieForm addMovieForm = new AddMovieForm(this);
+                addMovieForm.Show();
+            }
+            else
+            {
+                AddCustomerForm AddUserForm = new AddCustomerForm(this);
+                AddUserForm.Show();
+            }
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -108,9 +115,18 @@ namespace App
         }
         private void EditButton_Click(object sender, EventArgs e)
         {
-            Customer selectedCustomer = customers.ElementAt(index);
-            EditCustomerForm editCustomerForm = new EditCustomerForm(selectedCustomer, this);
-            editCustomerForm.Show();
+            if (currentFormType == FormType.movie)
+            {
+                Movie selectedMovie = movies.ElementAt(index);
+                EditMovieForm editMovieForm = new EditMovieForm(selectedMovie, this);
+                editMovieForm.Show();
+            }
+            else
+            {
+                Customer selectedCustomer = customers.ElementAt(index);
+                EditCustomerForm editCustomerForm = new EditCustomerForm(selectedCustomer, this);
+                editCustomerForm.Show();
+            }
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
