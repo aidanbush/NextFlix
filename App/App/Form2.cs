@@ -193,8 +193,23 @@ namespace App
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AddCustomerForm AddUserForm = new AddCustomerForm(this);
-            AddUserForm.Show();
+            switch (currentFormType)
+            {
+                case FormType.customer:
+
+
+                    AddCustomerForm AddUserForm = new AddCustomerForm(this);
+                    AddUserForm.Show();
+                    break;
+                case FormType.employee:
+                    break;
+                case FormType.movie:
+                    break;
+                case FormType.manager:
+                    break;
+            }
+
+
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -213,12 +228,45 @@ namespace App
             // reload view
             Debug.WriteLine("Updated Ratings");
         }
-
+        
         private void EditButton_Click(object sender, EventArgs e)
         {
-            Customer selectedCustomer = customers.ElementAt(index);
-            EditCustomerForm editCustomerForm = new EditCustomerForm(selectedCustomer, this);
-            editCustomerForm.Show();
+            switch (currentFormType)
+            {
+                case FormType.customer:
+                    Customer selectedCustomer = customers.ElementAt(index);
+                    EditCustomerForm editCustomerForm = new EditCustomerForm(selectedCustomer, this);
+                    editCustomerForm.Show();
+                    break;
+                case FormType.employee:
+                    break;
+                case FormType.movie:
+                    break;
+                case FormType.manager:
+                    break;
+            }
+
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            switch (currentFormType)
+            {
+                case FormType.customer:
+                    Customer selectedCustomer = customers.ElementAt(index);
+                    ConfirmationForm confirmation = new ConfirmationForm(selectedCustomer, "are you sure you want to delete " + selectedCustomer.FirstName + " " + selectedCustomer.LastName + "?");
+                    confirmation.Show();
+                    break;
+                case FormType.employee:
+                    break;
+                case FormType.movie:
+                    break;
+                case FormType.manager:
+                    break;
+            }
+
+            this.Form2_Load(sender, e);
+
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -253,5 +301,6 @@ namespace App
             currentFormType = FormType.manager;
             ChangeView();
         }
+
     }
 }
