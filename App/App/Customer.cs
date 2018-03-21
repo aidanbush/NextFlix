@@ -117,7 +117,28 @@ namespace App
 
         public bool Delete(SqlConnection con)
         {
-            throw new NotImplementedException();
+            String q = "DELETE FROM customer WHERE cid=@cid";
+
+            con.Open();
+            Console.WriteLine(this.Name.LastName);
+            using (SqlCommand command = new SqlCommand(q, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@cid", this.Id);
+                    int err = command.ExecuteNonQuery();
+                }
+
+                catch (Exception e)
+                {
+                    con.Close();
+                    Console.WriteLine("Database failed to delete record");
+                    return false;
+                }
+            }
+            con.Close();
+            return true;
+            
         }
     }
 }

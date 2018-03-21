@@ -1,3 +1,4 @@
+
 ﻿using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Data.SqlClient;
@@ -50,7 +51,6 @@ namespace App
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
-                    //Debug.Print(e.ToString());
                     con.Close();
                     return false;
                 }
@@ -83,17 +83,16 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
-            Console.WriteLine("OI");
+            
             String q = "UPDATE movie SET Name=@Name, " +
                        "genre=@genre, " +
                        "fees=@fees, " +
                        "num_copies=@num_copies " +
                        "WHERE mid=@mid";
             
-            Console.WriteLine("ACCOUNT ID = " + this.Id);
             if (AddEdit(q, con))
             {
-                Console.WriteLine("User updated");
+                Console.WriteLine("Movie updated");
                 return true;
             }
             else
