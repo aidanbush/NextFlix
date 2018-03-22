@@ -2,7 +2,7 @@
 
 namespace App
 {
-    interface IQuery
+    public interface IQuery
     {
         bool Add(SqlConnection con);
         bool Edit(SqlConnection con);
