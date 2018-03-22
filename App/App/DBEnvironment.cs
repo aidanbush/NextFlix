@@ -23,6 +23,7 @@ namespace App
         {
             return customers;
         }
+
         public static void SetCustomers()
         {
             customers = RetrieveCustomers();
@@ -32,6 +33,7 @@ namespace App
         {
             return employees;
         }
+
         public static void SetEmployees()
         {
             employees = RetrieveEmployees();
@@ -74,13 +76,22 @@ namespace App
         {
             return queryObject.Add(con);
         }
+
         public static bool Edit(IQuery queryObject)
         {
             return queryObject.Edit(con);
         }
+
         public static bool Delete(IQuery queryObject)
         {
             return queryObject.Delete(con);
+        }
+
+        public static DataSet getDataSet(string dataSet)
+        {
+            DataSet ds = new DataSet();
+            sda.Fill(ds, dataSet);
+            return ds;
         }
 
         public static BindingList<Customer> RetrieveCustomers()
@@ -134,7 +145,6 @@ namespace App
 
         private static BindingList<Employee>  RetrieveEmployees()
         {
-
             BindingList<Employee> employeeList = new BindingList<Employee>();
 
             string qString = "SELECT * FROM employee";
@@ -145,7 +155,6 @@ namespace App
 
             foreach (DataRow employeeRow in employeeTable.Rows)
             {
-                
                 UserName name = new UserName(employeeRow["first_name"].ToString(), employeeRow["last_name"].ToString());
 
                 Address address = new Address(employeeRow["suite_number"].ToString(), employeeRow["street_number"].ToString(),
@@ -179,6 +188,7 @@ namespace App
             foreach (DataRow movieRow in movieTable.Rows)
             {
 
+                int id = int.Parse(movieRow["mid"].ToString());
                 string name = movieRow["name"].ToString();
                 string genre = movieRow["genre"].ToString();
                 float fees = float.Parse(movieRow["fees"].ToString());
@@ -189,6 +199,7 @@ namespace App
                 //movieRow["rating"].ToString();
 
                 Movie m = new Movie(name, genre, fees, num_copies, copies, 1);
+                m.Id = id;
       
                 movies.Add(m);
                 

@@ -40,7 +40,6 @@ namespace App
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
-            this.RatingUpdateButton = new System.Windows.Forms.Button();
             this.UpdateRatingsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -58,8 +57,9 @@ namespace App
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(691, 492);
+            this.dataGridView1.Size = new System.Drawing.Size(691, 493);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // AddButton
@@ -103,24 +103,28 @@ namespace App
             this.customersToolStripMenuItem.Name = "customersToolStripMenuItem";
             this.customersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.customersToolStripMenuItem.Text = "Customers";
+            this.customersToolStripMenuItem.Click += new System.EventHandler(this.CustomerLoad);
             // 
             // customerRepresentativesToolStripMenuItem
             // 
             this.customerRepresentativesToolStripMenuItem.Name = "customerRepresentativesToolStripMenuItem";
             this.customerRepresentativesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.customerRepresentativesToolStripMenuItem.Text = "Customer Representatives";
+            this.customerRepresentativesToolStripMenuItem.Click += new System.EventHandler(this.CustomerRepLoad);
             // 
             // moviesToolStripMenuItem
             // 
             this.moviesToolStripMenuItem.Name = "moviesToolStripMenuItem";
             this.moviesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.moviesToolStripMenuItem.Text = "Movies";
+            this.moviesToolStripMenuItem.Click += new System.EventHandler(this.MoviesLoad);
             // 
             // salesReportsToolStripMenuItem
             // 
             this.salesReportsToolStripMenuItem.Name = "salesReportsToolStripMenuItem";
             this.salesReportsToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.salesReportsToolStripMenuItem.Text = "Sales Reports";
+            this.salesReportsToolStripMenuItem.Click += new System.EventHandler(this.SalesRepotsLoad);
             // 
             // contextMenuStrip1
             // 
@@ -137,6 +141,7 @@ namespace App
             this.EditButton.TabIndex = 6;
             this.EditButton.Text = "Edit";
             this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // DeleteButton
             // 
@@ -147,13 +152,6 @@ namespace App
             this.DeleteButton.TabIndex = 7;
             this.DeleteButton.Text = "Delete";
             this.DeleteButton.UseVisualStyleBackColor = true;
-            // 
-            // RatingUpdateButton
-            // 
-            this.RatingUpdateButton.Location = new System.Drawing.Point(0, 0);
-            this.RatingUpdateButton.Name = "RatingUpdateButton";
-            this.RatingUpdateButton.Size = new System.Drawing.Size(75, 23);
-            this.RatingUpdateButton.TabIndex = 0;
             // 
             // UpdateRatingsButton
             // 
@@ -203,7 +201,6 @@ namespace App
         private System.Windows.Forms.ToolStripMenuItem salesReportsToolStripMenuItem;
         private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button DeleteButton;
-        private System.Windows.Forms.Button RatingUpdateButton;
         private System.Windows.Forms.Button UpdateRatingsButton;
     }
 }
