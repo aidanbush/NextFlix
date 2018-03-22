@@ -78,6 +78,26 @@ namespace App
 
         public bool Delete(SqlConnection con)
         {
+            String q = "DELETE FROM movie WHERE mid=@mid";
+
+            con.Open();
+            using (SqlCommand command = new SqlCommand(q, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@mid", this.Id);
+                    int err = command.ExecuteNonQuery();
+                }
+
+                catch (Exception e)
+                {
+                    con.Close();
+                    Console.WriteLine("Database failed to delete record");
+                    return false;
+                }
+            }
+            con.Close();
+            return true;
             throw new System.NotImplementedException();
         }
 
