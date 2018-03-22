@@ -197,14 +197,14 @@ namespace App
             switch (currentFormType)
             {
                 case FormType.customer:
-
-
-                    AddCustomerForm AddUserForm = new AddCustomerForm(this);
-                    AddUserForm.Show();
+                    AddCustomerForm addUserForm = new AddCustomerForm(this);
+                    addUserForm.Show();
                     break;
                 case FormType.employee:
                     break;
                 case FormType.movie:
+                    AddMovieForm addMovieForm = new AddMovieForm(this);
+                    addMovieForm.Show();
                     break;
                 case FormType.manager:
                     break;
@@ -240,6 +240,9 @@ namespace App
                 case FormType.employee:
                     break;
                 case FormType.movie:
+                    Movie selectedMovie = movies.ElementAt(index);
+                    EditMovieForm editMovieForm = new EditMovieForm(selectedMovie, this);
+                    editMovieForm.Show();
                     break;
                 case FormType.manager:
                     break;

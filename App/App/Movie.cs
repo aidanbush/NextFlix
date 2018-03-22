@@ -62,7 +62,6 @@ namespace App
         }
         public bool Add(SqlConnection con)
         {
-            
             String q = "insert into movie(name, genre, fees, num_copies, copies_available)" +
                "values (@name, @genre, @fees, @num_copies, @copies_available)";
             if (AddEdit(q, con))
@@ -83,7 +82,6 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
-            
             String q = "UPDATE movie SET Name=@Name, " +
                        "genre=@genre, " +
                        "fees=@fees, " +

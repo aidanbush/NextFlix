@@ -195,9 +195,9 @@ namespace App
                 int id = (int)movieRow["mid"];
                 //rating don't work?
                 //movieRow["rating"].ToString();
-                Movie m = new Movie(name, genre, fees, num_copies, copies, 1);
-                m.Id = id;
-                movies.Add(m);
+                Movie movie = new Movie(name, genre, fees, num_copies, copies, 1);
+                movie.Id = id;
+                movies.Add(movie);
                 
             }
             return movies;

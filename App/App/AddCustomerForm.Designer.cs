@@ -111,18 +111,18 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(124, 25);
+            this.label1.Size = new System.Drawing.Size(130, 25);
             this.label1.TabIndex = 7;
-            this.label1.Text = "First Name*";
+            this.label1.Text = "First Name:*";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 86);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 25);
+            this.label2.Size = new System.Drawing.Size(129, 25);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Last Name*";
+            this.label2.Text = "Last Name:*";
             // 
             // label3
             // 
@@ -190,9 +190,9 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(7, 326);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(150, 25);
+            this.label9.Size = new System.Drawing.Size(156, 25);
             this.label9.TabIndex = 16;
-            this.label9.Text = "Email Address";
+            this.label9.Text = "Email Address:";
             // 
             // EmailBox
             // 
@@ -216,9 +216,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(13, 403);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(155, 25);
+            this.label10.Size = new System.Drawing.Size(161, 25);
             this.label10.TabIndex = 19;
-            this.label10.Text = "Phone Number";
+            this.label10.Text = "Phone Number:";
             // 
             // PhoneBox
             // 

@@ -72,5 +72,15 @@ namespace App
                 this.Close();
             }
         }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show("Cancel movie update? (Information will not be saved)", "Cancel",
+               MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+               MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+                this.Close();
+            }
+        }
     }
 }
