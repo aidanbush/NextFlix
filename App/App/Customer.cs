@@ -118,7 +118,6 @@ namespace App
             String q = "DELETE FROM customer WHERE cid=@cid";
 
             con.Open();
-            Console.WriteLine(this.Name.LastName);
             using (SqlCommand command = new SqlCommand(q, con))
             {
                 try

@@ -255,19 +255,20 @@ namespace App
             switch (currentFormType)
             {
                 case FormType.customer:
-                    Customer selectedCustomer = customers.ElementAt(index);
-                    ConfirmationForm confirmation = new ConfirmationForm(selectedCustomer, "are you sure you want to delete " + selectedCustomer.FirstName + " " + selectedCustomer.LastName + "?");
-                    confirmation.Show();
+                    DeleteCustomer();
                     break;
                 case FormType.employee:
+                    DeleteEmployee();
                     break;
                 case FormType.movie:
+                    DeleteMovie();
                     break;
                 case FormType.manager:
                     break;
             }
 
-            this.Form2_Load(sender, e);
+            
+
 
 
         }
@@ -304,6 +305,30 @@ namespace App
             currentFormType = FormType.manager;
             ChangeView();
         }
+
+        private void DeleteCustomer()
+        {
+            Customer selectedCustomer = customers.ElementAt(index);
+            ConfirmationForm confirmation = new ConfirmationForm(this, selectedCustomer, "are you sure you want to delete " + selectedCustomer.FirstName + " " + selectedCustomer.LastName + "?");
+            confirmation.Show();
+        }
+        private void DeleteMovie()
+        {
+            Movie selectedMovie = movies.ElementAt(index);
+            ConfirmationForm confirmation = new ConfirmationForm(this, selectedMovie, "are you sure you want to delete " + selectedMovie.Name + "?");
+            confirmation.Show();
+        }
+        private void DeleteEmployee()
+        {
+            Employee selectedEmployee = employees.ElementAt(index);
+            ConfirmationForm confirmation = new ConfirmationForm(this, selectedEmployee, "are you sure you want to delete " + selectedEmployee.FirstName + " " + selectedEmployee.LastName + "?");
+            confirmation.Show();
+        }
+        public void Reload(object sender, EventArgs e)
+        {
+            this.Form2_Load(sender, e);
+        }
+
 
     }
 }
