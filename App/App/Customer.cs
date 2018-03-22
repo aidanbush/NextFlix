@@ -51,8 +51,6 @@ namespace App
                     command.Parameters.AddWithValue("@postalcode", this.Address.PostalCode);
                     command.Parameters.AddWithValue("@city", this.Address.City);
                     command.Parameters.AddWithValue("@province", this.Address.Province);
-               
-                    
                     command.Parameters.AddWithValue("@cid", this.Id);
                     
                     int err = command.ExecuteNonQuery();

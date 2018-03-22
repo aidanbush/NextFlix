@@ -112,6 +112,7 @@
             this.CancelButton.TabIndex = 31;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // EditMovieButton
             // 
@@ -139,7 +140,7 @@
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.EditMovieButton);
             this.Name = "EditMovieForm";
-            this.Text = "EditMovieForm";
+            this.Text = "Edit Movie";
             this.ResumeLayout(false);
             this.PerformLayout();
 

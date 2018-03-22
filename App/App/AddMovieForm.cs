@@ -18,23 +18,86 @@ namespace App
             parent = manager;
             InitializeComponent();
         }
+        private bool InsertMovie()
+        {
+            if ((MessageBox.Show("Add new Customer with current information?", "Confirm",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+                
+                try
+                {
+                    String title = TitleBox.Text;
+                    String genre = GenreBox.Text;
+                    int copies = int.Parse(CopyAmountBox.Text);
+                    float fees = float.Parse(FeesBox.Text);
+                    Movie newMovie = new Movie(title, genre, fees, copies, copies, 0);
+                    
+                    DBEnvironment.Add(newMovie);
+                                        return true;
+                }
+                catch (Exception Ex)
+                {
+                    //HandleException(Ex);
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
 
+        }
+
+        private bool CheckTextBoxes()
+        {
+            Console.WriteLine("Should b hur");
+            if(TitleBox.Text == "" && CopyAmountBox.Text == "")
+            {
+                MessageBox.Show("Plese check the movie title and Copy amount");
+                return false;
+            }
+            else if(TitleBox.Text == "")
+            {
+                MessageBox.Show("Please check the title");
+                return false;
+            }
+            else if(CopyAmountBox.Text == "")
+            {
+                MessageBox.Show("Please check the movie copy amount");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        
         private void AddMovieButton_Click(object sender, EventArgs e)
         {
-            String title = TitleBox.Text;
-            String genre = GenreBox.Text;
-            int copies = int.Parse(CopyAmountBox.Text);
-            float fees = float.Parse(FeesBox.Text);
-
-            Movie newMovie = new Movie(title, genre, fees, copies, copies, 0);
-            DBEnvironment.Add(newMovie);
-            parent.FillTable();
-            MessageBox.Show("SUCCESS");
+            if (CheckTextBoxes())
+            {
+                if (InsertMovie())
+                {
+                    parent.FillTable();
+                    MessageBox.Show("Movie added!");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Movie could not be added");
+                }
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
-
+            if ((MessageBox.Show("Cancel movie entry? (Information will not be saved)", "Cancel",
+               MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+               MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+                this.Close();
+            }
         }
     }
 }

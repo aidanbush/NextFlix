@@ -62,7 +62,7 @@ namespace App
         }
         public bool Add(SqlConnection con)
         {
-            
+
             String q = "insert into movie(name, genre, fees, num_copies, copies_available)" +
                "values (@name, @genre, @fees, @num_copies, @copies_available)";
             if (AddEdit(q, con))
@@ -78,6 +78,7 @@ namespace App
 
         public bool Delete(SqlConnection con)
         {
+
             String q = "DELETE FROM movie WHERE mid=@mid";
 
             con.Open();
@@ -98,12 +99,11 @@ namespace App
             }
             con.Close();
             return true;
-            throw new System.NotImplementedException();
+
         }
 
         public bool Edit(SqlConnection con)
         {
-            
             String q = "UPDATE movie SET Name=@Name, " +
                        "genre=@genre, " +
                        "fees=@fees, " +

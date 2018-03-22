@@ -38,6 +38,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.FeesBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+
             this.SuspendLayout();
             // 
             // CancelButton
@@ -65,9 +67,11 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 25);
+
+            this.label1.Size = new System.Drawing.Size(73, 25);
             this.label1.TabIndex = 21;
-            this.label1.Text = "Title:";
+            this.label1.Text = "Title: *";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // TitleBox
             // 
@@ -104,9 +108,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 198);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(184, 25);
+            this.label3.Size = new System.Drawing.Size(198, 25);
             this.label3.TabIndex = 26;
-            this.label3.Text = "Amount of copies:";
+            this.label3.Text = "Amount of copies: *";
             // 
             // label5
             // 
@@ -124,11 +128,22 @@
             this.FeesBox.Size = new System.Drawing.Size(193, 31);
             this.FeesBox.TabIndex = 29;
             // 
+
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 582);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(276, 25);
+            this.label4.TabIndex = 30;
+            this.label4.Text = "* Indicates mandatory fields";
+            // 
             // AddMovieForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(488, 619);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.FeesBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
@@ -158,5 +173,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox FeesBox;
+        private System.Windows.Forms.Label label4;
+
     }
 }
