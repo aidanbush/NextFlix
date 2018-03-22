@@ -55,7 +55,6 @@ namespace App
             con = new SqlConnection(conn);
         }
 
-
         private static string getConnectionString()
         {
             string path = Path.GetFullPath(@"App");
@@ -187,26 +186,22 @@ namespace App
 
             foreach (DataRow movieRow in movieTable.Rows)
             {
-
-                int id = int.Parse(movieRow["mid"].ToString());
+                
                 string name = movieRow["name"].ToString();
                 string genre = movieRow["genre"].ToString();
                 float fees = float.Parse(movieRow["fees"].ToString());
                 int num_copies = int.Parse(movieRow["num_copies"].ToString());
                 int copies = int.Parse(movieRow["copies_available"].ToString());
-                
+                int id = (int)movieRow["mid"];
                 //rating don't work?
                 //movieRow["rating"].ToString();
-
                 Movie m = new Movie(name, genre, fees, num_copies, copies, 1);
                 m.Id = id;
-      
                 movies.Add(m);
                 
             }
             return movies;
         }
-
 
         public static void UpdateRatings()
         {

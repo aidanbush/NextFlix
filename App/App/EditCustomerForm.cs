@@ -45,6 +45,7 @@ namespace App
                 throw new AccountTypeException();
             }
             String selection = TypeBox.SelectedItem.ToString();
+
             switch (selection)
             {
                 case ("Limited"):
@@ -78,7 +79,6 @@ namespace App
             }
             if (customer.Address.City != CityBox.Text)
             {
-                Console.WriteLine("CHANGE ADDY");
                 updatedCustomer.Address.City = CityBox.Text;
             }
             if (customer.Address.HouseNumber != HouseBox.Text)
@@ -109,13 +109,13 @@ namespace App
             {
                 updatedCustomer.ContactInformation.PhoneNumber = PhoneBox.Text;
             }
-            /*if (customer.Type.ToString() != TypeBox.SelectedItem.ToString())
+            if (customer.Type.ToString() != TypeBox.SelectedItem.ToString())
             {
-                updatedCustomer.Type = GetType();
-
-            }*/
+                updatedCustomer.Type = GetAccountType();
+            }
+            
             DBEnvironment.Edit(updatedCustomer);
-            MessageBox.Show("Great Success!");
+            MessageBox.Show("Customer edit complete!");
         }
         private void EditUserButton_Click(object sender, EventArgs e)
         {

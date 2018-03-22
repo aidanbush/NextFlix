@@ -30,6 +30,7 @@ namespace App
             employees = DBEnvironment.GetEmployees();
 
             InitializeComponent();
+
             dataGridView1.AutoGenerateColumns = true;
             currentFormType = FormType.customer;
             ChangeView();
@@ -208,8 +209,6 @@ namespace App
                 case FormType.manager:
                     break;
             }
-
-
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -247,7 +246,7 @@ namespace App
             }
 
         }
-
+    
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             switch (currentFormType)
@@ -266,6 +265,7 @@ namespace App
             }
 
             this.Form2_Load(sender, e);
+
 
         }
 

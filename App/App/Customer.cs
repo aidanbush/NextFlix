@@ -51,11 +51,10 @@ namespace App
                     command.Parameters.AddWithValue("@postalcode", this.Address.PostalCode);
                     command.Parameters.AddWithValue("@city", this.Address.City);
                     command.Parameters.AddWithValue("@province", this.Address.Province);
-                    if (flag == true)
-                    {
-                        Console.WriteLine("GETTING ID");
-                        command.Parameters.AddWithValue("@cid", this.Id);
-                    }
+               
+                    
+                    command.Parameters.AddWithValue("@cid", this.Id);
+                    
                     int err = command.ExecuteNonQuery();
                 }
                 catch (Exception e)
@@ -71,6 +70,7 @@ namespace App
             Console.WriteLine("Database edit successful");
             return true;
         }
+
         public bool Add(SqlConnection con)
         {
 
@@ -90,8 +90,17 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
-            String q = "UPDATE customer SET first_name=@first_name, last_name=@last_name, phone_number=@phone_number, email=@email, suite_number=@suite_number, street_number=@street_number, house_number=@house_number, postalcode=@postalcode, city=@city, province=@province " +
-                    " WHERE cid=@cid";
+            String q = "UPDATE customer SET first_name=@first_name, " + 
+                    "last_name=@last_name, " + 
+                    "phone_number=@phone_number, " + 
+                    "email=@email, " + 
+                    "suite_number=@suite_number, " + 
+                    "street_number=@street_number, " + "house_number=@house_number, " +
+                    "postalcode=@postalcode, " +
+                    "city=@city, " +
+                    "province=@province, " +
+                    "account_type=@account_type " +
+                    "WHERE cid=@cid";
             Console.WriteLine("ACCOUNT ID = " + this.Id);
             if (AddEdit(q, con))
             {
