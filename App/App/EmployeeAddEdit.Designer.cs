@@ -51,9 +51,9 @@
             this.SIN = new System.Windows.Forms.Label();
             this.SINBox = new System.Windows.Forms.TextBox();
             this.Possition = new System.Windows.Forms.Label();
-            this.PossitionBox = new System.Windows.Forms.TextBox();
             this.WageLabel = new System.Windows.Forms.Label();
             this.WageBox = new System.Windows.Forms.TextBox();
+            this.PossitionBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // CityBox
@@ -94,13 +94,14 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(20, 439);
+            this.CancelButton.Location = new System.Drawing.Point(116, 439);
             this.CancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(93, 35);
             this.CancelButton.TabIndex = 42;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click_1);
             // 
             // label8
             // 
@@ -230,18 +231,19 @@
             // 
             // AddUserButton
             // 
-            this.AddUserButton.Location = new System.Drawing.Point(117, 438);
+            this.AddUserButton.Location = new System.Drawing.Point(20, 438);
             this.AddUserButton.Margin = new System.Windows.Forms.Padding(2);
             this.AddUserButton.Name = "AddUserButton";
             this.AddUserButton.Size = new System.Drawing.Size(92, 36);
             this.AddUserButton.TabIndex = 23;
             this.AddUserButton.Text = "Add User";
             this.AddUserButton.UseVisualStyleBackColor = true;
+            this.AddUserButton.Click += new System.EventHandler(this.AddUserButton_Click);
             // 
             // SIN
             // 
             this.SIN.AutoSize = true;
-            this.SIN.Location = new System.Drawing.Point(21, 160);
+            this.SIN.Location = new System.Drawing.Point(21, 171);
             this.SIN.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.SIN.Name = "SIN";
             this.SIN.Size = new System.Drawing.Size(155, 17);
@@ -250,7 +252,7 @@
             // 
             // SINBox
             // 
-            this.SINBox.Location = new System.Drawing.Point(20, 181);
+            this.SINBox.Location = new System.Drawing.Point(20, 192);
             this.SINBox.Margin = new System.Windows.Forms.Padding(2);
             this.SINBox.Name = "SINBox";
             this.SINBox.Size = new System.Drawing.Size(186, 22);
@@ -265,14 +267,6 @@
             this.Possition.Size = new System.Drawing.Size(65, 17);
             this.Possition.TabIndex = 48;
             this.Possition.Text = "Possition";
-            // 
-            // PossitionBox
-            // 
-            this.PossitionBox.Location = new System.Drawing.Point(20, 136);
-            this.PossitionBox.Margin = new System.Windows.Forms.Padding(2);
-            this.PossitionBox.Name = "PossitionBox";
-            this.PossitionBox.Size = new System.Drawing.Size(186, 22);
-            this.PossitionBox.TabIndex = 47;
             // 
             // WageLabel
             // 
@@ -292,13 +286,24 @@
             this.WageBox.Size = new System.Drawing.Size(116, 22);
             this.WageBox.TabIndex = 51;
             // 
+            // PossitionBox
+            // 
+            this.PossitionBox.FormattingEnabled = true;
+            this.PossitionBox.Items.AddRange(new object[] {
+            "Employee",
+            "Manager"});
+            this.PossitionBox.Location = new System.Drawing.Point(21, 135);
+            this.PossitionBox.Name = "PossitionBox";
+            this.PossitionBox.Size = new System.Drawing.Size(121, 24);
+            this.PossitionBox.TabIndex = 53;
+            // 
             // EmployeeAddEdit
             // 
             this.ClientSize = new System.Drawing.Size(328, 489);
+            this.Controls.Add(this.PossitionBox);
             this.Controls.Add(this.WageLabel);
             this.Controls.Add(this.WageBox);
             this.Controls.Add(this.Possition);
-            this.Controls.Add(this.PossitionBox);
             this.Controls.Add(this.SIN);
             this.Controls.Add(this.SINBox);
             this.Controls.Add(this.CityBox);
@@ -353,8 +358,8 @@
         private System.Windows.Forms.Label SIN;
         private System.Windows.Forms.TextBox SINBox;
         private System.Windows.Forms.Label Possition;
-        private System.Windows.Forms.TextBox PossitionBox;
         private System.Windows.Forms.Label WageLabel;
         private System.Windows.Forms.TextBox WageBox;
+        private System.Windows.Forms.ComboBox PossitionBox;
     }
 }

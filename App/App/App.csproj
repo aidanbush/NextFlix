@@ -101,6 +101,7 @@
     <Compile Include="ConfirmationForm.Designer.cs">
       <DependentUpon>ConfirmationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormInputHandler.cs" />
     <Compile Include="FormNavigator.cs" />
     <Compile Include="Movie.cs" />
     <Compile Include="PhoneNumberException.cs" />

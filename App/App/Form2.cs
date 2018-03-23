@@ -271,11 +271,6 @@ namespace App
                 case FormType.manager:
                     break;
             }
-
-            
-
-
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
