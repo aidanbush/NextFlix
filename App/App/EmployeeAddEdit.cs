@@ -123,12 +123,155 @@ namespace App
         }
         private void CancelButton_Click(object sender, EventArgs e)
         {
-
+            if ((MessageBox.Show("Cancel Customer Entry? (Information will not be saved)", "Cancel",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+                this.Close();
+            }
         }
 
         private void EmployeeAddEdit_Load(object sender, EventArgs e)
         {
 
         }
+
+        //exception handling
+        private bool NameBoxesValid()
+        {
+            if (FirstNameBox.Text == "" && LastNameBox.Text == "")
+            {
+
+                MessageBox.Show("The customer's first and last name cannot be blank");
+                return false;
+            }
+            else if (FirstNameBox.Text == "")
+            {
+
+                MessageBox.Show("The customer's first name cannot be blank.");
+                return false;
+            }
+            else if (LastNameBox.Text == "")
+            {
+
+                MessageBox.Show("The customer's last name cannot be blank");
+                return false;
+            }
+
+            else
+            {
+                return true;
+            }
+        }
+
+        private void HandleException(Exception Ex)
+        {
+            if (Ex is AccountTypeException)
+            {
+                MessageBox.Show("Choose an account type.");
+                return;
+            }
+            if (Ex is PostalCodeException)
+            {
+                MessageBox.Show("Invalid postal code.");
+                return;
+            }
+            else if (Ex is PhoneNumberException)
+            {
+                MessageBox.Show("Invalid Phone Number.");
+                return;
+            }
+        }
+        //
+
+        private String CheckBlankBoxes(TextBox box)
+        {
+            String outString;
+            switch (box.Text)
+            {
+                case ("eg t1t1t1"):
+                    outString = "";
+                    break;
+                case ("eg username@email.com"):
+                    outString = "";
+                    break;
+                default:
+                    outString = box.Text;
+                    break;
+            }
+            return outString;
+        }
+        private Employee CreateEmployee()
+        {
+            String postal = CheckBlankBoxes(PostalBox);
+            UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
+            Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, postal);
+            ContactInformation userInfo = new ContactInformation(null, PhoneBox.Text);
+            Employee newEmployee = new Employee(user, userAddress, userInfo, 1, DateTime.Now, "1", Employee.Position.Employee);
+            return newEmployee;
+        }
+        private bool InsertUser()
+        {
+            if ((MessageBox.Show("Add new Customer with current information?", "Confirm",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+                try
+                {
+                    Employee newEmployee = CreateEmployee();
+                    DBEnvironment.Add(newEmployee);
+                    MessageBox.Show("Customer successfully added!");
+                    parent.Refresh();
+
+                    return true;
+                }
+                catch (Exception Ex)
+                {
+                    HandleException(Ex);
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private void AddUserButton_Click(object sender, EventArgs e)
+        {
+            if (NameBoxesValid() == true)
+            {
+                if (InsertUser() == true)
+                {
+                    parent.FillTable();
+                    this.Close();
+                }
+            }
+        }
+        private void AddCustomerForm_Load(object sender, EventArgs e)
+        {
+            this.PostalBox.Enter += new EventHandler(PostalBox_Enter);
+            this.PostalBox.Leave += new EventHandler(PostalBox_Leave);
+            defaultSetText();
+
+        }
+        protected void defaultSetText()
+        {
+
+            this.PostalBox.Text = "eg t1t1t1";
+            PostalBox.ForeColor = Color.Gray;
+        }
+        private void PostalBox_Enter(object sender, EventArgs e)
+        {
+            if (PostalBox.ForeColor == Color.Black)
+                return;
+            PostalBox.Text = "";
+            PostalBox.ForeColor = Color.Black;
+        }
+        private void PostalBox_Leave(object sender, EventArgs e)
+        {
+            if (PostalBox.Text.Trim() == "")
+                defaultSetText();
+        }
+        
     }
 }
