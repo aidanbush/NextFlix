@@ -117,8 +117,8 @@ namespace App
         {
             UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
             //UserName user = new UserName("firstname","asdfasdf");
-            Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, PostalBox.Text);
-            //Address userAddress = new Address("asd", "asd", "asd", "asd", "AB", "r1r1r1");
+            //Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, PostalBox.Text);
+            Address userAddress = new Address("asd", "asd", "asd", "asd", "AB", "r1r1r1");
             ContactInformation userInfo = new ContactInformation(null, PhoneBox.Text);
             //ContactInformation userInfo = new ContactInformation(null, "1231231234");
             //Employee newEmployee = new Employee(user, userAddress, userInfo, 1, DateTime.Now, "123123123", Employee.Position.Employee);
@@ -137,12 +137,12 @@ namespace App
                     Employee newEmployee = CreateEmployee();
                     DBEnvironment.Add(newEmployee);
                     MessageBox.Show("Customer successfully added!");
-                    parent.Refresh();
                     return true;
                 }
                 catch (Exception Ex)
                 {
-                    //HandleException(Ex);
+                    //TODO do some kind of handling here
+                    return false;
                 }
             }
                 return false;
@@ -153,23 +153,50 @@ namespace App
 
         }
 
+
+
         private bool checkFormInputsGood()
         {
-            if (inputHandler.checkNames(FirstNameBox.Text))
+            if (!inputHandler.checkNames(FirstNameBox.Text))
                 return false;
-
+            if (!inputHandler.checkNames(LastNameBox.Text))
+                return false;
+            try { PossitionBox.SelectedItem.ToString(); }
+            catch (Exception e)
+            {
+                MessageBox.Show("Need to select a possition");
+                return false;
+            }
+            if (!inputHandler.checkSIN(SINBox.Text))
+                return false;
+        
+            try
+            {
+                ContactInformation userInfo = new ContactInformation(null, PhoneBox.Text);
+                UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
+                Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, PostalBox.Text);
+                Employee newEmployee = new Employee(user, userAddress, userInfo, float.Parse(WageBox.Text, CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, SINBox.Text, Employee.Position.Employee);
+            }
+            catch (Exception ex)
+            {
+                inputHandler.HandleException(ex);
+                return false;
+            }
+            
             return true;
         }
         private void AddUserButton_Click(object sender, EventArgs e)
         {
-
-            if (!checkFormInputsGood())
-                return;
             
-            if (InsertUser())
-                parent.FillTable();
-  
-            this.Close();
+            if (!checkFormInputsGood())
+            {
+                Debug.Print("Couldn't add employee");
+                return;
+            }
+             if (InsertUser())
+                 parent.FillTable();
+
+             this.Close();
 
         }
 
