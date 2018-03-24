@@ -201,6 +201,8 @@ namespace App
                     addUserForm.Show();
                     break;
                 case FormType.employee:
+                    EmployeeAddEdit addForm = new EmployeeAddEdit(null, this);
+                    addForm.Show();
                     break;
                 case FormType.movie:
                     AddMovieForm addMovieForm = new AddMovieForm(this);
@@ -238,6 +240,9 @@ namespace App
                     editCustomerForm.Show();
                     break;
                 case FormType.employee:
+                    Employee selectedEmployee = employees.ElementAt(index);
+                    EmployeeAddEdit editForm = new EmployeeAddEdit(selectedEmployee, this);
+                    editForm.Show();
                     break;
                 case FormType.movie:
                     Movie selectedMovie = movies.ElementAt(index);
@@ -266,11 +271,6 @@ namespace App
                 case FormType.manager:
                     break;
             }
-
-            
-
-
-
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
