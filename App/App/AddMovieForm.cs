@@ -90,6 +90,12 @@ namespace App
             }
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
         private void CancelButton_Click(object sender, EventArgs e)
         {
             if ((MessageBox.Show("Cancel movie entry? (Information will not be saved)", "Cancel",
