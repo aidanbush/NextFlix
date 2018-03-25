@@ -16,6 +16,7 @@ namespace App
     {
         public enum EmploymentRole { manager, employee };
         private EmploymentRole role;
+        private Form parent;
 
         private int index;
         private enum FormType { customer, employee, movie, manager, order};
@@ -32,8 +33,9 @@ namespace App
         private ManagerView managerView;
         private OrderView orderView;
 
-        public ManagerForm(EmploymentRole newRole)
+        public ManagerForm(Form newParent, EmploymentRole newRole)
         {
+            parent = newParent;
             role = newRole;
 
             customers = DBEnvironment.GetCustomers();
@@ -206,10 +208,20 @@ namespace App
                     break;
             }
         }
-        
-        private void FulfillOrderButton_click(object sender, EventArgs e)
+
+        private void FulfillOrderButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ManagerFormClosed(object sender, FormClosedEventArgs e)
+        {
+            parent.Show();
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
