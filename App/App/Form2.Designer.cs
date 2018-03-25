@@ -37,11 +37,12 @@ namespace App
             this.customerRepresentativesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moviesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.UpdateRatingsButton = new System.Windows.Forms.Button();
-            this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FulfillOrderButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -128,6 +129,13 @@ namespace App
             this.salesReportsToolStripMenuItem.Text = "Sales Reports";
             this.salesReportsToolStripMenuItem.Click += new System.EventHandler(this.SalesRepotsLoad);
             // 
+            // ordersToolStripMenuItem
+            // 
+            this.ordersToolStripMenuItem.Name = "ordersToolStripMenuItem";
+            this.ordersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.ordersToolStripMenuItem.Text = "Orders";
+            this.ordersToolStripMenuItem.Click += new System.EventHandler(this.OrderLoad);
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -167,18 +175,24 @@ namespace App
             this.UpdateRatingsButton.UseVisualStyleBackColor = true;
             this.UpdateRatingsButton.Click += new System.EventHandler(this.UpdateRatingsButton_Click);
             // 
-            // ordersToolStripMenuItem
+            // FulfillOrderButton
             // 
-            this.ordersToolStripMenuItem.Name = "ordersToolStripMenuItem";
-            this.ordersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.ordersToolStripMenuItem.Text = "Orders";
-            this.ordersToolStripMenuItem.Click += new System.EventHandler(this.OrderLoad);
+            this.FulfillOrderButton.Location = new System.Drawing.Point(74, 78);
+            this.FulfillOrderButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.FulfillOrderButton.Name = "FulfillOrderButton";
+            this.FulfillOrderButton.Size = new System.Drawing.Size(134, 55);
+            this.FulfillOrderButton.TabIndex = 9;
+            this.FulfillOrderButton.Text = "Fulfill order";
+            this.FulfillOrderButton.UseVisualStyleBackColor = true;
+            this.FulfillOrderButton.Visible = false;
+            this.FulfillOrderButton.Click += new System.EventHandler(this.FulfillOrderButton_click);
             // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(962, 552);
+            this.Controls.Add(this.FulfillOrderButton);
             this.Controls.Add(this.UpdateRatingsButton);
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.EditButton);
@@ -213,5 +227,6 @@ namespace App
         private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.Button UpdateRatingsButton;
+        private System.Windows.Forms.Button FulfillOrderButton;
     }
 }

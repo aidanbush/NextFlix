@@ -206,6 +206,11 @@ namespace App
                     break;
             }
         }
+        
+        private void FulfillOrderButton_click(object sender, EventArgs e)
+        {
+
+        }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -432,12 +437,18 @@ namespace App
 
             public void HideView()
             {
+                // buttons
+                parent.FulfillOrderButton.Hide();
+                // other
                 parent.dataGridView1.Hide();
                 parent.dataGridView1.DataSource = null;
             }
 
             public void ShowView()
             {
+                // buttons
+                parent.FulfillOrderButton.Show();
+                // other
                 parent.dataGridView1.Show();
                 parent.dataGridView1.DataSource = DBEnvironment.RetrieveUnfulfilledOrders();
             }
