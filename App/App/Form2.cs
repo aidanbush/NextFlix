@@ -292,6 +292,7 @@ namespace App
                 parent.UpdateRatingsButton.Hide();
                 // other
                 parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
             }
 
             public void ShowView()
@@ -336,6 +337,7 @@ namespace App
                 parent.UpdateRatingsButton.Hide();
                 // other
                 parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
             }
 
             public void ShowView()
@@ -379,6 +381,7 @@ namespace App
                 parent.UpdateRatingsButton.Hide();
                 // other
                 parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
             }
 
             public void ShowView()
@@ -430,11 +433,13 @@ namespace App
             public void HideView()
             {
                 parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
             }
 
             public void ShowView()
             {
                 parent.dataGridView1.Show();
+                parent.dataGridView1.DataSource = DBEnvironment.RetrieveUnfulfilledOrders();
             }
         }
     }
