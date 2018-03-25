@@ -14,6 +14,9 @@ namespace App
 {
     public partial class ManagerForm : Form
     {
+        public enum EmploymentRole { manager, employee };
+        private EmploymentRole role;
+
         private int index;
         private enum FormType { customer, employee, movie, manager};
         private FormType currentFormType;
@@ -28,8 +31,10 @@ namespace App
         private MovieView movieView;
         private ManagerView managerView;
 
-        public ManagerForm()
+        public ManagerForm(EmploymentRole newRole)
         {
+            role = newRole;
+
             customers = DBEnvironment.GetCustomers();
             movies = DBEnvironment.GetMovies();
             employees = DBEnvironment.GetEmployees();
@@ -40,6 +45,13 @@ namespace App
             managerView = new ManagerView(this);
             
             InitializeComponent();
+            
+            if (role != EmploymentRole.manager)
+            {
+                this.Text = "Employee";
+                customerRepresentativesToolStripMenuItem.Visible = false;
+                salesReportsToolStripMenuItem.Visible = false;
+            }
 
             dataGridView1.AutoGenerateColumns = true;
             ChangeView(FormType.customer);

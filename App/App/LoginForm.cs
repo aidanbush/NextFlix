@@ -31,7 +31,8 @@ namespace App
         {
             if (ValidateEmployee())
             {
-                // switch view
+                new ManagerForm(ManagerForm.EmploymentRole.employee).Show();
+                this.Hide();
             }
             // print error
             SetError("Invaid Username and Password");
@@ -41,7 +42,7 @@ namespace App
         {
             if (ValidateManager())
             {
-                new ManagerForm().Show();
+                new ManagerForm(ManagerForm.EmploymentRole.manager).Show();
                 this.Hide();
             }
             // print error
@@ -50,11 +51,27 @@ namespace App
 
         private bool ValidateCustomer()
         {
+            string name = NameTextBox.Text;
+            string pass = PasswordTextBox.Text;
+
+            if (name == "admin" && pass == "pass")
+            {
+                return true;
+            }
+
             return false;
         }
 
         private bool ValidateEmployee()
         {
+            string name = NameTextBox.Text;
+            string pass = PasswordTextBox.Text;
+
+            if (name == "admin" && pass == "pass")
+            {
+                return true;
+            }
+
             return false;
         }
 
