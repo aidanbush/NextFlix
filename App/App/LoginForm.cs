@@ -19,17 +19,62 @@ namespace App
 
         private void CustomerButtonClick(object sender, EventArgs e)
         {
+            if (ValidateCustomer())
+            {
+                // switch view
+            }
+            // print error
+            SetError("Invaid Username and Password");
         }
 
         private void EmployeeButtonClick(object sender, EventArgs e)
         {
-
+            if (ValidateEmployee())
+            {
+                // switch view
+            }
+            // print error
+            SetError("Invaid Username and Password");
         }
 
         private void ManagerButtonClick(object sender, EventArgs e)
         {
-            new ManagerForm().Show();
-            this.Hide();
+            if (ValidateManager())
+            {
+                new ManagerForm().Show();
+                this.Hide();
+            }
+            // print error
+            SetError("Invaid Username and Password");
+        }
+
+        private bool ValidateCustomer()
+        {
+            return false;
+        }
+
+        private bool ValidateEmployee()
+        {
+            return false;
+        }
+
+        private bool ValidateManager()
+        {
+            string name = NameTextBox.Text;
+            string pass = PasswordTextBox.Text;
+
+            if (name == "admin" && pass == "pass")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void SetError(string msg)
+        {
+            ErrorLabel.Text = msg;
+            ErrorLabel.Show();
         }
     }
 }

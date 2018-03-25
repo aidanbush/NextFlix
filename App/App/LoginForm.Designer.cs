@@ -1,4 +1,6 @@
-﻿namespace App
+﻿using System.Windows.Forms;
+
+namespace App
 {
     partial class LoginForm
     {
@@ -33,34 +35,37 @@
             this.EmployeeButton = new System.Windows.Forms.Button();
             this.NameLabel = new System.Windows.Forms.Label();
             this.NameTextBox = new System.Windows.Forms.TextBox();
+            this.PasswordLabel = new System.Windows.Forms.Label();
+            this.PasswordTextBox = new System.Windows.Forms.TextBox();
+            this.ErrorLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CustomerButton
             // 
-            this.CustomerButton.Location = new System.Drawing.Point(104, 83);
+            this.CustomerButton.Location = new System.Drawing.Point(104, 140);
             this.CustomerButton.Name = "CustomerButton";
             this.CustomerButton.Size = new System.Drawing.Size(75, 23);
-            this.CustomerButton.TabIndex = 0;
+            this.CustomerButton.TabIndex = 2;
             this.CustomerButton.Text = "Customer";
             this.CustomerButton.UseVisualStyleBackColor = true;
             this.CustomerButton.Click += new System.EventHandler(this.CustomerButtonClick);
             // 
             // ManagerButton
             // 
-            this.ManagerButton.Location = new System.Drawing.Point(104, 112);
+            this.ManagerButton.Location = new System.Drawing.Point(104, 169);
             this.ManagerButton.Name = "ManagerButton";
             this.ManagerButton.Size = new System.Drawing.Size(75, 23);
-            this.ManagerButton.TabIndex = 1;
+            this.ManagerButton.TabIndex = 3;
             this.ManagerButton.Text = "Manager";
             this.ManagerButton.UseVisualStyleBackColor = true;
             this.ManagerButton.Click += new System.EventHandler(this.ManagerButtonClick);
             // 
             // EmployeeButton
             // 
-            this.EmployeeButton.Location = new System.Drawing.Point(104, 141);
+            this.EmployeeButton.Location = new System.Drawing.Point(104, 198);
             this.EmployeeButton.Name = "EmployeeButton";
             this.EmployeeButton.Size = new System.Drawing.Size(75, 23);
-            this.EmployeeButton.TabIndex = 2;
+            this.EmployeeButton.TabIndex = 4;
             this.EmployeeButton.Text = "Employee";
             this.EmployeeButton.UseVisualStyleBackColor = true;
             this.EmployeeButton.Click += new System.EventHandler(this.EmployeeButtonClick);
@@ -79,13 +84,43 @@
             this.NameTextBox.Location = new System.Drawing.Point(104, 57);
             this.NameTextBox.Name = "NameTextBox";
             this.NameTextBox.Size = new System.Drawing.Size(100, 20);
-            this.NameTextBox.TabIndex = 4;
+            this.NameTextBox.TabIndex = 0;
+            // 
+            // PasswordLabel
+            // 
+            this.PasswordLabel.AutoSize = true;
+            this.PasswordLabel.Location = new System.Drawing.Point(101, 80);
+            this.PasswordLabel.Name = "PasswordLabel";
+            this.PasswordLabel.Size = new System.Drawing.Size(53, 13);
+            this.PasswordLabel.TabIndex = 5;
+            this.PasswordLabel.Text = "Password";
+            // 
+            // PasswordTextBox
+            // 
+            this.PasswordTextBox.Location = new System.Drawing.Point(104, 97);
+            this.PasswordTextBox.Name = "PasswordTextBox";
+            this.PasswordTextBox.Size = new System.Drawing.Size(100, 20);
+            this.PasswordTextBox.TabIndex = 1;
+            this.PasswordTextBox.UseSystemPasswordChar = true;
+            // 
+            // ErrorLabel
+            // 
+            this.ErrorLabel.AutoSize = true;
+            this.ErrorLabel.Location = new System.Drawing.Point(104, 124);
+            this.ErrorLabel.Name = "ErrorLabel";
+            this.ErrorLabel.Size = new System.Drawing.Size(29, 13);
+            this.ErrorLabel.TabIndex = 6;
+            this.ErrorLabel.Text = "Error";
+            this.ErrorLabel.Visible = false;
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.ErrorLabel);
+            this.Controls.Add(this.PasswordTextBox);
+            this.Controls.Add(this.PasswordLabel);
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.NameLabel);
             this.Controls.Add(this.EmployeeButton);
@@ -100,10 +135,13 @@
 
         #endregion
 
+        private System.Windows.Forms.Label NameLabel;
+        private System.Windows.Forms.Label PasswordLabel;
+        private System.Windows.Forms.TextBox NameTextBox;
+        private System.Windows.Forms.TextBox PasswordTextBox;
         private System.Windows.Forms.Button CustomerButton;
         private System.Windows.Forms.Button ManagerButton;
         private System.Windows.Forms.Button EmployeeButton;
-        private System.Windows.Forms.Label NameLabel;
-        private System.Windows.Forms.TextBox NameTextBox;
+        private Label ErrorLabel;
     }
 }
