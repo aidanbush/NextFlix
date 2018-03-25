@@ -154,7 +154,11 @@ namespace App
             DBEnvironment.SetEmployees();
             employees = DBEnvironment.GetEmployees();
             dataGridView1.DataSource = employees;
-            
+            // refactor to specify names
+            dataGridView1.Columns.Remove("Address");
+            dataGridView1.Columns.Remove("Name");
+            dataGridView1.Columns.Remove("ContactInformation");
+
             Refresh();
         }
 
