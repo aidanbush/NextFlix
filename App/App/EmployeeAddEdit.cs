@@ -24,11 +24,13 @@ namespace App
         {
             inputHandler = new FormInputHandler();
             parent = form;
+
             InitializeComponent();
             if (selectedEmployee == null)
             {
                 return;
             }
+            AddUserButton.Text = "Edit";
             employee = selectedEmployee;
             FillTextBoxes();
 
@@ -49,80 +51,16 @@ namespace App
             SINBox.Text = employee.SIN;
             WageBox.Text = employee.Wage.ToString();
             PossitionBox.Text = employee.EmployeePosition.ToString();
+
  
-        }
-        private void EditUser()
-        {
-            /*
-            Employee updatedEmployee = employee;
-            if (employee.Name.FirstName != FirstNameBox.Text)
-            {
-                updatedEmployee.Name.FirstName = FirstNameBox.Text;
-            }
-            if (employee.Name.LastName != LastNameBox.Text)
-            {
-                updatedEmployee.Name.LastName = LastNameBox.Text;
-            }
-            if (employee.Address.City != CityBox.Text)
-            {
-                updatedEmployee.Address.City = CityBox.Text;
-            }
-            if (employee.Address.HouseNumber != HouseBox.Text)
-            {
-                updatedEmployee.Address.HouseNumber = HouseBox.Text;
-            }
-            if (employee.Address.PostalCode != PostalBox.Text)
-            {
-                updatedEmployee.Address.PostalCode = PostalBox.Text;
-            }
-            if (employee.Address.Province != ProvinceBox.Text)
-            {
-                updatedEmployee.Address.Province = ProvinceBox.Text;
-            }
-            if (employee.Address.StreetNumber != StreetBox.Text)
-            {
-                updatedEmployee.Address.StreetNumber = StreetBox.Text;
-            }
-            if (employee.Address.SuiteNumber != SuiteBox.Text)
-            {
-                updatedEmployee.Address.SuiteNumber = SuiteBox.Text;
-            }
-            if (employee.ContactInformation.PhoneNumber != PhoneBox.Text)
-            {
-                updatedEmployee.ContactInformation.PhoneNumber = PhoneBox.Text;
-            }
-            if (SINBox.Text != employee.SIN)
-            {
-                updatedEmployee.SIN = SINBox.Text;
-            }
-            if (WageBox.Text != employee.Wage.ToString())
-            {
-                updatedEmployee.Wage = float.Parse(WageBox.Text, CultureInfo.InvariantCulture.NumberFormat);
-            }
-            if (PossitionBox.Text == Employee.Position.Employee.ToString())
-            {
-                updatedEmployee.EmployeePosition = Employee.Position.Employee;
-            }
-            else if(PossitionBox.Text == Employee.Position.Manager.ToString())
-            {
-                updatedEmployee.EmployeePosition = Employee.Position.Manager;
-            }
-            
-            DBEnvironment.Edit(updatedEmployee);
-            MessageBox.Show("Employee edit complete!");
-            */
         }
 
         private Employee CreateEmployee()
         {
             UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
-            //UserName user = new UserName("firstname","asdfasdf");
-            //Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, PostalBox.Text);
-            Address userAddress = new Address("asd", "asd", "asd", "asd", "AB", "r1r1r1");
+            Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, PostalBox.Text);
             ContactInformation userInfo = new ContactInformation(null, PhoneBox.Text);
-            //ContactInformation userInfo = new ContactInformation(null, "1231231234");
-            //Employee newEmployee = new Employee(user, userAddress, userInfo, 1, DateTime.Now, "123123123", Employee.Position.Employee);
-            Employee newEmployee = new Employee(user, userAddress, userInfo, 1, DateTime.Now, SINBox.Text, Employee.Position.Employee);
+            Employee newEmployee = new Employee(user, userAddress, userInfo, float.Parse(WageBox.Text, CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, SINBox.Text, Employee.Position.Employee);
             return newEmployee;
         }
 
@@ -141,13 +79,37 @@ namespace App
                 }
                 catch (Exception Ex)
                 {
-                    //TODO do some kind of handling here
                     return false;
                 }
             }
                 return false;
         }
-        
+        private bool EditUser()
+        {
+            if ((MessageBox.Show("Edit new Employee with current information?", "Confirm",
+               MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+               MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+                try
+                {
+
+                    Employee updatedEmployee = CreateEmployee();
+                    updatedEmployee.Id = employee.Id;
+                    DBEnvironment.Edit(updatedEmployee);
+                    MessageBox.Show("Customer successfully Edited!");
+                    return true;
+                }
+                catch (Exception Ex)
+                {
+                    return false;
+                }
+            }
+            return false;
+
+
+        }
+
+
         private void EmployeeAddEdit_Load(object sender, EventArgs e)
         {
 
@@ -190,11 +152,21 @@ namespace App
             
             if (!checkFormInputsGood())
             {
-                Debug.Print("Couldn't add employee");
+                if (employee == null)
+                    Debug.Print("Couldn't add employee");
+                else
+                    Debug.Print("Couldn't Edit employee");
                 return;
             }
-             if (InsertUser())
-                 parent.FillTable();
+
+            if (employee == null)
+            {
+                if (InsertUser())
+                    parent.FillTable();
+            }
+            else
+                if (EditUser())
+                    parent.FillTable();
 
              this.Close();
 

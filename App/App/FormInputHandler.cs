@@ -11,7 +11,7 @@ namespace App
 
         }
         
-        private bool doesNotContainSemiColon(string text)
+        private bool doesNotContainSemiColonOrSingleQuote(string text)
         {
             if (text.Contains(";"))
             {
@@ -28,7 +28,7 @@ namespace App
                 return false;
             }
             
-            return doesNotContainSemiColon(name);
+            return doesNotContainSemiColonOrSingleQuote(name);
         }
         public bool checkSIN (string text)
         {
@@ -44,7 +44,7 @@ namespace App
                 MessageBox.Show("SIN number contains a letter");
                 return false;
             }
-            return true;
+            return doesNotContainSemiColonOrSingleQuote(text);
 
         }
         public void HandleException(Exception Ex)
