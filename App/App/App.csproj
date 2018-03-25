@@ -110,6 +110,7 @@
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Movie.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="PhoneNumberException.cs" />
     <Compile Include="PostalCodeException.cs" />
     <Compile Include="Program.cs" />

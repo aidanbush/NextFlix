@@ -18,7 +18,7 @@ namespace App
         private EmploymentRole role;
 
         private int index;
-        private enum FormType { customer, employee, movie, manager};
+        private enum FormType { customer, employee, movie, manager, order};
         private FormType currentFormType;
 
         // binding lists
@@ -30,6 +30,7 @@ namespace App
         private EmployeeView employeeView;
         private MovieView movieView;
         private ManagerView managerView;
+        private OrderView orderView;
 
         public ManagerForm(EmploymentRole newRole)
         {
@@ -43,7 +44,9 @@ namespace App
             employeeView = new EmployeeView(this);
             movieView = new MovieView(this);
             managerView = new ManagerView(this);
-            
+            orderView = new OrderView(this);
+
+
             InitializeComponent();
             
             if (role != EmploymentRole.manager)
@@ -84,6 +87,9 @@ namespace App
                 case FormType.movie:
                     movieView.HideView();
                     break;
+                case FormType.order:
+                    orderView.HideView();
+                    break;
                 default:
                     break;
             }
@@ -103,6 +109,9 @@ namespace App
                     break;
                 case FormType.movie:
                     movieView.ShowView();
+                    break;
+                case FormType.order:
+                    orderView.ShowView();
                     break;
                 default:
                     Debug.WriteLine("default");
@@ -197,6 +206,11 @@ namespace App
                     break;
             }
         }
+        
+        private void FulfillOrderButton_click(object sender, EventArgs e)
+        {
+
+        }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -225,6 +239,12 @@ namespace App
         {
             Debug.WriteLine("SalesReportsLoad");
             ChangeView(FormType.manager);
+        }
+
+        private void OrderLoad(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OrderLoad");
+            ChangeView(FormType.order);
         }
 
         private void DeleteCustomer()
@@ -277,6 +297,7 @@ namespace App
                 parent.UpdateRatingsButton.Hide();
                 // other
                 parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
             }
 
             public void ShowView()
@@ -321,6 +342,7 @@ namespace App
                 parent.UpdateRatingsButton.Hide();
                 // other
                 parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
             }
 
             public void ShowView()
@@ -364,6 +386,7 @@ namespace App
                 parent.UpdateRatingsButton.Hide();
                 // other
                 parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
             }
 
             public void ShowView()
@@ -400,6 +423,34 @@ namespace App
 
             public void ShowView()
             {
+            }
+        }
+
+        private class OrderView : IView
+        {
+            private ManagerForm parent;
+
+            public OrderView(ManagerForm newParent)
+            {
+                parent = newParent;
+            }
+
+            public void HideView()
+            {
+                // buttons
+                parent.FulfillOrderButton.Hide();
+                // other
+                parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
+            }
+
+            public void ShowView()
+            {
+                // buttons
+                parent.FulfillOrderButton.Show();
+                // other
+                parent.dataGridView1.Show();
+                parent.dataGridView1.DataSource = DBEnvironment.RetrieveUnfulfilledOrders();
             }
         }
     }

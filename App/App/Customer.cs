@@ -25,11 +25,13 @@ namespace App
         public int Rating { get => rating; set => rating = value; }
         public string CreditCard { get => creditCard; set => creditCard = value; }
         public AccountType Type { get => type; set => type = value; }
+        
         /* function Overrides */
         public override string ToString()
         {
             return Id.ToString() + " " + Name.ToString() + " " + Type.ToString();
         }
+
         public bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();

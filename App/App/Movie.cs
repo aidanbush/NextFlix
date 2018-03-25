@@ -1,4 +1,3 @@
-
 ﻿using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Data.SqlClient;
@@ -23,6 +22,7 @@ namespace App
         public int Copies_available { get => copies_available; set => copies_available = value; }
         public int Rating { get => rating; set => rating = value; }
         public int Id { get => id; set => id = value; }
+
         public Movie(string name, string genre, float fees, int numOfCopies, int copiesAvailable, int rating)
         {
             Name = name;
@@ -32,6 +32,7 @@ namespace App
             Copies_available = numOfCopies;
             Rating = rating;
         }
+
         public bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
@@ -60,6 +61,7 @@ namespace App
             return true;
 
         }
+
         public bool Add(SqlConnection con)
         {
 
