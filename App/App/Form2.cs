@@ -14,8 +14,12 @@ namespace App
 {
     public partial class ManagerForm : Form
     {
+        public enum EmploymentRole { manager, employee };
+        private EmploymentRole role;
+        private Form parent;
+
         private int index;
-        private enum FormType { customer, employee, movie, manager};
+        private enum FormType { customer, employee, movie, manager, order};
         private FormType currentFormType;
 
         // binding lists
@@ -23,168 +27,98 @@ namespace App
         private BindingList<Movie> movies;
         private BindingList<Employee> employees;
 
-        public ManagerForm()
+        private CustomerView customerView;
+        private EmployeeView employeeView;
+        private MovieView movieView;
+        private ManagerView managerView;
+        private OrderView orderView;
+
+        public ManagerForm(Form newParent, EmploymentRole newRole)
         {
+            parent = newParent;
+            role = newRole;
+
             customers = DBEnvironment.GetCustomers();
             movies = DBEnvironment.GetMovies();
             employees = DBEnvironment.GetEmployees();
+            
+            customerView = new CustomerView(this);
+            employeeView = new EmployeeView(this);
+            movieView = new MovieView(this);
+            managerView = new ManagerView(this);
+            orderView = new OrderView(this);
+
 
             InitializeComponent();
+            
+            if (role != EmploymentRole.manager)
+            {
+                this.Text = "Employee";
+                customerRepresentativesToolStripMenuItem.Visible = false;
+                salesReportsToolStripMenuItem.Visible = false;
+            }
 
             dataGridView1.AutoGenerateColumns = true;
-            currentFormType = FormType.customer;
-            ChangeView();
+            ChangeView(FormType.customer);
         }
 
         public void FillTable()
         {
-            switch (currentFormType)
-            {
-                case (FormType.customer):
-                    ShowCustomerView();
-                    break;
-
-                case (FormType.movie):
-                    Console.WriteLine("FORM SET TO MOVIES");
-                    ShowMovieView();
-                    break;
-
-                case (FormType.employee):
-                    ShowEmployeeView();
-                    break;
-
-                default:
-                    this.Close();
-                    break;
-            }
-
-            dataGridView1.AutoGenerateColumns = true;
+            ChangeView(currentFormType);
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            switch (currentFormType)
-            {
-                case FormType.customer:
-                    ShowCustomerView();
-                    break;
-
-                case FormType.employee:
-                    ShowEmployeeView();
-                    break;
-
-                case FormType.movie:
-                    ShowMovieView();
-                    break;
-            }
+            ChangeView(currentFormType);
         }
 
-        private void ChangeView()
+        private void ChangeView(FormType newForm)
         {
             Debug.WriteLine("ChangeView");
-            // hide elements
-            // buttons
-            AddButton.Hide();
-            EditButton.Hide();
-            DeleteButton.Hide();
-            UpdateRatingsButton.Hide();
-            // other
-            dataGridView1.Hide();
+            switch (currentFormType)
+            {
+                case FormType.customer:
+                    customerView.HideView();
+                    break;
+                case FormType.employee:
+                    employeeView.HideView();
+                    break;
+                case FormType.manager:
+                    managerView.HideView();
+                    break;
+                case FormType.movie:
+                    movieView.HideView();
+                    break;
+                case FormType.order:
+                    orderView.HideView();
+                    break;
+                default:
+                    break;
+            }
+
+            currentFormType = newForm;
 
             switch (currentFormType)
             {
                 case FormType.customer:
-                    Debug.WriteLine("formtype.customer");
-                    ShowCustomerView();
+                    customerView.ShowView();
                     break;
                 case FormType.employee:
-                    Debug.WriteLine("formtype.employee");
-                    ShowEmployeeView();
+                    employeeView.ShowView();
                     break;
                 case FormType.manager:
-                    Debug.WriteLine("formtype.manager");
-                    ShowManagerView();
+                    managerView.ShowView();
                     break;
                 case FormType.movie:
-                    Debug.WriteLine("formtype.movie");
-                    ShowMovieView();
+                    movieView.ShowView();
+                    break;
+                case FormType.order:
+                    orderView.ShowView();
                     break;
                 default:
                     Debug.WriteLine("default");
                     break;
             }
-        }
-
-        private void ShowCustomerView()
-        {
-            Debug.WriteLine("ShowCustomerView");
-            // show elements
-            // buttons
-            AddButton.Show();
-            EditButton.Show();
-            DeleteButton.Show();
-            UpdateRatingsButton.Show();
-            // other
-            dataGridView1.Show();
-
-            // setup dataGridView
-            DBEnvironment.SetCustomers();
-            customers = DBEnvironment.GetCustomers();
-            dataGridView1.DataSource = customers;
-            // refactor to specify all columns
-            dataGridView1.Columns.Remove("Address");
-            dataGridView1.Columns.Remove("Name");
-            dataGridView1.Columns.Remove("ContactInformation");
-            
-            Refresh();
-        }
-
-        private void ShowEmployeeView()
-        {
-            Debug.WriteLine("ShowEmployeeView");
-            // show elements
-            // buttons
-            AddButton.Show();
-            EditButton.Show();
-            DeleteButton.Show();
-            // other
-            dataGridView1.Show();
-
-            // setup dataGridView
-            DBEnvironment.SetEmployees();
-            employees = DBEnvironment.GetEmployees();
-            dataGridView1.DataSource = employees;
-            
-            Refresh();
-        }
-
-        private void ShowManagerView()
-        {
-            // show elements
-
-            // fill with nothing
-            dataGridView1.DataSource = null;
-
-            Refresh();
-        }
-
-        private void ShowMovieView()
-        {
-            Debug.WriteLine("ShowMovieView");
-            // show elements
-            // buttons
-            AddButton.Show();
-            EditButton.Show();
-            DeleteButton.Show();
-            // other
-            dataGridView1.Show();
-
-            // setup dataGridView
-            DBEnvironment.SetMovies();
-            movies = DBEnvironment.GetMovies();
-            dataGridView1.DataSource = movies;
-
-            Refresh();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -201,6 +135,8 @@ namespace App
                     addUserForm.Show();
                     break;
                 case FormType.employee:
+                    EmployeeAddEdit addForm = new EmployeeAddEdit(null, this);
+                    addForm.Show();
                     break;
                 case FormType.movie:
                     AddMovieForm addMovieForm = new AddMovieForm(this);
@@ -225,6 +161,8 @@ namespace App
         {
             DBEnvironment.UpdateRatings();
             // reload view
+            ChangeView(currentFormType);
+
             Debug.WriteLine("Updated Ratings");
         }
         
@@ -238,6 +176,9 @@ namespace App
                     editCustomerForm.Show();
                     break;
                 case FormType.employee:
+                    Employee selectedEmployee = employees.ElementAt(index);
+                    EmployeeAddEdit editForm = new EmployeeAddEdit(selectedEmployee, this);
+                    editForm.Show();
                     break;
                 case FormType.movie:
                     Movie selectedMovie = movies.ElementAt(index);
@@ -255,21 +196,32 @@ namespace App
             switch (currentFormType)
             {
                 case FormType.customer:
-                    Customer selectedCustomer = customers.ElementAt(index);
-                    ConfirmationForm confirmation = new ConfirmationForm(selectedCustomer, "are you sure you want to delete " + selectedCustomer.FirstName + " " + selectedCustomer.LastName + "?");
-                    confirmation.Show();
+                    DeleteCustomer();
                     break;
                 case FormType.employee:
+                    DeleteEmployee();
                     break;
                 case FormType.movie:
+                    DeleteMovie();
                     break;
                 case FormType.manager:
                     break;
             }
+        }
 
-            this.Form2_Load(sender, e);
+        private void FulfillOrderButton_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ManagerFormClosed(object sender, FormClosedEventArgs e)
+        {
+            parent.Show();
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -280,30 +232,238 @@ namespace App
         private void CustomerLoad(object sender, EventArgs e)
         {
             Debug.WriteLine("CustomerLoad");
-            currentFormType = FormType.customer;
-            ChangeView();
+            ChangeView(FormType.customer);
         }
 
         private void CustomerRepLoad(object sender, EventArgs e)
         {
             Debug.WriteLine("CustomerRepLoad");
-            currentFormType = FormType.employee;
-            ChangeView();
+            ChangeView(FormType.employee);
         }
 
         private void MoviesLoad(object sender, EventArgs e)
         {
             Debug.WriteLine("MoviesLoad");
-            currentFormType = FormType.movie;
-            ChangeView();
+            ChangeView(FormType.movie);
         }
 
         private void SalesRepotsLoad(object sender, EventArgs e)
         {
             Debug.WriteLine("SalesReportsLoad");
-            currentFormType = FormType.manager;
-            ChangeView();
+            ChangeView(FormType.manager);
         }
 
+        private void OrderLoad(object sender, EventArgs e)
+        {
+            Debug.WriteLine("OrderLoad");
+            ChangeView(FormType.order);
+        }
+
+        private void DeleteCustomer()
+        {
+            Customer selectedCustomer = customers.ElementAt(index);
+            ConfirmationForm confirmation = new ConfirmationForm(this, selectedCustomer, "are you sure you want to delete " + selectedCustomer.FirstName + " " + selectedCustomer.LastName + "?");
+            confirmation.Show();
+        }
+
+        private void DeleteMovie()
+        {
+            Movie selectedMovie = movies.ElementAt(index);
+            ConfirmationForm confirmation = new ConfirmationForm(this, selectedMovie, "are you sure you want to delete " + selectedMovie.Name + "?");
+            confirmation.Show();
+        }
+
+        private void DeleteEmployee()
+        {
+            Employee selectedEmployee = employees.ElementAt(index);
+            ConfirmationForm confirmation = new ConfirmationForm(this, selectedEmployee, "are you sure you want to delete " + selectedEmployee.FirstName + " " + selectedEmployee.LastName + "?");
+            confirmation.Show();
+        }
+
+        public void Reload(object sender, EventArgs e)
+        {
+            this.Form2_Load(sender, e);
+        }
+
+        private interface IView
+        {
+            void ShowView();
+            void HideView();
+        }
+
+        private class CustomerView : IView
+        {
+            private ManagerForm parent;
+
+            public CustomerView(ManagerForm newParent)
+            {
+                parent = newParent;
+            }
+
+            public void HideView()
+            {
+                // buttons
+                parent.AddButton.Hide();
+                parent.EditButton.Hide();
+                parent.DeleteButton.Hide();
+                parent.UpdateRatingsButton.Hide();
+                // other
+                parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
+            }
+
+            public void ShowView()
+            {
+                Debug.WriteLine("ShowCustomerView");
+                // buttons
+                parent.AddButton.Show();
+                parent.EditButton.Show();
+                parent.DeleteButton.Show();
+                parent.UpdateRatingsButton.Show();
+                // other
+                parent.dataGridView1.Show();
+
+                // setup dataGridView
+                DBEnvironment.SetCustomers();
+                parent.customers = DBEnvironment.GetCustomers();
+                parent.dataGridView1.DataSource = parent.customers;
+                // refactor to specify all columns
+                parent.dataGridView1.Columns.Remove("Address");
+                parent.dataGridView1.Columns.Remove("Name");
+                parent.dataGridView1.Columns.Remove("ContactInformation");
+
+                parent.Refresh();
+            }
+        }
+
+        private class EmployeeView : IView
+        {
+            private ManagerForm parent;
+
+            public EmployeeView(ManagerForm newParent)
+            {
+                parent = newParent;
+            }
+
+            public void HideView()
+            {
+                // buttons
+                parent.AddButton.Hide();
+                parent.EditButton.Hide();
+                parent.DeleteButton.Hide();
+                parent.UpdateRatingsButton.Hide();
+                // other
+                parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
+            }
+
+            public void ShowView()
+            {
+                Debug.WriteLine("ShowEmployeeView");
+                // buttons
+                parent.AddButton.Show();
+                parent.EditButton.Show();
+                parent.DeleteButton.Show();
+                // other
+                parent.dataGridView1.Show();
+
+                // setup dataGridView
+                DBEnvironment.SetEmployees();
+                parent.employees = DBEnvironment.GetEmployees();
+                parent.dataGridView1.DataSource = parent.employees;
+                // refactor to specify names
+                parent.dataGridView1.Columns.Remove("Address");
+                parent.dataGridView1.Columns.Remove("Name");
+                parent.dataGridView1.Columns.Remove("ContactInformation");
+
+                parent.Refresh();
+            }
+        }
+
+        private class MovieView : IView
+        {
+            private ManagerForm parent;
+
+            public MovieView(ManagerForm newParent)
+            {
+                parent = newParent;
+            }
+
+            public void HideView()
+            {
+                // buttons
+                parent.AddButton.Hide();
+                parent.EditButton.Hide();
+                parent.DeleteButton.Hide();
+                parent.UpdateRatingsButton.Hide();
+                // other
+                parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
+            }
+
+            public void ShowView()
+            {
+                Debug.WriteLine("ShowMovieView");
+                // buttons
+                parent.AddButton.Show();
+                parent.EditButton.Show();
+                parent.DeleteButton.Show();
+                // other
+                parent.dataGridView1.Show();
+
+                // setup dataGridView
+                DBEnvironment.SetMovies();
+                parent.movies = DBEnvironment.GetMovies();
+                parent.dataGridView1.DataSource = parent.movies;
+
+                parent.Refresh();
+            }
+        }
+
+        private class ManagerView : IView
+        {
+            private ManagerForm parent;
+
+            public ManagerView(ManagerForm newParent)
+            {
+                parent = newParent;
+            }
+
+            public void HideView()
+            {
+            }
+
+            public void ShowView()
+            {
+            }
+        }
+
+        private class OrderView : IView
+        {
+            private ManagerForm parent;
+
+            public OrderView(ManagerForm newParent)
+            {
+                parent = newParent;
+            }
+
+            public void HideView()
+            {
+                // buttons
+                parent.FulfillOrderButton.Hide();
+                // other
+                parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
+            }
+
+            public void ShowView()
+            {
+                // buttons
+                parent.FulfillOrderButton.Show();
+                // other
+                parent.dataGridView1.Show();
+                parent.dataGridView1.DataSource = DBEnvironment.RetrieveUnfulfilledOrders();
+            }
+        }
     }
 }

@@ -1,4 +1,3 @@
-
 ﻿using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Data.SqlClient;
@@ -23,6 +22,7 @@ namespace App
         public int Copies_available { get => copies_available; set => copies_available = value; }
         public int Rating { get => rating; set => rating = value; }
         public int Id { get => id; set => id = value; }
+
         public Movie(string name, string genre, float fees, int numOfCopies, int copiesAvailable, int rating)
         {
             Name = name;
@@ -32,6 +32,7 @@ namespace App
             Copies_available = numOfCopies;
             Rating = rating;
         }
+
         public bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
@@ -60,8 +61,10 @@ namespace App
             return true;
 
         }
+
         public bool Add(SqlConnection con)
         {
+
             String q = "insert into movie(name, genre, fees, num_copies, copies_available)" +
                "values (@name, @genre, @fees, @num_copies, @copies_available)";
             if (AddEdit(q, con))
@@ -77,7 +80,28 @@ namespace App
 
         public bool Delete(SqlConnection con)
         {
-            throw new System.NotImplementedException();
+
+            String q = "DELETE FROM movie WHERE mid=@mid";
+
+            con.Open();
+            using (SqlCommand command = new SqlCommand(q, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@mid", this.Id);
+                    int err = command.ExecuteNonQuery();
+                }
+
+                catch (Exception e)
+                {
+                    con.Close();
+                    Console.WriteLine("Database failed to delete record");
+                    return false;
+                }
+            }
+            con.Close();
+            return true;
+
         }
 
         public bool Edit(SqlConnection con)

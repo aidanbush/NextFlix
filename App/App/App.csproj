@@ -77,6 +77,12 @@
     <Compile Include="EditMovieForm.Designer.cs">
       <DependentUpon>EditMovieForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeAddEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmployeeAddEdit.Designer.cs">
+      <DependentUpon>EmployeeAddEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,8 +107,16 @@
     <Compile Include="ConfirmationForm.Designer.cs">
       <DependentUpon>ConfirmationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormInputHandler.cs" />
     <Compile Include="FormNavigator.cs" />
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Movie.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="PhoneNumberException.cs" />
     <Compile Include="PostalCodeException.cs" />
     <Compile Include="Program.cs" />
@@ -124,6 +138,9 @@
     <EmbeddedResource Include="EditMovieForm.resx">
       <DependentUpon>EditMovieForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeAddEdit.resx">
+      <DependentUpon>EmployeeAddEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,6 +152,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConfirmationForm.resx">
       <DependentUpon>ConfirmationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

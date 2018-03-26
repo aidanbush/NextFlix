@@ -72,7 +72,7 @@ namespace App
                 this.Close();
             }
         }
-
+        
         private void CancelButton_Click(object sender, EventArgs e)
         {
             if ((MessageBox.Show("Cancel movie update? (Information will not be saved)", "Cancel",
@@ -82,5 +82,6 @@ namespace App
                 this.Close();
             }
         }
+
     }
 }

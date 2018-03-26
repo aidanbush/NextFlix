@@ -39,6 +39,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.FeesBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+
             this.SuspendLayout();
             // 
             // CancelButton
@@ -66,10 +67,11 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 23);
             this.label1.Name = "label1";
+
             this.label1.Size = new System.Drawing.Size(73, 25);
             this.label1.TabIndex = 21;
             this.label1.Text = "Title: *";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            //this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // TitleBox
             // 
@@ -126,6 +128,7 @@
             this.FeesBox.Size = new System.Drawing.Size(193, 31);
             this.FeesBox.TabIndex = 29;
             // 
+
             // label4
             // 
             this.label4.AutoSize = true;
@@ -171,5 +174,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox FeesBox;
         private System.Windows.Forms.Label label4;
+
     }
 }

@@ -197,10 +197,36 @@ namespace App
                 //movieRow["rating"].ToString();
                 Movie movie = new Movie(name, genre, fees, num_copies, copies, 1);
                 movie.Id = id;
-                movies.Add(movie);
-                
+                movies.Add(movie);         
             }
             return movies;
+        }
+
+        public static BindingList<Order> RetrieveUnfulfilledOrders()
+        {
+            string qString = "SELECT * FROM [order] where eid = null";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            DataTable orderTable = new DataTable();
+            adapter.Fill(orderTable);
+            BindingList<Order> orders = new BindingList<Order>();
+
+            foreach (DataRow orderRow in orderTable.Rows)
+            {
+                int oid = (int)orderRow["oid"];
+                int mid = (int)orderRow["mid"];
+                int cid = (int)orderRow["cid"];
+                DateTime placedDate = (DateTime)orderRow["order_placed"];
+
+                Order order = new Order(mid, cid)
+                {
+                    Id = oid,
+                    PlacedDate = placedDate
+                };
+
+                orders.Add(order);
+            }
+
+            return orders;
         }
 
         public static void UpdateRatings()

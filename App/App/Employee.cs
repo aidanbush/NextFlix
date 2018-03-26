@@ -31,11 +31,39 @@ namespace App
         
         public bool Add(SqlConnection con)
         {
-
-            con.Open();
+           
             String q = "insert into employee(first_name, last_name, phone_number, suite_number, street_number, house_number, postalcode, city, province, start, wage, social_insurance_num, position)" +
                "values (@first_name, @last_name, @phone_number, @suite_number, @street_number, @house_number, @postalcode, @city, @province, @start, @wage, @social_insurance_num, @position)";
+            return AddEdit(q, con);
+            
+        }
 
+
+        public bool Edit(SqlConnection con)
+        {
+            
+            String q = "UPDATE employee SET first_name=@first_name, " +
+                    "last_name=@last_name, " +
+                    "phone_number=@phone_number, " +
+                    "suite_number=@suite_number, " +
+                    "street_number=@street_number, " + 
+                    "house_number=@house_number, " +
+                    "postalcode=@postalcode, " +
+                    "city=@city, " +
+                    "province=@province, " +
+                    "start=@start, " +
+                    "wage=@wage, "+
+                    "social_insurance_num=@social_insurance_num, "+
+                    "position=@position " +
+                    "WHERE eid=@eid";
+
+            
+            return AddEdit(q, con);
+        }
+
+        public bool AddEdit(string q, SqlConnection con)
+        {
+            con.Open();
             using (SqlCommand command = new SqlCommand(q, con))
             {
                 try
@@ -53,8 +81,10 @@ namespace App
                     command.Parameters.AddWithValue("@province", this.Address.Province);
                     command.Parameters.AddWithValue("@social_insurance_num", this.SIN);
                     command.Parameters.AddWithValue("@position", this.position.ToString());
+                    command.Parameters.AddWithValue("@eid", this.Id.ToString());
 
                     int err = command.ExecuteNonQuery();
+                    
                 }
                 catch (Exception e)
                 {
@@ -66,17 +96,30 @@ namespace App
             }
             con.Close();
             return true;
-            
-        }
-
-        public bool Edit(SqlConnection con)
-        {
-            throw new NotImplementedException();
         }
 
         public bool Delete(SqlConnection con)
         {
-            throw new NotImplementedException();
+            String q = "DELETE FROM employee WHERE eid=@eid";
+
+            con.Open();
+            using (SqlCommand command = new SqlCommand(q, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@eid", this.Id);
+                    int err = command.ExecuteNonQuery();
+                }
+
+                catch (Exception e)
+                {
+                    con.Close();
+                    Console.WriteLine("Database failed to delete record");
+                    return false;
+                }
+            }
+            con.Close();
+            return true;
         }
     }
 }
