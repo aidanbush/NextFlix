@@ -23,8 +23,7 @@ namespace App
             if ((MessageBox.Show("Add new Customer with current information?", "Confirm",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
-            {
-                
+            {   
                 try
                 {
                     String title = TitleBox.Text;
@@ -34,11 +33,10 @@ namespace App
                     Movie newMovie = new Movie(title, genre, fees, copies, copies, 0);
                     
                     DBEnvironment.Add(newMovie);
-                                        return true;
+                    return true;
                 }
                 catch (Exception Ex)
                 {
-                    //HandleException(Ex);
                     return false;
                 }
             }
@@ -51,7 +49,6 @@ namespace App
 
         private bool CheckTextBoxes()
         {
-            Console.WriteLine("Should b hur");
             if(TitleBox.Text == "" && CopyAmountBox.Text == "")
             {
                 MessageBox.Show("Plese check the movie title and Copy amount");
