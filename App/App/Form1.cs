@@ -16,7 +16,7 @@ namespace App
         {
             InitializeComponent();
             DBEnvironment.ConnectToDB();
-            FormNavigator.AddForm(new ManagerForm(ManagerForm.EmploymentRole.manager), "customersManagerForm");
+            FormNavigator.AddForm(new ManagerForm(this, ManagerForm.EmploymentRole.manager), "customersManagerForm");
             FormNavigator.ChangeForm(this, "customersManagerForm");
         }
     }

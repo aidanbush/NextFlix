@@ -22,6 +22,8 @@ namespace App
             if (ValidateCustomer())
             {
                 // switch view
+                ClearCredentials();
+                return;
             }
             // print error
             SetError("Invaid Username and Password");
@@ -31,8 +33,10 @@ namespace App
         {
             if (ValidateEmployee())
             {
-                new ManagerForm(ManagerForm.EmploymentRole.employee).Show();
+                new ManagerForm(this, ManagerForm.EmploymentRole.employee).Show();
                 this.Hide();
+                ClearCredentials();
+                return;
             }
             // print error
             SetError("Invaid Username and Password");
@@ -42,8 +46,10 @@ namespace App
         {
             if (ValidateManager())
             {
-                new ManagerForm(ManagerForm.EmploymentRole.manager).Show();
+                new ManagerForm(this, ManagerForm.EmploymentRole.manager).Show();
                 this.Hide();
+                ClearCredentials();
+                return;
             }
             // print error
             SetError("Invaid Username and Password");
@@ -86,6 +92,12 @@ namespace App
             }
 
             return false;
+        }
+
+        private void ClearCredentials()
+        {
+            NameTextBox.Text = "";
+            PasswordTextBox.Text = "";
         }
 
         private void SetError(string msg)
