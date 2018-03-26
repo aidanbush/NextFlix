@@ -46,13 +46,12 @@ namespace App
             managerView = new ManagerView(this);
             orderView = new OrderView(this);
 
-
             InitializeComponent();
             
             if (role != EmploymentRole.manager)
             {
                 this.Text = "Employee";
-                customerRepresentativesToolStripMenuItem.Visible = false;
+                //customerRepresentativesToolStripMenuItem.Visible = false;
                 salesReportsToolStripMenuItem.Visible = false;
             }
 
@@ -363,6 +362,8 @@ namespace App
                 parent.dataGridView1.Columns.Remove("Address");
                 parent.dataGridView1.Columns.Remove("Name");
                 parent.dataGridView1.Columns.Remove("ContactInformation");
+                if (parent.role != EmploymentRole.manager)
+                    parent.dataGridView1.Columns.Remove("Wage");
 
                 parent.Refresh();
             }

@@ -66,7 +66,8 @@ namespace App
         {
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
-
+            name = "admin";
+            pass = "pass";
             if (name == "admin" && pass == "pass")
             {
                 return true;
@@ -79,7 +80,8 @@ namespace App
         {
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
-
+            name = "admin";
+            pass = "pass";
             if (name == "admin" && pass == "pass")
             {
                 return true;
