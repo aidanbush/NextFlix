@@ -26,6 +26,7 @@ namespace App
         private BindingList<Customer> customers;
         private BindingList<Movie> movies;
         private BindingList<Employee> employees;
+        private BindingList<Order> orders;
 
         private CustomerView customerView;
         private EmployeeView employeeView;
@@ -211,7 +212,11 @@ namespace App
 
         private void FulfillOrderButton_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement
+            //Order selectedOrder = orders.ElementAt(index);
+            Order selectedOrder = new Order(-1, -1);
+            FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
+            fufillForm.Show();
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
