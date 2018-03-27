@@ -237,7 +237,18 @@ end;
 go
 
 insert into employee (position, first_name, last_name, [start], wage)
-values ('manager', 'admin', 'admin', (getdate()), 1);
+values ('manager', 'admin', 'admin', getdate(), 1);
 
 insert into employee_accounts (eid, username, passhash)
 values (1, 'admin', 'pass');
+
+insert into customer (first_name, last_name, account_type, creation_date)
+values ('admin', 'admin', 'Gold', getdate());
+
+insert into customer_accounts (cid, username, passhash)
+values (1, 'admin', 'pass');
+
+select * from employee;
+select * from employee_accounts;
+select * from customer;
+select * from customer_accounts;
