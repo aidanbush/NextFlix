@@ -27,9 +27,9 @@ create table customer (
 	house_number text,
 	city text,
 	province text,
-	phone_number char(10) check(phone_number not like '%[^0-9]%'),
-	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
-	email varchar(320) check(email like '_%@_%._%'),
+	phone_number char(10) check(phone_number is null or (phone_number not like '%[^0-9]%')),
+	postalcode char(6) check(postalcode is null or (len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]')),
+	email varchar(320) check(email is null or (email like '_%@_%._%')),
 	account_type varchar(10) not null check (account_type IN ('Disabled', 'Limited', 'Bronze', 'Silver', 'Gold')),
 	creation_date date not null check(creation_date <= getdate()),
 	credit_card text, --doesn't always have 16 digits
@@ -46,13 +46,12 @@ create table employee (
 	house_number text,
 	city text,
 	province text,
-	phone_number char(10) check(phone_number not like '%[^0-9]%'),
-	postalcode char(6) check(len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]'),
+	phone_number char(10) check(phone_number is null or (phone_number not like '%[^0-9]%')),
+	postalcode char(6) check(postalcode is null or (len(postalcode) = 6 and postalcode like '[a-zA-Z][0-9][a-zA-Z][0-9][a-zA-Z][0-9]')),
 	start date not null,
 	wage float not null check(wage > 0),
-	social_insurance_num char(9) check(len(social_insurance_num) = 9 and isnumeric(social_insurance_num) = 1),
+	social_insurance_num char(9) check(social_insurance_num is null or (len(social_insurance_num) = 9 and isnumeric(social_insurance_num) = 1)),
 );
-
 
 create table movie (
 	mid int not null primary key identity,
@@ -75,7 +74,6 @@ create table [order] (
 	foreign key (eid) references employee(eid),
 );
 
-
 create table [queue] (
 	cid int not null,
 	mid int not null,
@@ -84,7 +82,6 @@ create table [queue] (
 	foreign key (mid) references movie(mid),
 	foreign key (cid) references customer(cid),
 );
-
 
 create table actor (
 	aid int not null primary key identity,
@@ -237,3 +234,10 @@ begin
 	set rating = (select avg(rating) from actor_rating where aid = actor.aid) -- test
 	where actor.aid in (select aid from inserted) or actor.aid in (select aid from deleted)
 end;
+go
+
+insert into employee (position, first_name, last_name, [start], wage)
+values ('manager', 'admin', 'admin', (getdate()), 1);
+
+insert into employee_accounts (eid, username, passhash)
+values (1, 'admin', 'pass');
