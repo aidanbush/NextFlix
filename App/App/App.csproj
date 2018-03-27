@@ -49,6 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountTypeException.cs" />
+    <Compile Include="Actor.cs" />
+    <Compile Include="ActorAddEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ActorAddEdit.Designer.cs">
+      <DependentUpon>ActorAddEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddMovieForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +108,12 @@
     <Compile Include="ConfirmationForm.Designer.cs">
       <DependentUpon>ConfirmationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3.Designer.cs">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormInputHandler.cs" />
     <Compile Include="FormNavigator.cs" />
     <Compile Include="LoginForm.cs">
@@ -120,6 +133,9 @@
     <Compile Include="Person.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="Customer.cs" />
+    <EmbeddedResource Include="ActorAddEdit.resx">
+      <DependentUpon>ActorAddEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddMovieForm.resx">
       <DependentUpon>AddMovieForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,10 +14,16 @@ namespace App
     public partial class AddMovieForm : Form
     {
         ManagerForm parent;
+        private BindingList<Actor> actors;
+        Actor selectedActor;
         public AddMovieForm(ManagerForm manager)
         {
             parent = manager;
             InitializeComponent();
+            actors = new BindingList<Actor>();
+            //var source = new BindingSource(actors, null);
+            ActorList.DataSource = actors;
+            ActorList.AutoGenerateColumns = true;
         }
         private bool InsertMovie()
         {
@@ -48,7 +55,6 @@ namespace App
             }
 
         }
-
         private bool CheckTextBoxes()
         {
             Console.WriteLine("Should b hur");
@@ -77,7 +83,7 @@ namespace App
         {
             if (CheckTextBoxes())
             {
-                if (InsertMovie())
+                if (InsertMovie() && InserActors())
                 {
                     parent.FillTable();
                     MessageBox.Show("Movie added!");
@@ -104,6 +110,60 @@ namespace App
             {
                 this.Close();
             }
+        }
+
+        private void AddActor_Click(object sender, EventArgs e)
+        {
+            ActorAddEdit actorForm = new ActorAddEdit(this, null);
+            actorForm.Show();
+        }
+
+        public void addActor(Actor actor)
+        {
+            this.actors.Add(actor);
+        }
+
+        private void DeleteActor_Click(object sender, EventArgs e)
+        {
+            if (selectedActor == null)
+                return;
+        
+            this.actors.Remove(selectedActor);
+        }
+        
+        private void ActorList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {    
+        }
+        private void ActorList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            selectedActor = this.actors.ElementAt(e.RowIndex);
+        }
+
+        private bool InserActors()
+        {
+            foreach (Actor actor in actors)
+            {
+                try
+                {
+                    DBEnvironment.Add(actor);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void EditActor_Click(object sender, EventArgs e)
+        {
+            if (selectedActor == null)
+                return;
+            ActorAddEdit actorForm = new ActorAddEdit(this, selectedActor);
+            actorForm.Show();
         }
     }
 }

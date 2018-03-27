@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace App
@@ -16,6 +18,11 @@ namespace App
             if (text.Contains(";"))
             {
                 MessageBox.Show("No ; you hacker");
+                return false;
+            }
+            if (text.Contains("'"))
+            {
+                MessageBox.Show("No ' please");
                 return false;
             }
             return true;
@@ -47,6 +54,17 @@ namespace App
             return doesNotContainSemiColonOrSingleQuote(text);
 
         }
+
+        public bool checkDateOfBirth(string text)
+        {
+            var compare = new Regex("[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]");
+            if (!compare.IsMatch(text))
+            {
+                MessageBox.Show("Date of birth is in wrong format.");
+                return false;
+            }
+            return true;
+        }
         public void HandleException(Exception Ex)
         {
             if (Ex is AccountTypeException)
@@ -65,7 +83,5 @@ namespace App
                 return;
             }
         }
-
     }
-    
 }
