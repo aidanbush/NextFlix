@@ -78,6 +78,12 @@ namespace App
                 return true;
             }
 
+            Employee employee = DBEnvironment.ValidateEmployee(name, DBEnvironment.HashPassword(pass));
+            if (employee != null)
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -87,6 +93,12 @@ namespace App
             string pass = PasswordTextBox.Text;
 
             if (name == "admin" && pass == "pass")
+            {
+                return true;
+            }
+
+            Employee manager = DBEnvironment.ValidateManager(name, DBEnvironment.HashPassword(pass));
+            if (manager != null)
             {
                 return true;
             }

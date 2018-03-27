@@ -2,6 +2,8 @@
 --create database project;
 
 --drop tables
+drop table customer_accounts;
+drop table employee_accounts;
 drop table actor_rating;
 drop table movie_rating;
 drop table starred;
@@ -36,7 +38,7 @@ create table customer (
 
 create table employee (
 	eid int not null primary key identity,
-	position text not null,
+	position varchar(10) not null check(position IN ('employee', 'manager')),
 	first_name text not null,
 	last_name text not null,
 	suite_number text,
@@ -120,6 +122,23 @@ create table actor_rating (
 	foreign key (aid) references actor(aid),
 	foreign key (cid) references customer(cid),
 );
+
+create table customer_accounts (
+	cid int not null,
+	username text not null,
+	passhash text not null,
+	primary key (cid),
+	foreign key (cid) references customer(cid),
+);
+
+create table employee_accounts (
+	eid int not null,
+	username text not null,
+	passhash text not null,
+	primary key (eid),
+	foreign key (eid) references employee(eid),
+);
+
 go
 
 --functions

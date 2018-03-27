@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Security.Cryptography;
 
 namespace App
 {
@@ -240,6 +241,155 @@ namespace App
             cmd.ExecuteNonQuery();
 
             con.Close();
+        }
+
+        public static Employee ValidateEmployee(string username, string passhash)
+        {
+            string qString = "SELECT * FROM employee WHERE eid IN (SELECT eid from employee_accounts WHERE username LIKE @username and passhash LIKE @passhash)";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+            adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            if (table.Rows.Count == 1)
+            {
+                DataRow row = table.Rows[0];
+                Employee employee = CreateEmployeeFromRow(row);
+                return employee;
+            }
+
+            return null;
+        }
+
+        public static Employee ValidateManager(string username, string passhash)
+        {
+            string qString = "SELECT * FROM employee WHERE eid IN (SELECT eid from employee_accounts WHERE username LIKE @username AND passhash LIKE @passhash) AND position = 'manager'";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+            adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            if (table.Rows.Count == 1)
+            {
+                DataRow row = table.Rows[0];
+                Employee employee = CreateEmployeeFromRow(row);
+                return employee;
+            }
+
+            return null;
+        }
+
+        private static Employee CreateEmployeeFromRow(DataRow row)
+        {
+            string firstName;
+            if (row.IsNull("first_name"))
+            {
+                return null;
+            }
+            firstName = row["first_name"].ToString();
+
+            string lastName;
+            if (row.IsNull("last_name"))
+            {
+                return null;
+            }
+            lastName = row["last_name"].ToString();
+
+            string suite = "";
+            if (!row.IsNull("suite_number"))
+            {
+                suite = row["suite_number"].ToString();
+            }
+            
+            string street = "";
+            if (!row.IsNull("street_number"))
+            {
+                street = row["street_number"].ToString();
+            }
+
+            string house = "";
+            if (!row.IsNull("house_number"))
+            {
+                house = row["house_number"].ToString();
+            }
+
+            string city = "";
+            if (!row.IsNull("city"))
+            {
+                city = row["city"].ToString();
+            }
+
+            string province = "";
+            if (!row.IsNull("province"))
+            {
+                province = row["province"].ToString();
+            }
+
+            string postalCode = "";
+            if (!row.IsNull("postalcode"))
+            {
+                postalCode = row["postalcode"].ToString();
+            }
+            
+            string phone = "";
+            if (!row.IsNull("phone_number"))
+            {
+                phone = row["phone_number"].ToString();
+            }
+            
+            Employee.Position position;
+            if (row.IsNull("position"))
+            {
+                return null;
+            }
+            position = Employee.Position.Employee;
+            if (row["position"].ToString() == "manager")
+            {
+                position = Employee.Position.Manager;
+            }
+            
+            float wage;
+            if (row.IsNull("wage"))
+            {
+                return null;
+            }
+            wage = float.Parse(row["wage"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+
+            DateTime startDate;
+            if (row.IsNull("start"))
+            {
+                return null;
+            }
+            startDate = (DateTime)row["start"];
+
+            string sin = "";
+            if (row.IsNull("social_insurance_num"))
+            {
+                sin = row["social_insurance_num"].ToString();
+            }
+
+            UserName name = new UserName(firstName, lastName);
+
+            Address address = new Address(suite, street, house, city, province, postalCode);
+
+            ContactInformation contactInfo = new ContactInformation("", phone);
+
+            Employee employee = new Employee(name, address, contactInfo, wage, startDate, sin, position);
+            employee.Id = (int)row["eid"];
+
+            return employee;
+        }
+
+        public static string HashPassword(string password)
+        {
+            SHA1Managed sha1 = new SHA1Managed();
+            byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            return Convert.ToBase64String(hash);
         }
     }
 }
