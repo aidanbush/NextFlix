@@ -65,6 +65,12 @@ namespace App
                 return true;
             }
 
+            Customer customer = DBEnvironment.ValidateCustomer(name, DBEnvironment.HashPassword(pass));
+            if (customer != null)
+            {
+                return true;
+            }
+
             return false;
         }
 

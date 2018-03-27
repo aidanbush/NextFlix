@@ -243,6 +243,26 @@ namespace App
             con.Close();
         }
 
+        public static Customer ValidateCustomer(string username, string passhash)
+        {
+            string qString = "SELECT * FROM customer WHERE cid IN (SELECT cid from customer_accounts WHERE username LIKE @username and passhash LIKE @passhash)";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+            adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            if (table.Rows.Count == 1)
+            {
+                DataRow row = table.Rows[0];
+                Customer customer = CreateCustomerFromRow(row);
+                return customer;
+            }
+
+            return null;
+        }
+
         public static Employee ValidateEmployee(string username, string passhash)
         {
             string qString = "SELECT * FROM employee WHERE eid IN (SELECT eid from employee_accounts WHERE username LIKE @username and passhash LIKE @passhash)";
@@ -382,6 +402,117 @@ namespace App
             employee.Id = (int)row["eid"];
 
             return employee;
+        }
+
+        private static Customer CreateCustomerFromRow(DataRow row)
+        {
+            string firstName;
+            if (row.IsNull("first_name"))
+            {
+                return null;
+            }
+            firstName = row["first_name"].ToString();
+
+            string lastName;
+            if (row.IsNull("last_name"))
+            {
+                return null;
+            }
+            lastName = row["last_name"].ToString();
+
+            string suite = "";
+            if (!row.IsNull("suite_number"))
+            {
+                suite = row["suite_number"].ToString();
+            }
+
+            string street = "";
+            if (!row.IsNull("street_number"))
+            {
+                street = row["street_number"].ToString();
+            }
+
+            string house = "";
+            if (!row.IsNull("house_number"))
+            {
+                house = row["house_number"].ToString();
+            }
+
+            string city = "";
+            if (!row.IsNull("city"))
+            {
+                city = row["city"].ToString();
+            }
+
+            string province = "";
+            if (!row.IsNull("province"))
+            {
+                province = row["province"].ToString();
+            }
+
+            string postalCode = "";
+            if (!row.IsNull("postalcode"))
+            {
+                postalCode = row["postalcode"].ToString();
+            }
+
+            string email = "";
+            if (!row.IsNull("email"))
+            {
+                email = row["email"].ToString();
+            }
+
+            string phone = "";
+            if (!row.IsNull("phone_number"))
+            {
+                phone = row["phone_number"].ToString();
+            }
+
+            DateTime creationDate;
+            if (row.IsNull("creation_date"))
+            {
+                return null;
+            }
+            creationDate = (DateTime)row["creation_date"];
+
+            string creditCard = "";
+            if (!row.IsNull("credit_card"))
+            {
+                creditCard = row["credit_card"].ToString();
+            }
+
+            UserName name = new UserName(firstName, lastName);
+            Address address = new Address(suite, street, house, city, province, postalCode);
+            Customer.AccountType account = Customer.AccountType.Limited;
+            switch (row["account_type"].ToString())
+            {
+                case "Disabled":
+                    account = Customer.AccountType.Disabled;
+                    break;
+                case "Limited":
+                    account = Customer.AccountType.Limited;
+                    break;
+                case "Bronze":
+                    account = Customer.AccountType.Bronze;
+                    break;
+                case "Silver":
+                    account = Customer.AccountType.Silver;
+                    break;
+                case "Gold":
+                    account = Customer.AccountType.Gold;
+                    break;
+                default:
+                    return null;
+            }
+
+            ContactInformation newContact = new ContactInformation(email, phone);
+            Customer customer = new Customer(name, address, newContact, account);
+            customer.CreationDate = creationDate;
+            customer.CreditCard = creditCard;
+            customer.Id = (int)row["cid"];
+            customer.Rating = (int)row["rating"];
+
+            return null;
         }
 
         public static string HashPassword(string password)
