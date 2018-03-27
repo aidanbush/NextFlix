@@ -19,7 +19,8 @@ namespace App
 
         private void CustomerButtonClick(object sender, EventArgs e)
         {
-            if (ValidateCustomer())
+            Customer customer = ValidateCustomer();
+            if (customer != null)
             {
                 // switch view
                 ClearCredentials();
@@ -31,7 +32,8 @@ namespace App
 
         private void EmployeeButtonClick(object sender, EventArgs e)
         {
-            if (ValidateEmployee())
+            Employee employee = ValidateEmployee();
+            if (employee != null)
             {
                 new ManagerForm(this, ManagerForm.EmploymentRole.employee).Show();
                 this.Hide();
@@ -44,7 +46,8 @@ namespace App
 
         private void ManagerButtonClick(object sender, EventArgs e)
         {
-            if (ValidateManager())
+            Employee manager = ValidateManager();
+            if (manager != null)
             {
                 new ManagerForm(this, ManagerForm.EmploymentRole.manager).Show();
                 this.Hide();
@@ -55,61 +58,55 @@ namespace App
             SetError("Invaid Username and Password");
         }
 
-        private bool ValidateCustomer()
+        private Customer ValidateCustomer()
         {
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
+            Customer customer;
 
             if (name == "admin" && pass == "pass")
             {
-                return true;
+                customer = DBEnvironment.ValidateCustomer(name, pass);
+                return customer;
             }
 
-            Customer customer = DBEnvironment.ValidateCustomer(name, DBEnvironment.HashPassword(pass));
-            if (customer != null)
-            {
-                return true;
-            }
+            customer = DBEnvironment.ValidateCustomer(name, DBEnvironment.HashPassword(pass));
 
-            return false;
+            return customer;
         }
 
-        private bool ValidateEmployee()
+        private Employee ValidateEmployee()
         {
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
+            Employee employee;
 
             if (name == "admin" && pass == "pass")
             {
-                return true;
+                employee = DBEnvironment.ValidateEmployee(name, pass);
+                return employee;
             }
 
-            Employee employee = DBEnvironment.ValidateEmployee(name, DBEnvironment.HashPassword(pass));
-            if (employee != null)
-            {
-                return true;
-            }
-
-            return false;
+            employee = DBEnvironment.ValidateEmployee(name, DBEnvironment.HashPassword(pass));
+            
+            return employee;
         }
 
-        private bool ValidateManager()
+        private Employee ValidateManager()
         {
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
+            Employee manager;
 
             if (name == "admin" && pass == "pass")
             {
-                return true;
+                manager = DBEnvironment.ValidateManager(name, pass);
+                return manager;
             }
 
-            Employee manager = DBEnvironment.ValidateManager(name, DBEnvironment.HashPassword(pass));
-            if (manager != null)
-            {
-                return true;
-            }
+            manager = DBEnvironment.ValidateManager(name, DBEnvironment.HashPassword(pass));
 
-            return false;
+            return manager;
         }
 
         private void ClearCredentials()
