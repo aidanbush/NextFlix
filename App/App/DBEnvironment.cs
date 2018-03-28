@@ -481,8 +481,6 @@ namespace App
                 creditCard = row["credit_card"].ToString();
             }
 
-            UserName name = new UserName(firstName, lastName);
-            Address address = new Address(suite, street, house, city, province, postalCode);
             Customer.AccountType account = Customer.AccountType.Limited;
             switch (row["account_type"].ToString())
             {
@@ -505,6 +503,9 @@ namespace App
                     return null;
             }
 
+            UserName name = new UserName(firstName, lastName);
+            Address address = new Address(suite, street, house, city, province, postalCode);
+
             ContactInformation newContact = new ContactInformation(email, phone);
             Customer customer = new Customer(name, address, newContact, account);
             customer.CreationDate = creationDate;
@@ -512,7 +513,7 @@ namespace App
             customer.Id = (int)row["cid"];
             customer.Rating = (int)row["rating"];
 
-            return null;
+            return customer;
         }
 
         public static string HashPassword(string password)
