@@ -109,6 +109,12 @@
     </Compile>
     <Compile Include="FormInputHandler.cs" />
     <Compile Include="FormNavigator.cs" />
+    <Compile Include="FufillOrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FufillOrderForm.Designer.cs">
+      <DependentUpon>FufillOrderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConfirmationForm.resx">
       <DependentUpon>ConfirmationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FufillOrderForm.resx">
+      <DependentUpon>FufillOrderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
