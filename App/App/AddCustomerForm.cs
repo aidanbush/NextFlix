@@ -95,29 +95,41 @@ namespace App
         private String CheckBlankBoxes(TextBox box)
         {
             String outString;
+            Console.WriteLine("TEST VALUE");
             switch (box.Text)
             {
                 case ("eg t1t1t1"):
+                    Console.WriteLine("Blank postal");
                     outString = "";
                     break;
                 case ("eg username@email.com"):
+                    Console.WriteLine("Blank email");
+                    outString = "";
+                    break;
+                case (""):
                     outString = "";
                     break;
                 default:
+                    Console.WriteLine("Should work");
+                    Console.WriteLine(EmailBox.Text);
                     outString = box.Text;
                     break;
             }
+            Console.WriteLine("OUT");
             return outString;
         }
         private Customer CreateCustomer()
         {
+            Console.WriteLine("postal box text " + PostalBox.Text);   
             String postal = CheckBlankBoxes(PostalBox);
             String email = CheckBlankBoxes(EmailBox);
 
             Customer.AccountType type = GetAccountType();
             UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
             Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, postal);
+            Console.WriteLine("Before");
             ContactInformation userInfo = new ContactInformation(email, PhoneBox.Text);
+            Console.WriteLine("After user");
             Customer newCustomer = new Customer(user, userAddress, userInfo, type);
 
             return newCustomer;

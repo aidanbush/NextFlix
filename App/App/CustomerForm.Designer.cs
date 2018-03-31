@@ -37,9 +37,6 @@
             this.myProfileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProfilePanel = new System.Windows.Forms.Panel();
-            this.HomePanel = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.NumberLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.EditButton = new System.Windows.Forms.Button();
@@ -50,6 +47,8 @@
             this.AddressLabel = new System.Windows.Forms.Label();
             this.NameLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.HomePanel = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.ProfilePanel.SuspendLayout();
             this.HomePanel.SuspendLayout();
@@ -137,35 +136,6 @@
             this.ProfilePanel.Name = "ProfilePanel";
             this.ProfilePanel.Size = new System.Drawing.Size(1147, 667);
             this.ProfilePanel.TabIndex = 1;
-            // 
-            // HomePanel
-            // 
-            this.HomePanel.Controls.Add(this.label4);
-            this.HomePanel.Controls.Add(this.label3);
-            this.HomePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HomePanel.Location = new System.Drawing.Point(0, 40);
-            this.HomePanel.Name = "HomePanel";
-            this.HomePanel.Size = new System.Drawing.Size(1147, 667);
-            this.HomePanel.TabIndex = 10;
-            this.HomePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.HomePanel_Paint);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(57, 272);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 25);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "label4";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(31, 49);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 25);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Hello, User";
             // 
             // NumberLabel
             // 
@@ -257,6 +227,25 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Your Information:";
             // 
+            // HomePanel
+            // 
+            this.HomePanel.Controls.Add(this.label3);
+            this.HomePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HomePanel.Location = new System.Drawing.Point(0, 40);
+            this.HomePanel.Name = "HomePanel";
+            this.HomePanel.Size = new System.Drawing.Size(1147, 667);
+            this.HomePanel.TabIndex = 10;
+            this.HomePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.HomePanel_Paint);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(31, 49);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(118, 25);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Hello, User";
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -302,6 +291,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel HomePanel;
         public System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
     }
 }
