@@ -23,7 +23,8 @@ namespace App
             Customer customer = ValidateCustomer();
             if (customer != null)
             {
-                // switch view
+                new CustomerForm(this, customer).Show();
+                this.Hide();
                 ClearCredentials();
                 return;
             }

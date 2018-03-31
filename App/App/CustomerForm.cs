@@ -12,10 +12,18 @@ namespace App
 {
     public partial class CustomerForm : Form
     {
+        private Form parent;
+        private Customer user;
+
         private enum CustomerFormType { home, movie, rentals, profile };
         private CustomerFormType currentType;
-        public CustomerForm()
+
+
+        public CustomerForm(Form newParent, Customer newUser)
         {
+            parent = newParent;
+            user = newUser;
+
             currentType = CustomerFormType.home;
             InitializeComponent();
             HomePanel.Visible = true;
@@ -64,6 +72,11 @@ namespace App
         private void HomePanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void CustomerFormClosed(object sender, FormClosedEventArgs e)
+        {
+            parent.Show();
         }
     }
 }
