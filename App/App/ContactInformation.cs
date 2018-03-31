@@ -21,6 +21,7 @@ namespace App
         }
         private String CleanPhone(String phone)
         {
+            Console.WriteLine(phone);
             if (phone == "")
             {
                 return null;
@@ -30,6 +31,7 @@ namespace App
                 throw new PhoneNumberException();
             }
             var stripped = Regex.Replace(phone, "[^0-9]", "");
+            Console.WriteLine(stripped.ToString());
             return stripped.ToString();            
         }
 

@@ -119,17 +119,15 @@ namespace App
             return outString;
         }
         private Customer CreateCustomer()
-        {
-            Console.WriteLine("postal box text " + PostalBox.Text);   
+        {  
             String postal = CheckBlankBoxes(PostalBox);
             String email = CheckBlankBoxes(EmailBox);
+            String phone = CheckBlankBoxes(PhoneBox);
 
             Customer.AccountType type = GetAccountType();
             UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
             Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, postal);
-            Console.WriteLine("Before");
-            ContactInformation userInfo = new ContactInformation(email, PhoneBox.Text);
-            Console.WriteLine("After user");
+            ContactInformation userInfo = new ContactInformation(email, phone);
             Customer newCustomer = new Customer(user, userAddress, userInfo, type);
 
             return newCustomer;

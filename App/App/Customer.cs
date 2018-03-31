@@ -58,7 +58,7 @@ namespace App
                     command.Parameters.AddWithValue("@last_name", this.Name.LastName);
                     command.Parameters.AddWithValue("@creation_date", DateTime.Now);
                     command.Parameters.AddWithValue("@account_type", this.Type.ToString());
-                    command.Parameters.AddWithValue("@phone_number", this.ContactInformation.PhoneNumber);
+                    command.Parameters.AddWithValue("@phone_number", CheckNulls(this.ContactInformation.PhoneNumber));
                     command.Parameters.AddWithValue("@email", CheckNulls(this.ContactInformation.Email));
                     command.Parameters.AddWithValue("@suite_number", this.Address.SuiteNumber);
                     command.Parameters.AddWithValue("@street_number", this.Address.StreetNumber);
