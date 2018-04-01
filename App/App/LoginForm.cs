@@ -28,7 +28,7 @@ namespace App
                 ClearCredentials();
                 return;
             }
-            // print error
+
             SetError("Invaid Username and Password");
         }
 
@@ -37,12 +37,12 @@ namespace App
             Employee employee = ValidateEmployee();
             if (employee != null)
             {
-                new ManagerForm(this, ManagerForm.EmploymentRole.employee).Show();
+                new ManagerForm(this, employee).Show();
                 this.Hide();
                 ClearCredentials();
                 return;
             }
-            // print error
+
             SetError("Invaid Username and Password");
         }
 
@@ -51,12 +51,12 @@ namespace App
             Employee manager = ValidateManager();
             if (manager != null)
             {
-                new ManagerForm(this, ManagerForm.EmploymentRole.manager).Show();
+                new ManagerForm(this, manager).Show();
                 this.Hide();
                 ClearCredentials();
                 return;
             }
-            // print error
+
             SetError("Invaid Username and Password");
         }
 

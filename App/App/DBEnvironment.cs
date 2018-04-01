@@ -13,7 +13,7 @@ namespace App
 {
     internal static class DBEnvironment
     {
-        private static SqlConnection con; 
+        private static SqlConnection con;
         private static SqlDataAdapter sda;
         private static BindingList<Customer> customers;
         private static BindingList<Employee> employees;
@@ -44,7 +44,7 @@ namespace App
         {
             return movies;
         }
-   
+
         internal static void SetMovies()
         {
             movies = RetrieveMovies();
@@ -71,7 +71,7 @@ namespace App
 
             return connectionString;
         }
-        
+
         public static bool Add(IQuery queryObject)
         {
             return queryObject.Add(con);
@@ -104,7 +104,7 @@ namespace App
             DataTable customerTable = new DataTable();
             adaptor.Fill(customerTable);
 
-            foreach(DataRow customerRow in customerTable.Rows) {
+            foreach (DataRow customerRow in customerTable.Rows) {
                 UserName name = new UserName(customerRow["first_name"].ToString(), customerRow["last_name"].ToString());
                 Address address = new Address(customerRow["suite_number"].ToString(), customerRow["street_number"].ToString(),
                                               customerRow["house_number"].ToString(), customerRow["city"].ToString(),
@@ -143,7 +143,7 @@ namespace App
             return customers;
         }
 
-        private static BindingList<Employee>  RetrieveEmployees()
+        private static BindingList<Employee> RetrieveEmployees()
         {
             BindingList<Employee> employeeList = new BindingList<Employee>();
 
@@ -187,7 +187,7 @@ namespace App
 
             foreach (DataRow movieRow in movieTable.Rows)
             {
-                
+
                 string name = movieRow["name"].ToString();
                 string genre = movieRow["genre"].ToString();
                 float fees = float.Parse(movieRow["fees"].ToString());
@@ -198,14 +198,16 @@ namespace App
                 //movieRow["rating"].ToString();
                 Movie movie = new Movie(name, genre, fees, num_copies, copies, 1);
                 movie.Id = id;
-                movies.Add(movie);         
+                movies.Add(movie);
             }
             return movies;
         }
 
         public static BindingList<Order> RetrieveUnfulfilledOrders()
         {
-            string qString = "SELECT * FROM [order] where eid = null";
+            Debug.WriteLine("Retrieveing orders");
+
+            string qString = "SELECT * FROM [order] where eid is NULL";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             DataTable orderTable = new DataTable();
             adapter.Fill(orderTable);
@@ -213,6 +215,7 @@ namespace App
 
             foreach (DataRow orderRow in orderTable.Rows)
             {
+                Debug.WriteLine("new order");
                 int oid = (int)orderRow["oid"];
                 int mid = (int)orderRow["mid"];
                 int cid = (int)orderRow["cid"];
@@ -230,6 +233,31 @@ namespace App
             return orders;
         }
 
+        public static bool FulfillOrder(int oid, int eid)
+        {
+            string qString = "UPDATE [order] SET eid = @eid WHERE oid = @oid";
+
+            con.Open();
+            using (SqlCommand command = new SqlCommand(qString, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@eid", eid);
+                    command.Parameters.AddWithValue("@oid", oid);
+                    int err = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    con.Close();
+                    return false;
+                }
+
+            }
+            con.Close();
+            return true;
+        }
+
         public static void UpdateRatings()
         {
             con.Open();
@@ -241,6 +269,60 @@ namespace App
             cmd.ExecuteNonQuery();
 
             con.Close();
+        }
+
+        public static Movie GetMovieByID(int id)
+        {
+            string qString = "SELECT * FROM movie WHERE mid = @id";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@id", id);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            if (table.Rows.Count == 1)
+            {
+                DataRow row = table.Rows[0];
+                return CreateMovieFromRow(row);
+            }
+
+            return null;
+        }
+
+        public static Employee GetEmployeeByID(int id)
+        {
+            string qString = "SELECT * FROM employee WHERE eid = @id";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@id", id);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            if (table.Rows.Count == 1)
+            {
+                DataRow row = table.Rows[0];
+                return CreateEmployeeFromRow(row);
+            }
+
+            return null;
+        }
+
+        public static Customer GetCustomerByID(int id)
+        {
+            string qString = "SELECT * FROM customer WHERE cid = @id";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@id", id);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            if (table.Rows.Count == 1)
+            {
+                DataRow row = table.Rows[0];
+                return CreateCustomerFromRow(row);
+            }
+
+            return null;
         }
 
         public static Customer ValidateCustomer(string username, string passhash)
@@ -514,6 +596,61 @@ namespace App
             customer.Rating = (int)row["rating"];
 
             return customer;
+        }
+
+        public static Movie CreateMovieFromRow(DataRow row)
+        {
+            string name;
+            if (row.IsNull("name"))
+            {
+                return null;
+            }
+            name = row["name"].ToString();
+
+            int mid;
+            if (row.IsNull("mid"))
+            {
+                return null;
+            }
+            mid = (int)row["mid"];
+
+            string genre = "";
+            if (!row.IsNull("genre"))
+            {
+                genre = row["genre"].ToString();
+            }
+
+            float fees;
+            if (row.IsNull("fees"))
+            {
+                return null;
+            }
+            fees = float.Parse(row["fees"].ToString());
+
+            int numCopies;
+            if (row.IsNull("num_copies"))
+            {
+                return null;
+            }
+            numCopies = (int)row["num_copies"];
+
+            int available;
+            if (row.IsNull("copies_available"))
+            {
+                return null;
+            }
+            available = (int)row["copies_available"];
+
+            int rating = 0;
+            if (!row.IsNull("rating"))
+            {
+                rating = (int)row["rating"];
+            }
+
+            return new Movie(name, genre, fees, numCopies, available, rating)
+            {
+                Id = mid
+            };
         }
 
         public static string HashPassword(string password)
