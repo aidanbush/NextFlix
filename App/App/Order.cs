@@ -35,6 +35,11 @@ namespace App
             throw new NotImplementedException();
         }
 
+        public bool AddToQueue(SqlConnection con)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(SqlConnection con)
         {
             throw new NotImplementedException();

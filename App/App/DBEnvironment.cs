@@ -77,6 +77,11 @@ namespace App
             return queryObject.Add(con);
         }
 
+        public static bool AddToQueue(IQuery queryObject)
+        {
+            return queryObject.AddToQueue(con);
+        }
+
         public static bool Edit(IQuery queryObject)
         {
             return queryObject.Edit(con);
@@ -485,11 +490,8 @@ namespace App
             }
 
             UserName name = new UserName(firstName, lastName);
-
             Address address = new Address(suite, street, house, city, province, postalCode);
-
             ContactInformation contactInfo = new ContactInformation("", phone);
-
             Employee employee = new Employee(name, address, contactInfo, wage, startDate, sin, position);
             employee.Id = (int)row["eid"];
 

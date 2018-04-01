@@ -50,12 +50,13 @@
             this.HomePanel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.myMoviesPanel = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
             this.RentMovieButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.rentMoviePanel = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.MovieGridView = new System.Windows.Forms.DataGridView();
+            this.RentButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.ProfilePanel.SuspendLayout();
             this.HomePanel.SuspendLayout();
@@ -90,21 +91,21 @@
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(258, 38);
             this.homeToolStripMenuItem.Text = "Home";
             this.homeToolStripMenuItem.Click += new System.EventHandler(this.homeToolStripMenuItem_Click);
             // 
             // movieHomeToolStripMenuItem
             // 
             this.movieHomeToolStripMenuItem.Name = "movieHomeToolStripMenuItem";
-            this.movieHomeToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.movieHomeToolStripMenuItem.Size = new System.Drawing.Size(258, 38);
             this.movieHomeToolStripMenuItem.Text = "Rent A Movie";
             this.movieHomeToolStripMenuItem.Click += new System.EventHandler(this.movieHomeToolStripMenuItem_Click);
             // 
             // myMoviesToolStripMenuItem
             // 
             this.myMoviesToolStripMenuItem.Name = "myMoviesToolStripMenuItem";
-            this.myMoviesToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.myMoviesToolStripMenuItem.Size = new System.Drawing.Size(258, 38);
             this.myMoviesToolStripMenuItem.Text = "My Movies";
             this.myMoviesToolStripMenuItem.Click += new System.EventHandler(this.myMoviesToolStripMenuItem_Click);
             // 
@@ -143,7 +144,7 @@
             this.ProfilePanel.Controls.Add(this.label1);
             this.ProfilePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProfilePanel.Location = new System.Drawing.Point(0, 0);
-            this.ProfilePanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ProfilePanel.Margin = new System.Windows.Forms.Padding(4);
             this.ProfilePanel.Name = "ProfilePanel";
             this.ProfilePanel.Size = new System.Drawing.Size(1148, 708);
             this.ProfilePanel.TabIndex = 1;
@@ -171,7 +172,7 @@
             // EditButton
             // 
             this.EditButton.Location = new System.Drawing.Point(40, 304);
-            this.EditButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.EditButton.Margin = new System.Windows.Forms.Padding(4);
             this.EditButton.Name = "EditButton";
             this.EditButton.Size = new System.Drawing.Size(224, 52);
             this.EditButton.TabIndex = 7;
@@ -253,7 +254,7 @@
             this.HomePanel.Controls.Add(this.label3);
             this.HomePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HomePanel.Location = new System.Drawing.Point(0, 0);
-            this.HomePanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.HomePanel.Margin = new System.Windows.Forms.Padding(4);
             this.HomePanel.Name = "HomePanel";
             this.HomePanel.Size = new System.Drawing.Size(1148, 708);
             this.HomePanel.TabIndex = 10;
@@ -279,15 +280,6 @@
             this.myMoviesPanel.Size = new System.Drawing.Size(1148, 708);
             this.myMoviesPanel.TabIndex = 1;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 20);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(211, 25);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Your current movies:";
-            // 
             // RentMovieButton
             // 
             this.RentMovieButton.Location = new System.Drawing.Point(20, 230);
@@ -298,16 +290,56 @@
             this.RentMovieButton.UseVisualStyleBackColor = true;
             this.RentMovieButton.Click += new System.EventHandler(this.RentMovieButton_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 20);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(211, 25);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Your current movies:";
+            // 
             // rentMoviePanel
             // 
+            this.rentMoviePanel.Controls.Add(this.label6);
             this.rentMoviePanel.Controls.Add(this.MovieGridView);
-            this.rentMoviePanel.Controls.Add(this.button1);
+            this.rentMoviePanel.Controls.Add(this.RentButton);
             this.rentMoviePanel.Controls.Add(this.label5);
             this.rentMoviePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rentMoviePanel.Location = new System.Drawing.Point(0, 0);
             this.rentMoviePanel.Name = "rentMoviePanel";
             this.rentMoviePanel.Size = new System.Drawing.Size(1148, 708);
             this.rentMoviePanel.TabIndex = 2;
+            this.rentMoviePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.rentMoviePanel_Paint);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(25, 89);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(180, 25);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Available movies:";
+            // 
+            // MovieGridView
+            // 
+            this.MovieGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.MovieGridView.Location = new System.Drawing.Point(25, 145);
+            this.MovieGridView.Name = "MovieGridView";
+            this.MovieGridView.RowTemplate.Height = 33;
+            this.MovieGridView.Size = new System.Drawing.Size(606, 230);
+            this.MovieGridView.TabIndex = 2;
+            this.MovieGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MovieGridView_CellContentClick);
+            // 
+            // RentButton
+            // 
+            this.RentButton.Location = new System.Drawing.Point(25, 396);
+            this.RentButton.Name = "RentButton";
+            this.RentButton.Size = new System.Drawing.Size(175, 66);
+            this.RentButton.TabIndex = 1;
+            this.RentButton.Text = "Rent movie";
+            this.RentButton.UseVisualStyleBackColor = true;
+            this.RentButton.Click += new System.EventHandler(this.RentButton_click);
             // 
             // label5
             // 
@@ -317,24 +349,6 @@
             this.label5.Size = new System.Drawing.Size(154, 25);
             this.label5.TabIndex = 0;
             this.label5.Text = "Movies to rent:";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(25, 304);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(175, 66);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Rent movie";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // MovieGridView
-            // 
-            this.MovieGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MovieGridView.Location = new System.Drawing.Point(25, 61);
-            this.MovieGridView.Name = "MovieGridView";
-            this.MovieGridView.RowTemplate.Height = 33;
-            this.MovieGridView.Size = new System.Drawing.Size(606, 230);
-            this.MovieGridView.TabIndex = 2;
             // 
             // CustomerForm
             // 
@@ -347,7 +361,7 @@
             this.Controls.Add(this.HomePanel);
             this.Controls.Add(this.ProfilePanel);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CustomerForm";
             this.Text = "Grettings, User";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CustomerFormClosed);
@@ -396,6 +410,7 @@
         private System.Windows.Forms.Panel rentMoviePanel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView MovieGridView;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button RentButton;
+        private System.Windows.Forms.Label label6;
     }
 }
