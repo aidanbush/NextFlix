@@ -12,38 +12,44 @@ namespace App
 {
     public partial class FufillOrderForm : Form
     {
-        private Form parent;
+        private ManagerForm parent;
         private Order order;
 
-        public FufillOrderForm(Form newParent, Order newOrder)
+        public FufillOrderForm(ManagerForm newParent, Order newOrder)
         {
             parent = newParent;
             order = newOrder;
             InitializeComponent();
+            FillForm();
         }
 
         private void FufillOrderButton_Click(object sender, EventArgs e)
         {
             // create report
             // add employee id
-            // close form
+            if (DBEnvironment.FulfillOrder(order.Id, parent.User.Id))
+            {
+                // remove from parent list
+            }
             Close();
         }
 
-        private FufillOrderForm()
+        private void FillForm()
         {
+            Customer customer = DBEnvironment.GetCustomerByID(order.CustomerID);
             // get customer
-            CustomerNameLabel.Text = "Name: ";
-            StreetAddressLabel.Text = "Street Address: ";
-            CityLabel.Text = "City: ";
-            ProvenceLabel.Text = "Provence: ";
-            PostalCodeLabel.Text = "Postal Code: ";
-            PhoneLabel.Text = "Phone Number: ";
-            EmailLabel.Text = "Email:";
+            CustomerNameLabel.Text = "Name: " + customer.FirstName + " " + customer.LastName;
+            StreetAddressLabel.Text = "Street Address: " + customer.StreetNumber;
+            CityLabel.Text = "City: " + customer.City;
+            ProvenceLabel.Text = "Provence: " + customer.Province;
+            PostalCodeLabel.Text = "Postal Code: " + customer.PostalCode;
+            PhoneLabel.Text = "Phone Number: " + customer.ContactInformation.PhoneNumber;
+            EmailLabel.Text = "Email:" + customer.ContactInformation.Email;
 
+            Movie movie = DBEnvironment.GetMovieByID(order.MovieID);
             // get movie
-            MovieTitleLabel.Text = "Title: ";
-            MovieIDLabel.Text = "Movie ID: ";
+            MovieTitleLabel.Text = "Title: " + movie.Name;
+            MovieIDLabel.Text = "Movie ID: " + movie.Id;
         }
     }
 }

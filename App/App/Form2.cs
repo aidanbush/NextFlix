@@ -33,6 +33,9 @@ namespace App
         private ManagerView managerView;
         private OrderView orderView;
 
+        public Employee User { get => user; }
+        public BindingList<Order> Orders { get => orders; }
+
         public ManagerForm(Form newParent, Employee newUser)
         {
             parent = newParent;
@@ -213,7 +216,7 @@ namespace App
         {
             // TODO: implement
             //Order selectedOrder = orders.ElementAt(index);
-            Order selectedOrder = new Order(-1, -1);
+            Order selectedOrder = orders[index];
             FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
             fufillForm.Show();
         }
@@ -462,11 +465,17 @@ namespace App
 
             public void ShowView()
             {
+                Debug.WriteLine("Show OrderView");
                 // buttons
                 parent.FulfillOrderButton.Show();
                 // other
                 parent.dataGridView1.Show();
-                parent.dataGridView1.DataSource = DBEnvironment.RetrieveUnfulfilledOrders();
+
+                // setup dataGridView
+                parent.orders = DBEnvironment.RetrieveUnfulfilledOrders();
+                parent.dataGridView1.DataSource = parent.orders;
+                
+                parent.Refresh();
             }
         }
     }
