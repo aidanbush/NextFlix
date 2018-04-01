@@ -14,8 +14,7 @@ namespace App
 {
     public partial class ManagerForm : Form
     {
-        public enum EmploymentRole { manager, employee };
-        private EmploymentRole role;
+        private Employee user;
         private Form parent;
 
         private int index;
@@ -34,10 +33,10 @@ namespace App
         private ManagerView managerView;
         private OrderView orderView;
 
-        public ManagerForm(Form newParent, EmploymentRole newRole)
+        public ManagerForm(Form newParent, Employee newUser)
         {
             parent = newParent;
-            role = newRole;
+            user = newUser;
 
             customers = DBEnvironment.GetCustomers();
             movies = DBEnvironment.GetMovies();
@@ -52,7 +51,7 @@ namespace App
 
             InitializeComponent();
             
-            if (role != EmploymentRole.manager)
+            if (user.EmployeePosition != Employee.Position.Manager)
             {
                 this.Text = "Employee";
                 customerRepresentativesToolStripMenuItem.Visible = false;
