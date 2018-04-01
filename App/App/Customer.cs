@@ -31,12 +31,25 @@ namespace App
         {
             return Id.ToString() + " " + Name.ToString() + " " + Type.ToString();
         }
+        private Object CheckNulls(String value)
+        {
+            Console.WriteLine("checking " + value);
+            if(value == null)
+            {
+                Console.WriteLine("Insert Null for code/email");
+                return DBNull.Value;
+            }
+            else
+            {
+                Console.WriteLine("Return " + value);
+                return value.ToString();
+            }
+        }
 
         public bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
-            bool flag = true;
-            Console.WriteLine(this.Name.LastName);
+            Console.WriteLine("CHecking with " + this.Name.FirstName + " and " + this.Name.LastName);
             using (SqlCommand command = new SqlCommand(queryString, con))
             {
                 try
@@ -45,12 +58,12 @@ namespace App
                     command.Parameters.AddWithValue("@last_name", this.Name.LastName);
                     command.Parameters.AddWithValue("@creation_date", DateTime.Now);
                     command.Parameters.AddWithValue("@account_type", this.Type.ToString());
-                    command.Parameters.AddWithValue("@phone_number", this.ContactInformation.PhoneNumber);
-                    command.Parameters.AddWithValue("@email", this.ContactInformation.Email);
+                    command.Parameters.AddWithValue("@phone_number", CheckNulls(this.ContactInformation.PhoneNumber));
+                    command.Parameters.AddWithValue("@email", CheckNulls(this.ContactInformation.Email));
                     command.Parameters.AddWithValue("@suite_number", this.Address.SuiteNumber);
                     command.Parameters.AddWithValue("@street_number", this.Address.StreetNumber);
                     command.Parameters.AddWithValue("@house_number", this.Address.HouseNumber);
-                    command.Parameters.AddWithValue("@postalcode", this.Address.PostalCode);
+                    command.Parameters.AddWithValue("@postalcode", CheckNulls(this.Address.PostalCode));
                     command.Parameters.AddWithValue("@city", this.Address.City);
                     command.Parameters.AddWithValue("@province", this.Address.Province);
                     command.Parameters.AddWithValue("@cid", this.Id);
@@ -73,7 +86,14 @@ namespace App
 
         public bool Add(SqlConnection con)
         {
-
+            if(this.Address.PostalCode == "")
+            {
+                this.Address.PostalCode = null;
+            }
+            if(this.ContactInformation.Email == "")
+            {
+                this.ContactInformation.Email = null;
+            }
             String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province)" +
                "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province)";
 
@@ -90,18 +110,19 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
+            
             String q = "UPDATE customer SET first_name=@first_name, " + 
                     "last_name=@last_name, " + 
                     "phone_number=@phone_number, " + 
                     "email=@email, " + 
                     "suite_number=@suite_number, " + 
-                    "street_number=@street_number, " + "house_number=@house_number, " +
+                    "street_number=@street_number, " +
+                    "house_number=@house_number, " +
                     "postalcode=@postalcode, " +
                     "city=@city, " +
                     "province=@province, " +
                     "account_type=@account_type " +
                     "WHERE cid=@cid";
-            Console.WriteLine("ACCOUNT ID = " + this.Id);
             if (AddEdit(q, con))
             {
 

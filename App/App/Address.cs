@@ -22,32 +22,55 @@ namespace App
             houseNumber = house;
             city = town;
             province = prov;
-            postalCode = CleanPostalCode(postal);
-            if(postalCode == null)
+            if(postal == null)
             {
+                postal = "";
+            }
+
+            if (IsPostalCodeValid(postal))
+            {
+                postalCode = ReplaceWhiteSpaceFromPostal(postal);
+            }
+            else
+            {
+                Console.WriteLine("Blank Post");
+                if (postal == "")
+                {
+                    
+                    postal = "";
+                    return;
+                }
+                
+
                 throw new PostalCodeException();
             }
         }
-        private String CleanPostalCode(String postal)
+        private String ReplaceWhiteSpaceFromPostal(String code)
         {
-            String code;
-
-
-            if (postal == "")
+            if (code == "")
             {
-                return postal; 
+                return code;
+            }
+            return code.Replace(" ", "");
+        }
+        private bool IsPostalCodeValid(String postal)
+        {
+            if(postal == "")
+            {
+                return true;
             }
             if (postal.Length != 6 && postal.Length != 7)
             {
-                return null;
+                return false;
             }
-            code = postal.Replace(" ", "");
+            String code = ReplaceWhiteSpaceFromPostal(postal);
+
             //check if index 0, 2, 4 are numbers, if so, throw exception
             for (int i = 0; i < code.Length; i += 2)
             {
                 if(Char.IsDigit(code[i]) == true)
                 {
-                    return null;
+                    return false;
                 }
             }
             //Check if index 1, 3, 5 are letters, if so, throw exception
@@ -55,10 +78,10 @@ namespace App
             {
                 if (Char.IsDigit(code[i]) == false)
                 {
-                    return null;
+                    return false;
                 }
             }
-            return code;
+            return true;
         }
 
 

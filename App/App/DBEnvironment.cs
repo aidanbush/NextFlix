@@ -106,9 +106,19 @@ namespace App
 
             foreach (DataRow customerRow in customerTable.Rows) {
                 UserName name = new UserName(customerRow["first_name"].ToString(), customerRow["last_name"].ToString());
+                String postalCode;
+                try
+                {
+                    postalCode = customerRow["postalcode"].ToString();
+                }
+                catch(PostalCodeException)
+                {
+                    postalCode = "";
+                }
+
                 Address address = new Address(customerRow["suite_number"].ToString(), customerRow["street_number"].ToString(),
                                               customerRow["house_number"].ToString(), customerRow["city"].ToString(),
-                                              customerRow["province"].ToString(), customerRow["postalcode"].ToString());
+                                              customerRow["province"].ToString(), postalCode);
                 Customer.AccountType account = Customer.AccountType.Limited;
                 switch (customerRow["account_type"].ToString())
                 {

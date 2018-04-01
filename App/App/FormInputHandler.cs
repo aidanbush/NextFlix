@@ -30,6 +30,17 @@ namespace App
             
             return doesNotContainSemiColonOrSingleQuote(name);
         }
+        public bool CheckForNull(String boxEntry)
+        {
+            if(boxEntry == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public bool checkSIN (string text)
         {
             int n;

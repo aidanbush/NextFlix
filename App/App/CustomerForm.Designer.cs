@@ -48,7 +48,13 @@
             this.NameLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.HomePanel = new System.Windows.Forms.Panel();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
             this.label4 = new System.Windows.Forms.Label();
+>>>>>>> a89f3c8427b093e832f53faaa6cb2951b3044249
+=======
+>>>>>>> 967f8fc02bbea2d89da354f649eaf62cef488754
             this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.ProfilePanel.SuspendLayout();
@@ -269,6 +275,10 @@
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 13);
+<<<<<<< HEAD
+>>>>>>> a89f3c8427b093e832f53faaa6cb2951b3044249
+=======
+>>>>>>> 967f8fc02bbea2d89da354f649eaf62cef488754
             this.label3.TabIndex = 0;
             this.label3.Text = "Hello, User";
             // 
@@ -319,6 +329,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel HomePanel;
         public System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
     }
 }
