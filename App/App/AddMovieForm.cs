@@ -15,19 +15,38 @@ namespace App
     {
         ManagerForm parent;
         private BindingList<Actor> actors;
+        private BindingList<Actor> movieActors;
+        private BindingList<Actor> deletedActors;
         Actor selectedActor;
-        public AddMovieForm(ManagerForm manager)
+        Actor selectedActorInMovieList;
+        Movie movie;
+        public AddMovieForm(ManagerForm manager, Movie selectedMovie)
         {
             parent = manager;
             InitializeComponent();
-            actors = new BindingList<Actor>();
-            //var source = new BindingSource(actors, null);
+            DBEnvironment.SetActors();
+            actors = DBEnvironment.GetActors();
+            movieActors = new BindingList<Actor>();
+            deletedActors = new BindingList<Actor>();
+            movie = selectedMovie;
             ActorList.DataSource = actors;
+            MovieActorList.DataSource = movieActors;
             ActorList.AutoGenerateColumns = true;
+            if (selectedMovie != null)
+                fillForm();
+        }
+
+        private void fillForm()
+        {
+            CopyAmountBox.Text = movie.Num_copies.ToString();
+            GenreBox.Text = movie.Genre;
+            TitleBox.Text = movie.Name;
+            FeesBox.Text = movie.Fees.ToString();
+            AddMovieButton.Text = "Edit";
         }
         private bool InsertMovie()
         {
-            if ((MessageBox.Show("Add new Customer with current information?", "Confirm",
+            if ((MessageBox.Show("Add new Movie with current information?", "Confirm",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
@@ -39,9 +58,11 @@ namespace App
                     int copies = int.Parse(CopyAmountBox.Text);
                     float fees = float.Parse(FeesBox.Text);
                     Movie newMovie = new Movie(title, genre, fees, copies, copies, 0);
-                    
+                    newMovie.Id = -1;
                     DBEnvironment.Add(newMovie);
-                                        return true;
+                    movie = newMovie;
+                    
+                    return true;
                 }
                 catch (Exception Ex)
                 {
@@ -57,7 +78,6 @@ namespace App
         }
         private bool CheckTextBoxes()
         {
-            Console.WriteLine("Should b hur");
             if(TitleBox.Text == "" && CopyAmountBox.Text == "")
             {
                 MessageBox.Show("Plese check the movie title and Copy amount");
@@ -83,8 +103,27 @@ namespace App
         {
             if (CheckTextBoxes())
             {
-                if (InsertMovie() && InserActors())
+
+                if (movie != null)
                 {
+
+                    if (!EditMovie())
+                    {
+                        MessageBox.Show("There was a problem editing the movie");
+                        return;
+                    }
+                    parent.FillTable();
+                    MessageBox.Show("Movie Edited!");
+                    this.Close();
+                }
+                else if (InsertMovie())
+                {
+                    if (!InsertActors(movie))
+                    {
+                        Debug.Print("There was a problem adding the actors");
+                        return;
+                    }
+                    
                     parent.FillTable();
                     MessageBox.Show("Movie added!");
                     this.Close();
@@ -94,6 +133,36 @@ namespace App
                     MessageBox.Show("Movie could not be added");
                 }
             }
+        }
+
+        private bool EditMovie()
+        {
+            if ((MessageBox.Show("Add new Movie with current information?", "Confirm",
+           MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+           MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+
+                try
+                {
+                    String title = TitleBox.Text;
+                    String genre = GenreBox.Text;
+                    int copies = int.Parse(CopyAmountBox.Text);
+                    float fees = float.Parse(FeesBox.Text);
+                    Movie newMovie = new Movie(title, genre, fees, copies, copies, 0);
+                    newMovie.Id = movie.Id;
+                    DBEnvironment.Edit(newMovie);
+
+                    Starred starred = new Starred(this.movieActors.ToArray(), deletedActors.ToArray(), newMovie);
+                    DBEnvironment.Edit(starred);
+
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+
+            return true;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -117,18 +186,21 @@ namespace App
             ActorAddEdit actorForm = new ActorAddEdit(this, null);
             actorForm.Show();
         }
-
-        public void addActor(Actor actor)
-        {
-            this.actors.Add(actor);
-        }
-
+        
         private void DeleteActor_Click(object sender, EventArgs e)
         {
             if (selectedActor == null)
                 return;
-        
-            this.actors.Remove(selectedActor);
+
+
+            if ((MessageBox.Show("are you sure you want to delete" + selectedActor.Name.FirstName + "?", "Confirm",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+
+                DBEnvironment.Delete(selectedActor);
+                this.Reload();
+            }
         }
         
         private void ActorList_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -138,23 +210,15 @@ namespace App
         {
             if (e.RowIndex < 0)
                 return;
-
-            selectedActor = this.actors.ElementAt(e.RowIndex);
+            var index = ActorList.CurrentRow.Index;
+            selectedActor = this.actors.ElementAt(index);
         }
-
-        private bool InserActors()
+        private bool InsertActors(Movie movie)
         {
-            foreach (Actor actor in actors)
-            {
-                try
-                {
-                    DBEnvironment.Add(actor);
-                }
-                catch (Exception ex)
-                {
+                Starred s = new Starred(movieActors.ToArray(), null, movie);
+                if (!DBEnvironment.Add(s))
                     return false;
-                }
-            }
+            
             return true;
         }
 
@@ -164,6 +228,46 @@ namespace App
                 return;
             ActorAddEdit actorForm = new ActorAddEdit(this, selectedActor);
             actorForm.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (selectedActor == null)
+                return;
+
+            if (movieActors.Contains(selectedActor))
+                return;
+
+            movieActors.Add(selectedActor);
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            if (selectedActorInMovieList == null)
+                return;
+
+            if (!movieActors.Contains(selectedActorInMovieList))
+                return;
+
+            Debug.Print(selectedActorInMovieList.ToString());
+            deletedActors.Add(selectedActorInMovieList);
+            movieActors.Remove(selectedActorInMovieList);
+        }
+        
+        public void Reload()
+        {
+            DBEnvironment.SetActors();
+            actors = DBEnvironment.GetActors();
+            ActorList.DataSource = actors;
+            this.Refresh();
+        }
+
+        private void SelectActorInMovieList(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            var index = MovieActorList.CurrentRow.Index;
+            selectedActorInMovieList = this.movieActors.ElementAt(index);
         }
     }
 }

@@ -14,8 +14,12 @@ namespace App
             this.actor = actor;
             validator = new FormInputHandler();
             InitializeComponent();
-            if (actor != null)
-                fillFormData();
+            if (actor == null)
+                return;
+
+
+            fillFormData();
+            AddEdit.Text = "Edit";
         }
 
         private void fillFormData()
@@ -27,7 +31,7 @@ namespace App
             else
                 FemaleRadio.Checked = true;
 
-            DateOfBirthBox.Text = actor.DateOfBirth;
+            DateOfBirthBox.Text = actor.DateOfBirth.ToString("MM/dd/yyyy");
         }
 
         private bool Validate()
@@ -54,15 +58,24 @@ namespace App
                 return;
 
             UserName name = new UserName(this.FirstNameBox.Text, this.LastNameBox.Text);
-            Actor actor;
+            Actor newActor;
             if (FemaleRadio.Checked)
-                actor = new Actor(name, "F", DateOfBirthBox.Text, -1);
+                //Need to fix on database, reinit constraint from G to F
+                newActor = new Actor(name, "G", validator.getDBReadyDate(DateOfBirthBox.Text), "", "", "");
             else if (MaleRadio.Checked)
-                actor = new Actor(name, "M", DateOfBirthBox.Text, -1);
+                newActor = new Actor(name, "M", validator.getDBReadyDate(DateOfBirthBox.Text), "", "", "");
             else
                 return;
 
-            this.parent.addActor(actor);
+            if (actor == null)
+                DBEnvironment.Add(newActor);
+            else
+            {
+                newActor.Id = actor.Id;
+                DBEnvironment.Edit(newActor);
+            }
+            
+            parent.Reload();
             this.Close();
         }
 

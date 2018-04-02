@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -54,15 +55,53 @@ namespace App
             return doesNotContainSemiColonOrSingleQuote(text);
 
         }
+        public DateTime getDBReadyDate(string text)
+        {
+            DateTime dateTime;
+            bool isValid = DateTime.TryParseExact(
+                    text,
+                    "MM/dd/yyyy",
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out dateTime);
+
+
+            if (!isValid)
+                return dateTime;
+
+
+            return dateTime;
+        }
 
         public bool checkDateOfBirth(string text)
         {
-            var compare = new Regex("[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]");
-            if (!compare.IsMatch(text))
+
+            DateTime dateTime;
+            bool isValid = DateTime.TryParseExact(
+                    text,
+                    "MM/dd/yyyy",
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out dateTime);
+
+            if (!isValid)
             {
                 MessageBox.Show("Date of birth is in wrong format.");
                 return false;
             }
+
+            if (dateTime > DateTime.Now)
+            {
+                MessageBox.Show("Date of birth hasn't happened yet.");
+                return false;
+            }
+            else if (dateTime < DateTime.Parse("1/1/1753 12:00:00 AM"))
+            {
+                MessageBox.Show("Date of birth must be after 1/1/1753");
+                return false;
+            }
+                
+                
             return true;
         }
         public void HandleException(Exception Ex)
