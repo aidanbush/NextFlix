@@ -29,11 +29,11 @@ namespace App
         private void RentButton_Click(object sender, EventArgs e)
         {
             AddToQueue adder = new AddToQueue(movie, user);
-            if (adder.MovieInQueue())
+            /*if (adder.MovieInQueue())
             {
                 MessageBox.Show("Movie is already in your queue");
                 return;
-            }
+            }*/
             if (DBEnvironment.AddToQueue(adder))
             {
                 MessageBox.Show("Movie has been added to your queue!");

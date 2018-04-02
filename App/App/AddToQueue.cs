@@ -19,15 +19,14 @@ namespace App
             user = currentUser;
             creationDate = DateTime.Now;
         }
-        public bool MovieInQueue()
+        public bool MoviesInQueue()
         {
-             BindingList<int> userQueue;
-
+            BindingList<Movie> userQueue;
             userQueue = DBEnvironment.RetrieveQueue(user);
 
-            foreach(int mid in userQueue)
+            foreach(Movie queueMovie in userQueue)
             {
-                if(mid == movie.Id)
+                if(queueMovie.Id == movie.Id)
                 {
                     return true;
                 }

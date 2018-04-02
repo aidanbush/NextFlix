@@ -15,8 +15,8 @@ namespace App
         private Form parent;
         private Customer user;
         private BindingList<Movie> movies;
+        private BindingList<Movie> userQueue;
         private int index;
-
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
 
@@ -27,19 +27,36 @@ namespace App
             
             currentType = CustomerFormType.home;
             InitializeComponent();
-
+            FillUserInfo();
             DBEnvironment.SetMovies();
             movies = DBEnvironment.GetMovies();
+            userQueue = DBEnvironment.RetrieveQueue(user);
+            MoviesQueuedGridView.AutoGenerateColumns = true;
             MovieGridView.AutoGenerateColumns = true;
+            HidePanels();
+            
+        }
+        private void HidePanels()
+        {
             HomePanel.Visible = true;
             ProfilePanel.Visible = false;
             rentMoviePanel.Visible = false;
             myMoviesPanel.Visible = false;
-            
         }
+        private void FillUserInfo()
+        {
+            NameLabel.Text = "Name:" + user.Name.FirstName + " " + user.Name.LastName;
+            AddressLabel.Text = "Address: " + user.Address.HouseNumber + " " + user.Address.StreetNumber;
+            PhoneLabel.Text = "Phone number: " + user.ContactInformation.CleanNumberForOutput();
+            CityLabel.Text = "City: " + user.Address.City;
+            ProvinceLabel.Text = "Province: " + user.Address.Province;
+            EmailLabel.Text = "Email: " + user.ContactInformation.Email;
+        }
+        
         private void fillMovies()
         {
             MovieGridView.DataSource = movies;
+            MoviesQueuedGridView.DataSource = userQueue;
             
         }
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)

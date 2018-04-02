@@ -191,29 +191,29 @@ namespace App
 
             return employeeList;
         }
-        public static BindingList<int> RetrieveQueue(Customer user)
+        public static BindingList<Movie> RetrieveQueue(Customer user)
         {
             int cid = user.Id;
-            string query = "SELECT * FROM queue, movie WHERE cid=" +
-                cid;
+
+            //GET THE MOVIES IN QUEUE
+            string query = "select * from movie " +
+                           "WHERE mid IN " +
+                           "(SELECT mid from queue WHERE cid=" + cid + ")";
+           /* string query = "SELECT * FROM movie" +
+                "WHERE mid" +
+                "IN" +
+                "SELECT * FROM queue, movie WHERE cid=" +
+                cid;*/
             SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
             DataTable queueTable = new DataTable();
             adaptor.Fill(queueTable);
-            BindingList<int> queue = new BindingList<int>();
-            foreach (DataRow queueRow in queueTable.Rows)
-            {
-                int movie = int.Parse(queueRow["mid"].ToString());
-                queue.Add(movie);
-            }
+            BindingList<Movie> queue = GetMoviesFromQuery(queueTable);
+            
             return queue;
 
         }
-        private static BindingList<Movie> RetrieveMovies()
+        private static BindingList<Movie> GetMoviesFromQuery(DataTable movieTable)
         {
-            string qString = "SELECT * FROM movie";
-            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
-            DataTable movieTable = new DataTable();
-            adaptor.Fill(movieTable);
             BindingList<Movie> movies = new BindingList<Movie>();
 
             foreach (DataRow movieRow in movieTable.Rows)
@@ -231,6 +231,15 @@ namespace App
                 movie.Id = id;
                 movies.Add(movie);
             }
+            return movies;
+        }
+        private static BindingList<Movie> RetrieveMovies()
+        {
+            string qString = "SELECT * FROM movie";
+            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
+            DataTable movieTable = new DataTable();
+            adaptor.Fill(movieTable);
+            BindingList<Movie> movies = GetMoviesFromQuery(movieTable);
             return movies;
         }
 
