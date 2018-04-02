@@ -65,7 +65,7 @@
             "Gold",
             "Disabled"});
             this.TypeBox.Location = new System.Drawing.Point(6, 243);
-            this.TypeBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TypeBox.Margin = new System.Windows.Forms.Padding(2);
             this.TypeBox.Name = "TypeBox";
             this.TypeBox.Size = new System.Drawing.Size(102, 21);
             this.TypeBox.TabIndex = 46;
@@ -74,7 +74,7 @@
             // CityBox
             // 
             this.CityBox.Location = new System.Drawing.Point(68, 145);
-            this.CityBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CityBox.Margin = new System.Windows.Forms.Padding(2);
             this.CityBox.Name = "CityBox";
             this.CityBox.Size = new System.Drawing.Size(78, 20);
             this.CityBox.TabIndex = 30;
@@ -92,7 +92,7 @@
             // PhoneBox
             // 
             this.PhoneBox.Location = new System.Drawing.Point(6, 224);
-            this.PhoneBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PhoneBox.Margin = new System.Windows.Forms.Padding(2);
             this.PhoneBox.Name = "PhoneBox";
             this.PhoneBox.Size = new System.Drawing.Size(144, 20);
             this.PhoneBox.TabIndex = 36;
@@ -110,7 +110,7 @@
             // CancelButton
             // 
             this.CancelButton.Location = new System.Drawing.Point(6, 326);
-            this.CancelButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CancelButton.Margin = new System.Windows.Forms.Padding(2);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(70, 29);
             this.CancelButton.TabIndex = 43;
@@ -121,7 +121,7 @@
             // EmailBox
             // 
             this.EmailBox.Location = new System.Drawing.Point(6, 184);
-            this.EmailBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.EmailBox.Margin = new System.Windows.Forms.Padding(2);
             this.EmailBox.Name = "EmailBox";
             this.EmailBox.Size = new System.Drawing.Size(142, 20);
             this.EmailBox.TabIndex = 34;
@@ -149,7 +149,7 @@
             // PostalBox
             // 
             this.PostalBox.Location = new System.Drawing.Point(147, 145);
-            this.PostalBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PostalBox.Margin = new System.Windows.Forms.Padding(2);
             this.PostalBox.Name = "PostalBox";
             this.PostalBox.Size = new System.Drawing.Size(78, 20);
             this.PostalBox.TabIndex = 32;
@@ -217,7 +217,7 @@
             // ProvinceBox
             // 
             this.ProvinceBox.Location = new System.Drawing.Point(6, 145);
-            this.ProvinceBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ProvinceBox.Margin = new System.Windows.Forms.Padding(2);
             this.ProvinceBox.Name = "ProvinceBox";
             this.ProvinceBox.Size = new System.Drawing.Size(52, 20);
             this.ProvinceBox.TabIndex = 29;
@@ -225,7 +225,7 @@
             // StreetBox
             // 
             this.StreetBox.Location = new System.Drawing.Point(147, 99);
-            this.StreetBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StreetBox.Margin = new System.Windows.Forms.Padding(2);
             this.StreetBox.Name = "StreetBox";
             this.StreetBox.Size = new System.Drawing.Size(78, 20);
             this.StreetBox.TabIndex = 28;
@@ -233,7 +233,7 @@
             // HouseBox
             // 
             this.HouseBox.Location = new System.Drawing.Point(68, 99);
-            this.HouseBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.HouseBox.Margin = new System.Windows.Forms.Padding(2);
             this.HouseBox.Name = "HouseBox";
             this.HouseBox.Size = new System.Drawing.Size(78, 20);
             this.HouseBox.TabIndex = 27;
@@ -241,7 +241,7 @@
             // SuiteBox
             // 
             this.SuiteBox.Location = new System.Drawing.Point(6, 99);
-            this.SuiteBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.SuiteBox.Margin = new System.Windows.Forms.Padding(2);
             this.SuiteBox.Name = "SuiteBox";
             this.SuiteBox.Size = new System.Drawing.Size(52, 20);
             this.SuiteBox.TabIndex = 26;
@@ -249,7 +249,7 @@
             // LastNameBox
             // 
             this.LastNameBox.Location = new System.Drawing.Point(6, 62);
-            this.LastNameBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LastNameBox.Margin = new System.Windows.Forms.Padding(2);
             this.LastNameBox.Name = "LastNameBox";
             this.LastNameBox.Size = new System.Drawing.Size(140, 20);
             this.LastNameBox.TabIndex = 25;
@@ -257,7 +257,7 @@
             // FirstNameBox
             // 
             this.FirstNameBox.Location = new System.Drawing.Point(6, 24);
-            this.FirstNameBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FirstNameBox.Margin = new System.Windows.Forms.Padding(2);
             this.FirstNameBox.Name = "FirstNameBox";
             this.FirstNameBox.Size = new System.Drawing.Size(140, 20);
             this.FirstNameBox.TabIndex = 24;
@@ -265,7 +265,7 @@
             // EditUserButton
             // 
             this.EditUserButton.Location = new System.Drawing.Point(79, 325);
-            this.EditUserButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.EditUserButton.Margin = new System.Windows.Forms.Padding(2);
             this.EditUserButton.Name = "EditUserButton";
             this.EditUserButton.Size = new System.Drawing.Size(69, 29);
             this.EditUserButton.TabIndex = 23;
@@ -276,6 +276,7 @@
             // PasswordLabel
             // 
             this.PasswordLabel.AutoSize = true;
+            this.PasswordLabel.Enabled = false;
             this.PasswordLabel.Location = new System.Drawing.Point(12, 273);
             this.PasswordLabel.Name = "PasswordLabel";
             this.PasswordLabel.Size = new System.Drawing.Size(56, 13);
@@ -284,6 +285,7 @@
             // 
             // PasswordTextBox
             // 
+            this.PasswordTextBox.Enabled = false;
             this.PasswordTextBox.Location = new System.Drawing.Point(6, 290);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.Size = new System.Drawing.Size(100, 20);
@@ -319,7 +321,7 @@
             this.Controls.Add(this.LastNameBox);
             this.Controls.Add(this.FirstNameBox);
             this.Controls.Add(this.EditUserButton);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "EditCustomerForm";
             this.Text = "Edit Customer";
             this.Load += new System.EventHandler(this.EditCustomerForm_Load);

@@ -132,7 +132,9 @@ namespace App
             UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
             Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, postal);
             ContactInformation userInfo = new ContactInformation(email, phone);
+            Credentials credentials = new Credentials(UsernameTextBox.Text, PasswordTextBox.Text);
             Customer newCustomer = new Customer(user, userAddress, userInfo, type);
+            newCustomer.Credentials = credentials;
 
             return newCustomer;
         }

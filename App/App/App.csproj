@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Address.cs" />
     <Compile Include="ContactInformation.cs" />
+    <Compile Include="Credentials.cs" />
     <Compile Include="CustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>

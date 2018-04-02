@@ -46,7 +46,7 @@ namespace App
             }
         }
 
-        public bool AddEdit(String queryString, SqlConnection con)
+        /*private bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
             Console.WriteLine("CHecking with " + this.Name.FirstName + " and " + this.Name.LastName);
@@ -82,7 +82,7 @@ namespace App
             con.Close();
             Console.WriteLine("Database edit successful");
             return true;
-        }
+        }*/
 
         public bool Add(SqlConnection con)
         {
@@ -94,24 +94,53 @@ namespace App
             {
                 this.ContactInformation.Email = null;
             }
-            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province)" +
-               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province)";
+            String qString = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province, username, passhash)" +
+               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province, @username, @passhash)";
 
-            if(AddEdit(q, con))
+            con.Open();
+            Console.WriteLine("CHecking with " + this.Name.FirstName + " and " + this.Name.LastName);
+            using (SqlCommand command = new SqlCommand(qString, con))
             {
-                return true;
+                try
+                {
+                    command.Parameters.AddWithValue("@first_name", this.Name.FirstName);
+                    command.Parameters.AddWithValue("@last_name", this.Name.LastName);
+                    command.Parameters.AddWithValue("@creation_date", DateTime.Now);
+                    command.Parameters.AddWithValue("@account_type", this.Type.ToString());
+                    command.Parameters.AddWithValue("@phone_number", CheckNulls(this.ContactInformation.PhoneNumber));
+                    command.Parameters.AddWithValue("@email", CheckNulls(this.ContactInformation.Email));
+                    command.Parameters.AddWithValue("@suite_number", this.Address.SuiteNumber);
+                    command.Parameters.AddWithValue("@street_number", this.Address.StreetNumber);
+                    command.Parameters.AddWithValue("@house_number", this.Address.HouseNumber);
+                    command.Parameters.AddWithValue("@postalcode", CheckNulls(this.Address.PostalCode));
+                    command.Parameters.AddWithValue("@city", this.Address.City);
+                    command.Parameters.AddWithValue("@province", this.Address.Province);
+                    command.Parameters.AddWithValue("@cid", this.Id);
+                    command.Parameters.AddWithValue("@username", this.Credentials.Username);
+                    command.Parameters.AddWithValue("@passhash", this.Credentials.PassHash);
+
+                    int err = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    Debug.Print(e.ToString());
+                    con.Close();
+                    return false;
+                }
+
             }
-            else
-            {
-                return false;
-            }
-            
+            con.Close();
+            Console.WriteLine("Database edit successful");
+            return true;
+
+            // credentials
         }
 
         public bool Edit(SqlConnection con)
         {
             
-            String q = "UPDATE customer SET first_name=@first_name, " + 
+            String qString = "UPDATE customer SET first_name=@first_name, " + 
                     "last_name=@last_name, " + 
                     "phone_number=@phone_number, " + 
                     "email=@email, " + 
@@ -122,18 +151,43 @@ namespace App
                     "city=@city, " +
                     "province=@province, " +
                     "account_type=@account_type " +
+                    //"passhash=@passhash" +
                     "WHERE cid=@cid";
-            if (AddEdit(q, con))
-            {
 
-                Console.WriteLine("User updated");
-                return true;
-            }
-            else
+            con.Open();
+            Console.WriteLine("CHecking with " + this.Name.FirstName + " and " + this.Name.LastName);
+            using (SqlCommand command = new SqlCommand(qString, con))
             {
-                Console.WriteLine("User could not be updated");
-                return false;
+                try
+                {
+                    command.Parameters.AddWithValue("@first_name", this.Name.FirstName);
+                    command.Parameters.AddWithValue("@last_name", this.Name.LastName);
+                    command.Parameters.AddWithValue("@account_type", this.Type.ToString());
+                    command.Parameters.AddWithValue("@phone_number", CheckNulls(this.ContactInformation.PhoneNumber));
+                    command.Parameters.AddWithValue("@email", CheckNulls(this.ContactInformation.Email));
+                    command.Parameters.AddWithValue("@suite_number", this.Address.SuiteNumber);
+                    command.Parameters.AddWithValue("@street_number", this.Address.StreetNumber);
+                    command.Parameters.AddWithValue("@house_number", this.Address.HouseNumber);
+                    command.Parameters.AddWithValue("@postalcode", CheckNulls(this.Address.PostalCode));
+                    command.Parameters.AddWithValue("@city", this.Address.City);
+                    command.Parameters.AddWithValue("@province", this.Address.Province);
+                    command.Parameters.AddWithValue("@cid", this.Id);
+                    //command.Parameters.AddWithValue("@passhash", this.Credentials.PassHash);
+
+                    int err = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    Debug.Print(e.ToString());
+                    con.Close();
+                    return false;
+                }
+
             }
+            con.Close();
+            Console.WriteLine("Database edit successful");
+            return true;
         }
 
         public bool Delete(SqlConnection con)
