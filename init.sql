@@ -34,6 +34,8 @@ create table customer (
 	creation_date date not null check(creation_date <= getdate()),
 	credit_card text, --doesn't always have 16 digits
 	rating int check(0 <= rating and rating <= 5) default 0 not null,
+	username text not null,
+	passhash text not null,
 );
 
 create table employee (
@@ -51,6 +53,8 @@ create table employee (
 	start date not null,
 	wage float not null check(wage > 0),
 	social_insurance_num char(9) check(social_insurance_num is null or (len(social_insurance_num) = 9 and isnumeric(social_insurance_num) = 1)),
+	username text not null,
+	passhash text not null,
 );
 
 create table movie (
@@ -236,19 +240,11 @@ begin
 end;
 go
 
-insert into employee (position, first_name, last_name, [start], wage)
-values ('manager', 'admin', 'admin', getdate(), 1);
+insert into employee (position, first_name, last_name, [start], wage, username, passhash)
+values ('manager', 'admin', 'admin', getdate(), 1, 'admin', 'pass');
 
-insert into employee_accounts (eid, username, passhash)
-values (1, 'admin', 'pass');
-
-insert into customer (first_name, last_name, account_type, creation_date)
-values ('admin', 'admin', 'Gold', getdate());
-
-insert into customer_accounts (cid, username, passhash)
-values (1, 'admin', 'pass');
+insert into customer (first_name, last_name, account_type, creation_date, username, passhash)
+values ('admin', 'admin', 'Gold', getdate(), 'admin', 'pass');
 
 select * from employee;
-select * from employee_accounts;
 select * from customer;
-select * from customer_accounts;

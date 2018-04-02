@@ -337,7 +337,7 @@ namespace App
 
         public static Customer ValidateCustomer(string username, string passhash)
         {
-            string qString = "SELECT * FROM customer WHERE cid IN (SELECT cid from customer_accounts WHERE username LIKE @username and passhash LIKE @passhash)";
+            string qString = "SELECT * FROM customer WHERE username LIKE @username and passhash LIKE @passhash";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
@@ -357,7 +357,7 @@ namespace App
 
         public static Employee ValidateEmployee(string username, string passhash)
         {
-            string qString = "SELECT * FROM employee WHERE eid IN (SELECT eid from employee_accounts WHERE username LIKE @username and passhash LIKE @passhash)";
+            string qString = "SELECT * FROM employee WHERE username LIKE @username and passhash LIKE @passhash";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
@@ -377,7 +377,7 @@ namespace App
 
         public static Employee ValidateManager(string username, string passhash)
         {
-            string qString = "SELECT * FROM employee WHERE eid IN (SELECT eid from employee_accounts WHERE username LIKE @username AND passhash LIKE @passhash) AND position = 'manager'";
+            string qString = "SELECT * FROM employee WHERE username LIKE @username AND passhash LIKE @passhash AND position = 'manager'";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
