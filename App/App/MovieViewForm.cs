@@ -29,10 +29,19 @@ namespace App
         private void RentButton_Click(object sender, EventArgs e)
         {
             AddToQueue adder = new AddToQueue(movie, user);
-            Console.WriteLine("User id: " + user.Id.ToString());
-            Console.WriteLine(movie.Name + " id: " + movie.Id.ToString());
-            Console.WriteLine("date: " + adder.CreationDate.ToString());
-            DBEnvironment.AddToQueue(adder);
+            if (adder.MovieInQueue())
+            {
+                MessageBox.Show("Movie is already in your queue");
+                return;
+            }
+            if (DBEnvironment.AddToQueue(adder))
+            {
+                MessageBox.Show("Movie has been added to your queue!");
+            }
+            else
+            {
+                MessageBox.Show("Movie could not be added");
+            }
         }
     }
 }

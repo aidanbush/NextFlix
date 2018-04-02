@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,21 @@ namespace App
             movie = selectedMovie;
             user = currentUser;
             creationDate = DateTime.Now;
+        }
+        public bool MovieInQueue()
+        {
+             BindingList<int> userQueue;
+
+            userQueue = DBEnvironment.RetrieveQueue(user);
+
+            foreach(int mid in userQueue)
+            {
+                if(mid == movie.Id)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         public DateTime CreationDate { get => creationDate; set => creationDate = value; }
         public bool Add(SqlConnection con)
