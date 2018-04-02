@@ -34,7 +34,7 @@ create table customer (
 	creation_date date not null check(creation_date <= getdate()),
 	credit_card text, --doesn't always have 16 digits
 	rating int check(0 <= rating and rating <= 5) default 0 not null,
-	username text not null,
+	username varchar(64) not null unique,
 	passhash text not null,
 );
 
@@ -53,7 +53,7 @@ create table employee (
 	start date not null,
 	wage float not null check(wage > 0),
 	social_insurance_num char(9) check(social_insurance_num is null or (len(social_insurance_num) = 9 and isnumeric(social_insurance_num) = 1)),
-	username text not null,
+	username varchar(64) not null unique,
 	passhash text not null,
 );
 
