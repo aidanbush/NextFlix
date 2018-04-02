@@ -32,8 +32,11 @@ namespace App
             ActorList.DataSource = actors;
             MovieActorList.DataSource = movieActors;
             ActorList.AutoGenerateColumns = true;
-            if (selectedMovie != null)
-                fillForm();
+            if (selectedMovie == null)
+                return;
+            movieActors = DBEnvironment.GetActors(selectedMovie);
+            MovieActorList.DataSource = movieActors;
+            fillForm();
         }
 
         private void fillForm()

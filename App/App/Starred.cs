@@ -18,41 +18,41 @@ namespace App
         }
         public bool Add(SqlConnection con)
         {
+            con.Open();
             String q = "insert into starred(mid, aid)" +
          "values (@mid, @aid)";
+
             foreach (Actor actor in addedActors)
             {
-                if (!query(actor, movie, q, con))
-                    return false;
+                query(actor, movie, q, con);
             }
+            con.Close();
             return true;
         }
 
         public bool Delete(SqlConnection con)
         {
-            
+            con.Open();
             String q = "Delete FROM starred WHERE mid=@mid AND aid=@aid";
             foreach (Actor actor in deletedActors)
             {
-                if (!query(actor, movie, q, con))
-                    return false;
+                query(actor, movie, q, con);
             }
+            con.Close();
             return true;
         }
 
         public bool Edit(SqlConnection con)
         {
-            if (!Add(con))
-               return false;
-            if (!Delete(con))
-                return false;
+            Add(con);
+            Delete(con);
             return true;
         }
 
 
         private bool query(Actor actor, Movie movie, String q, SqlConnection con)
         {
-            con.Open();
+
             using (SqlCommand command = new SqlCommand(q, con))
             {
                 try
@@ -67,13 +67,11 @@ namespace App
                 }
                 catch (Exception e)
                 {
-                    Debug.Print(e.ToString());
-                    con.Close();
+                    Debug.Print("Couldn't add " + actor.Id);
                     return false;
                 }
 
             }
-            con.Close();
             return true;
         }
     }
