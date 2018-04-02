@@ -19,32 +19,33 @@ namespace App
             parent = frm;
             InitializeComponent();
         }
-        private bool NameBoxesValid()
+
+        private bool InputsValid()
         {
-            if (FirstNameBox.Text == "" && LastNameBox.Text == "")
-            {
+            string msg = "";
+            if (FirstNameBox.Text == "")
+                msg += "First name cannot be blank.\n";
 
-                MessageBox.Show("The customer's first and last name cannot be blank");
+            if (LastNameBox.Text == "")
+                msg += "Last name cannot be blank.\n";
+
+            if (UsernameTextBox.Text == "")
+                msg += "Username cannot be blank.\n";
+            else if (!DBEnvironment.CustomerUsernameAvailablility(UsernameTextBox.Text))
+                msg += "Username unavailable.\n";
+
+            if (PasswordTextBox.Text == "")
+                msg += "Password cannot be blank.\n";
+
+            if (msg != "")
+            {
+                MessageBox.Show(msg);
                 return false;
             }
-            else if(FirstNameBox.Text == "")
-            {
 
-                MessageBox.Show("The customer's first name cannot be blank.");
-                return false;
-            }
-            else if(LastNameBox.Text == "")
-            {
-
-                MessageBox.Show("The customer's last name cannot be blank");
-                return false;
-            }
-            
-            else
-            {
-                return true;
-            }
+            return true;
         }
+
         private Customer.AccountType GetAccountType()
         {
             Customer.AccountType type;
@@ -74,6 +75,7 @@ namespace App
             }
             return type;
         }
+
         private void HandleException(Exception Ex)
         {
             if (Ex is AccountTypeException)
@@ -92,6 +94,7 @@ namespace App
                 return;
             }
         }
+
         private String CheckBlankBoxes(TextBox box)
         {
             String outString;
@@ -118,6 +121,7 @@ namespace App
             Console.WriteLine("OUT");
             return outString;
         }
+
         private Customer CreateCustomer()
         {  
             String postal = CheckBlankBoxes(PostalBox);
@@ -132,6 +136,7 @@ namespace App
 
             return newCustomer;
         }
+
         private bool InsertUser()
         { 
             if ((MessageBox.Show("Add new Customer with current information?", "Confirm",
@@ -158,17 +163,19 @@ namespace App
                 return false;
             }
         }
+
         private void AddUserButton_Click(object sender, EventArgs e)
         {
-            if (NameBoxesValid() == true)
+            if (!InputsValid())
+                return;
+
+            if (InsertUser() == true)
             {
-                if (InsertUser() == true)
-                {
-                    parent.FillTable();
-                    this.Close();
-                }
+                parent.FillTable();
+                this.Close();
             }
         }
+
         private void CancelButton_Click(object sender, EventArgs e)
         {
             if ((MessageBox.Show("Cancel Customer Entry? (Information will not be saved)", "Cancel",
@@ -178,6 +185,7 @@ namespace App
                 this.Close();
             }
         }
+
         private void AddCustomerForm_Load(object sender, EventArgs e)
         {
             this.PostalBox.Enter += new EventHandler(PostalBox_Enter);
@@ -185,16 +193,16 @@ namespace App
             this.EmailBox.Enter += new EventHandler(EmailBox_Enter);
             this.EmailBox.Leave += new EventHandler(EmailBox_Leave);
             defaultSetText();
-            
         }
+
         protected void defaultSetText()
         {
-
             this.PostalBox.Text = "eg t1t1t1";
             PostalBox.ForeColor = Color.Gray;
             this.EmailBox.Text = "eg username@email.com";
             EmailBox.ForeColor = Color.Gray;
         }
+
         private void PostalBox_Enter(object sender, EventArgs e)
         {
             if (PostalBox.ForeColor == Color.Black)
@@ -202,6 +210,7 @@ namespace App
             PostalBox.Text = "";
             PostalBox.ForeColor = Color.Black;
         }
+
         private void PostalBox_Leave(object sender, EventArgs e)
         {
             if (PostalBox.Text.Trim() == "")
@@ -215,11 +224,13 @@ namespace App
             EmailBox.Text = "";
             EmailBox.ForeColor = Color.Black;
         }
+
         private void EmailBox_Leave(object sender, EventArgs e)
         {
             if (EmailBox.Text.Trim() == "")
                 defaultSetText();
         }
+
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 

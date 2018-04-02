@@ -335,9 +335,37 @@ namespace App
             return null;
         }
 
+        public static bool CustomerUsernameAvailablility(string username)
+        {
+            // use top so it breaks out early
+            string qString = "SELECT TOP 1 * FROM customer WHERE username LIKE @username";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            return table.Rows.Count == 0;
+        }
+
+        public static bool EmployeeUsernameAvailablility(string username)
+        {
+            // use top so it breaks out early
+            string qString = "SELECT TOP 1 * FROM employee WHERE username LIKE @username";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            return table.Rows.Count == 0;
+        }
+
         public static Customer ValidateCustomer(string username, string passhash)
         {
-            string qString = "SELECT * FROM customer WHERE username LIKE @username and passhash LIKE @passhash";
+            string qString = "SELECT * FROM customer WHERE username LIKE @username AND passhash LIKE @passhash";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
@@ -357,7 +385,7 @@ namespace App
 
         public static Employee ValidateEmployee(string username, string passhash)
         {
-            string qString = "SELECT * FROM employee WHERE username LIKE @username and passhash LIKE @passhash";
+            string qString = "SELECT * FROM employee WHERE username LIKE @username AND passhash LIKE @passhash";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
