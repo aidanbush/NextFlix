@@ -105,52 +105,7 @@ namespace App
             adaptor.Fill(customerTable);
 
             foreach (DataRow customerRow in customerTable.Rows) {
-                UserName name = new UserName(customerRow["first_name"].ToString(), customerRow["last_name"].ToString());
-                String postalCode;
-                try
-                {
-                    postalCode = customerRow["postalcode"].ToString();
-                }
-                catch(PostalCodeException)
-                {
-                    postalCode = "";
-                }
-
-                Address address = new Address(customerRow["suite_number"].ToString(), customerRow["street_number"].ToString(),
-                                              customerRow["house_number"].ToString(), customerRow["city"].ToString(),
-                                              customerRow["province"].ToString(), postalCode);
-                Customer.AccountType account = Customer.AccountType.Limited;
-                switch (customerRow["account_type"].ToString())
-                {
-                    case "Disabled":
-                        account = Customer.AccountType.Disabled;
-                        break;
-                    case "Limited":
-                        account = Customer.AccountType.Limited;
-                        break;
-                    case "Bronze":
-                        account = Customer.AccountType.Bronze;
-                        break;
-                    case "Silver":
-                        account = Customer.AccountType.Silver;
-                        break;
-                    case "Gold":
-                        account = Customer.AccountType.Gold;
-                        break;
-                    default:
-                        Debug.Write("Read customer without account type.");
-                        continue;
-                }
-
-                ContactInformation newContact = new ContactInformation(customerRow["email"].ToString(), customerRow["phone_number"].ToString());
-                Credentials credentials = new Credentials(customerRow["username"].ToString(), customerRow["passhash"].ToString());
-                Customer customer = new Customer(name, address, newContact, account)
-                {
-                    CreationDate = (DateTime)customerRow["creation_date"],
-                    Id = (int)customerRow["cid"],
-                    Credentials = credentials,
-                };
-
+                Customer customer = CreateCustomerFromRow(customerRow);
                 customers.Add(customer);
             }
 
@@ -169,27 +124,8 @@ namespace App
 
             foreach (DataRow employeeRow in employeeTable.Rows)
             {
-                UserName name = new UserName(employeeRow["first_name"].ToString(), employeeRow["last_name"].ToString());
-
-                Address address = new Address(employeeRow["suite_number"].ToString(), employeeRow["street_number"].ToString(),
-                                              employeeRow["house_number"].ToString(), employeeRow["city"].ToString(),
-                                              employeeRow["province"].ToString(), employeeRow["postalcode"].ToString());
-
-
-                ContactInformation contactInfo = new ContactInformation(null, employeeRow["phone_number"].ToString());
-                Employee.Position position = Employee.Position.Employee;
-                if (employeeRow["position"].ToString() == "Manager")
-                {
-                    position = Employee.Position.Manager;
-                }
-                Credentials credentials = new Credentials(employeeRow["username"].ToString(), employeeRow["passhash"].ToString());
-                Employee e = new Employee(name, address, contactInfo, float.Parse(employeeRow["wage"].ToString(), CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, employeeRow["social_insurance_num"].ToString(), position)
-                {
-                    Id = int.Parse(employeeRow["eid"].ToString()),
-                    Credentials = credentials,
-                };
-
-                employeeList.Add(e);
+                Employee employee = CreateEmployeeFromRow(employeeRow);
+                employeeList.Add(employee);
             }
 
             return employeeList;
@@ -205,17 +141,7 @@ namespace App
 
             foreach (DataRow movieRow in movieTable.Rows)
             {
-
-                string name = movieRow["name"].ToString();
-                string genre = movieRow["genre"].ToString();
-                float fees = float.Parse(movieRow["fees"].ToString());
-                int num_copies = int.Parse(movieRow["num_copies"].ToString());
-                int copies = int.Parse(movieRow["copies_available"].ToString());
-                int id = (int)movieRow["mid"];
-                //rating don't work?
-                //movieRow["rating"].ToString();
-                Movie movie = new Movie(name, genre, fees, num_copies, copies, 1);
-                movie.Id = id;
+                Movie movie = CreateMovieFromRow(movieRow);
                 movies.Add(movie);
             }
             return movies;
@@ -526,8 +452,13 @@ namespace App
 
             ContactInformation contactInfo = new ContactInformation("", phone);
 
-            Employee employee = new Employee(name, address, contactInfo, wage, startDate, sin, position);
-            employee.Id = (int)row["eid"];
+            Credentials credentials = new Credentials(row["username"].ToString(), row["passhash"].ToString());
+
+            Employee employee = new Employee(name, address, contactInfo, wage, startDate, sin, position)
+            {
+                Id = (int)row["eid"],
+                Credentials = credentials
+            };
 
             return employee;
         }
@@ -635,11 +566,17 @@ namespace App
             Address address = new Address(suite, street, house, city, province, postalCode);
 
             ContactInformation newContact = new ContactInformation(email, phone);
-            Customer customer = new Customer(name, address, newContact, account);
-            customer.CreationDate = creationDate;
-            customer.CreditCard = creditCard;
-            customer.Id = (int)row["cid"];
-            customer.Rating = (int)row["rating"];
+
+            Credentials credentials = new Credentials(row["username"].ToString(), row["passhash"].ToString());
+
+            Customer customer = new Customer(name, address, newContact, account)
+            {
+                CreationDate = creationDate,
+                CreditCard = creditCard,
+                Id = (int)row["cid"],
+                Rating = (int)row["rating"],
+                Credentials = credentials
+            };
 
             return customer;
         }
