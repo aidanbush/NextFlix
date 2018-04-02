@@ -49,8 +49,7 @@ namespace App
             if ((MessageBox.Show("Add new Movie with current information?", "Confirm",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
-            {
-                
+            {   
                 try
                 {
                     String title = TitleBox.Text;
@@ -66,7 +65,6 @@ namespace App
                 }
                 catch (Exception Ex)
                 {
-                    //HandleException(Ex);
                     return false;
                 }
             }

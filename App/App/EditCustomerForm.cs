@@ -86,8 +86,15 @@ namespace App
                 updatedCustomer.Address.HouseNumber = HouseBox.Text;
             }
             if (customer.Address.PostalCode != PostalBox.Text)
-            {
-                updatedCustomer.Address.PostalCode = PostalBox.Text;
+            {   
+                if(PostalBox.Text == "")
+                {
+                    updatedCustomer.Address.PostalCode = null;
+                }
+                else
+                {
+                    updatedCustomer.Address.PostalCode = PostalBox.Text;
+                }
             }
             if (customer.Address.Province != ProvinceBox.Text)
             {
@@ -103,7 +110,14 @@ namespace App
             }
             if (customer.ContactInformation.Email != EmailBox.Text)
             {
-                updatedCustomer.ContactInformation.Email = EmailBox.Text;
+                if (EmailBox.Text == "")
+                {
+                    updatedCustomer.ContactInformation.Email = null;
+                }
+                else
+                {
+                    updatedCustomer.ContactInformation.Email = EmailBox.Text;
+                }
             }
             if (customer.ContactInformation.PhoneNumber != PhoneBox.Text)
             {
@@ -128,8 +142,7 @@ namespace App
                 parent.FillTable();
                 this.Close();
             }
-                
-
+            
         }
 
         private void EditCustomerForm_Load(object sender, EventArgs e)

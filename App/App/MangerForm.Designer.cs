@@ -43,6 +43,7 @@ namespace App
             this.DeleteButton = new System.Windows.Forms.Button();
             this.UpdateRatingsButton = new System.Windows.Forms.Button();
             this.FulfillOrderButton = new System.Windows.Forms.Button();
+            this.LogoutButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +64,6 @@ namespace App
             this.dataGridView1.Size = new System.Drawing.Size(921, 607);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // AddButton
             // 
@@ -186,13 +186,29 @@ namespace App
             this.FulfillOrderButton.Text = "Fulfill order";
             this.FulfillOrderButton.UseVisualStyleBackColor = true;
             this.FulfillOrderButton.Visible = false;
-            this.FulfillOrderButton.Click += new System.EventHandler(this.FulfillOrderButton_click);
+            this.FulfillOrderButton.Click += new System.EventHandler(this.FulfillOrderButton_Click);
+            // 
+            // LogoutButton
+            // 
+            this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LogoutButton.Location = new System.Drawing.Point(875, 28);
+            this.LogoutButton.Name = "LogoutButton";
+            this.LogoutButton.Size = new System.Drawing.Size(75, 23);
+            this.LogoutButton.TabIndex = 10;
+            this.LogoutButton.Text = "Logout";
+            this.LogoutButton.UseVisualStyleBackColor = true;
+            this.LogoutButton.Click += new System.EventHandler(this.LogoutButton_Click);
             // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+<<<<<<< HEAD:App/App/Form2.Designer.cs
             this.ClientSize = new System.Drawing.Size(1283, 679);
+=======
+            this.ClientSize = new System.Drawing.Size(962, 552);
+            this.Controls.Add(this.LogoutButton);
+>>>>>>> 7f66d7f2b6328ffd0b79feda35aef9c533fc93ab:App/App/MangerForm.Designer.cs
             this.Controls.Add(this.FulfillOrderButton);
             this.Controls.Add(this.UpdateRatingsButton);
             this.Controls.Add(this.DeleteButton);
@@ -204,6 +220,7 @@ namespace App
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "ManagerForm";
             this.Text = "Manager";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ManagerFormClosed);
             this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -229,5 +246,6 @@ namespace App
         private System.Windows.Forms.Button DeleteButton;
         private System.Windows.Forms.Button UpdateRatingsButton;
         private System.Windows.Forms.Button FulfillOrderButton;
+        private System.Windows.Forms.Button LogoutButton;
     }
 }

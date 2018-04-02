@@ -14,20 +14,24 @@ namespace App
 
         public ContactInformation(String eAddress, String phone)
         {
+
             email = eAddress;
+
             phoneNumber = CleanPhone(phone);
         }
         private String CleanPhone(String phone)
         {
+            Console.WriteLine(phone);
             if (phone == "")
             {
-                return phone;
+                return null;
             }
             if(phone.Length != 10)
             {
                 throw new PhoneNumberException();
             }
             var stripped = Regex.Replace(phone, "[^0-9]", "");
+            Console.WriteLine(stripped.ToString());
             return stripped.ToString();            
         }
 

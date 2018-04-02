@@ -14,8 +14,8 @@ namespace App
 {
     public partial class ManagerForm : Form
     {
-        public enum EmploymentRole { manager, employee };
-        private EmploymentRole role;
+        private Employee user;
+        private Form parent;
 
         private int index;
         private enum FormType { customer, employee, movie, manager, order};
@@ -25,6 +25,7 @@ namespace App
         private BindingList<Customer> customers;
         private BindingList<Movie> movies;
         private BindingList<Employee> employees;
+        private BindingList<Order> orders;
 
         private CustomerView customerView;
         private EmployeeView employeeView;
@@ -32,9 +33,13 @@ namespace App
         private ManagerView managerView;
         private OrderView orderView;
 
-        public ManagerForm(EmploymentRole newRole)
+        public Employee User { get => user; }
+        public BindingList<Order> Orders { get => orders; }
+
+        public ManagerForm(Form newParent, Employee newUser)
         {
-            role = newRole;
+            parent = newParent;
+            user = newUser;
 
             customers = DBEnvironment.GetCustomers();
             movies = DBEnvironment.GetMovies();
@@ -48,7 +53,7 @@ namespace App
 
             InitializeComponent();
             
-            if (role != EmploymentRole.manager)
+            if (user.EmployeePosition != Employee.Position.Manager)
             {
                 this.Text = "Employee";
                 //customerRepresentativesToolStripMenuItem.Visible = false;
@@ -118,10 +123,6 @@ namespace App
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -205,10 +206,24 @@ namespace App
                     break;
             }
         }
-        
-        private void FulfillOrderButton_click(object sender, EventArgs e)
-        {
 
+        private void FulfillOrderButton_Click(object sender, EventArgs e)
+        {
+            // TODO: implement
+            //Order selectedOrder = orders.ElementAt(index);
+            Order selectedOrder = orders[index];
+            FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
+            fufillForm.Show();
+        }
+
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ManagerFormClosed(object sender, FormClosedEventArgs e)
+        {
+            parent.Show();
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -447,11 +462,17 @@ namespace App
 
             public void ShowView()
             {
+                Debug.WriteLine("Show OrderView");
                 // buttons
                 parent.FulfillOrderButton.Show();
                 // other
                 parent.dataGridView1.Show();
-                parent.dataGridView1.DataSource = DBEnvironment.RetrieveUnfulfilledOrders();
+
+                // setup dataGridView
+                parent.orders = DBEnvironment.RetrieveUnfulfilledOrders();
+                parent.dataGridView1.DataSource = parent.orders;
+                
+                parent.Refresh();
             }
         }
     }
