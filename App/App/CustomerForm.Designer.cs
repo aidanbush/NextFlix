@@ -48,13 +48,6 @@
             this.NameLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.HomePanel = new System.Windows.Forms.Panel();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            this.label4 = new System.Windows.Forms.Label();
->>>>>>> a89f3c8427b093e832f53faaa6cb2951b3044249
-=======
->>>>>>> 967f8fc02bbea2d89da354f649eaf62cef488754
             this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.ProfilePanel.SuspendLayout();
@@ -248,7 +241,6 @@
             // 
             // HomePanel
             // 
-            this.HomePanel.Controls.Add(this.label4);
             this.HomePanel.Controls.Add(this.label3);
             this.HomePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HomePanel.Location = new System.Drawing.Point(0, 24);
@@ -258,16 +250,6 @@
             this.HomePanel.TabIndex = 10;
             this.HomePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.HomePanel_Paint);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 141);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "label4";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -275,10 +257,6 @@
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 13);
-<<<<<<< HEAD
->>>>>>> a89f3c8427b093e832f53faaa6cb2951b3044249
-=======
->>>>>>> 967f8fc02bbea2d89da354f649eaf62cef488754
             this.label3.TabIndex = 0;
             this.label3.Text = "Hello, User";
             // 
