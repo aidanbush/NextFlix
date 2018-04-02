@@ -164,12 +164,8 @@ namespace App
 
             return customers;
         }
-<<<<<<< HEAD
         private static BindingList<Employee>  RetrieveEmployees()
-=======
 
-        private static BindingList<Employee> RetrieveEmployees()
->>>>>>> 7f66d7f2b6328ffd0b79feda35aef9c533fc93ab
         {
             BindingList<Employee> employeeList = new BindingList<Employee>();
 

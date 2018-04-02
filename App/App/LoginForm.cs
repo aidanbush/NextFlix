@@ -81,11 +81,8 @@ namespace App
         {
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
-<<<<<<< HEAD
-=======
             Employee employee;
-
->>>>>>> 7f66d7f2b6328ffd0b79feda35aef9c533fc93ab
+            
             if (name == "admin" && pass == "pass")
             {
                 employee = DBEnvironment.ValidateEmployee(name, pass);
@@ -101,11 +98,8 @@ namespace App
         {
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
-<<<<<<< HEAD
-=======
             Employee manager;
-
->>>>>>> 7f66d7f2b6328ffd0b79feda35aef9c533fc93ab
+            
             if (name == "admin" && pass == "pass")
             {
                 manager = DBEnvironment.ValidateManager(name, pass);
