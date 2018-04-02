@@ -143,9 +143,13 @@ namespace App
                 }
 
                 ContactInformation newContact = new ContactInformation(customerRow["email"].ToString(), customerRow["phone_number"].ToString());
-                Customer customer = new Customer(name, address, newContact, account);
-                customer.CreationDate = (DateTime)customerRow["creation_date"];
-                customer.Id = (int)customerRow["cid"];
+                Credentials credentials = new Credentials(customerRow["username"].ToString(), customerRow["passhash"].ToString());
+                Customer customer = new Customer(name, address, newContact, account)
+                {
+                    CreationDate = (DateTime)customerRow["creation_date"],
+                    Id = (int)customerRow["cid"],
+                    Credentials = credentials,
+                };
 
                 customers.Add(customer);
             }
@@ -178,8 +182,12 @@ namespace App
                 {
                     position = Employee.Position.Manager;
                 }
-                Employee e = new Employee(name, address, contactInfo, float.Parse(employeeRow["wage"].ToString(), CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, employeeRow["social_insurance_num"].ToString(), position);
-                e.Id = int.Parse(employeeRow["eid"].ToString());
+                Credentials credentials = new Credentials(employeeRow["username"].ToString(), employeeRow["passhash"].ToString());
+                Employee e = new Employee(name, address, contactInfo, float.Parse(employeeRow["wage"].ToString(), CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, employeeRow["social_insurance_num"].ToString(), position)
+                {
+                    Id = int.Parse(employeeRow["eid"].ToString()),
+                    Credentials = credentials,
+                };
 
                 employeeList.Add(e);
             }

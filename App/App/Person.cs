@@ -28,6 +28,9 @@ namespace App
         public string City { get => address.City; }
         public string Province { get => address.Province; }
         public string PostalCode { get => address.PostalCode; }
+
+        /* username getter */
+        public string Username { get => credentials.Username; }
     }
 
 }

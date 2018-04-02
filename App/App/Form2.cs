@@ -338,6 +338,7 @@ namespace App
                 parent.dataGridView1.Columns.Remove("Address");
                 parent.dataGridView1.Columns.Remove("Name");
                 parent.dataGridView1.Columns.Remove("ContactInformation");
+                parent.dataGridView1.Columns.Remove("Credentials");
 
                 parent.Refresh();
             }
@@ -382,6 +383,7 @@ namespace App
                 parent.dataGridView1.Columns.Remove("Address");
                 parent.dataGridView1.Columns.Remove("Name");
                 parent.dataGridView1.Columns.Remove("ContactInformation");
+                parent.dataGridView1.Columns.Remove("Credentials");
 
                 parent.Refresh();
             }
