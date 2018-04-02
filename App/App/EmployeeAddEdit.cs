@@ -119,14 +119,8 @@ namespace App
 
         }
         
-        private bool checkFormInputsGood()
+        private bool checkFormInputs()
         {
-            if (UsernameTextBox.Text == "" || PasswordTextBox.Text == "")
-                return false;
-
-            if (!DBEnvironment.EmployeeUsernameAvailablility(UsernameTextBox.Text))
-                return false;
-
             if (!inputHandler.checkNames(FirstNameBox.Text))
                 return false;
 
@@ -161,9 +155,20 @@ namespace App
             return true;
         }
 
+        private bool ValidUsernamePassword()
+        {
+            if (UsernameTextBox.Text == "" || PasswordTextBox.Text == "")
+                return false;
+
+            if (!DBEnvironment.EmployeeUsernameAvailablility(UsernameTextBox.Text))
+                return false;
+
+            return true;
+        }
+
         private void AddUserButton_Click(object sender, EventArgs e)
         {
-            if (!checkFormInputsGood())
+            if (!checkFormInputs())
             {
                 if (employee == null)
                     Debug.Print("Couldn't add employee");
@@ -174,12 +179,17 @@ namespace App
 
             if (employee == null)
             {
+                if (!ValidUsernamePassword())
+                    return;
+
                 if (InsertUser())
                     parent.FillTable();
             }
             else
+            {
                 if (EditUser())
                     parent.FillTable();
+            }
 
             this.Close();
 
@@ -188,6 +198,7 @@ namespace App
         private void CancelButton_Click_1(object sender, EventArgs e)
         {
             Debug.Print("cancelBtn");
+            this.Close();
         }
     }
 }
