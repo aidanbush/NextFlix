@@ -46,7 +46,7 @@ namespace App
             }
         }
 
-        public bool AddEdit(String queryString, SqlConnection con)
+        private bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
             Console.WriteLine("CHecking with " + this.Name.FirstName + " and " + this.Name.LastName);
@@ -67,7 +67,9 @@ namespace App
                     command.Parameters.AddWithValue("@city", this.Address.City);
                     command.Parameters.AddWithValue("@province", this.Address.Province);
                     command.Parameters.AddWithValue("@cid", this.Id);
-                    
+                    command.Parameters.AddWithValue("@username", this.Credentials.Username);
+                    command.Parameters.AddWithValue("@passhash", this.Credentials.PassHash);
+
                     int err = command.ExecuteNonQuery();
                 }
                 catch (Exception e)
@@ -77,8 +79,8 @@ namespace App
                     con.Close();
                     return false;
                 }
-
             }
+
             con.Close();
             Console.WriteLine("Database edit successful");
             return true;
@@ -94,24 +96,16 @@ namespace App
             {
                 this.ContactInformation.Email = null;
             }
-            String q = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province)" +
-               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province)";
+            String qString = "insert into customer(first_name, last_name, account_type, creation_date, phone_number, email, suite_number, street_number, house_number, postalcode, city, province, username, passhash)" +
+               "values (@first_name, @last_name, @account_type, @creation_date, @phone_number, @email, @suite_number, @street_number, @house_number, @postalcode, @city, @province, @username, @passhash)";
 
-            if(AddEdit(q, con))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            
+            return AddEdit(qString, con);
         }
 
         public bool Edit(SqlConnection con)
         {
             
-            String q = "UPDATE customer SET first_name=@first_name, " + 
+            String qString = "UPDATE customer SET first_name=@first_name, " + 
                     "last_name=@last_name, " + 
                     "phone_number=@phone_number, " + 
                     "email=@email, " + 
@@ -122,18 +116,10 @@ namespace App
                     "city=@city, " +
                     "province=@province, " +
                     "account_type=@account_type " +
+                    //"passhash=@passhash" +
                     "WHERE cid=@cid";
-            if (AddEdit(q, con))
-            {
 
-                Console.WriteLine("User updated");
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("User could not be updated");
-                return false;
-            }
+            return AddEdit(qString, con);
         }
 
         public bool Delete(SqlConnection con)
