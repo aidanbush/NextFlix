@@ -34,7 +34,23 @@ namespace App
             Console.WriteLine(stripped.ToString());
             return stripped.ToString();            
         }
-
+        public string CleanNumberForOutput()
+        {
+            //(xxx) xxx-xxxx
+            string number = phoneNumber;
+            if (number != null)
+            {
+                phoneNumber.Insert(0, "(");
+                phoneNumber.Insert(4, ")");
+                phoneNumber.Insert(5, " ");
+                phoneNumber.Insert(10, "-");
+            }
+            else
+            {
+                number = "";
+            }
+            return number;
+        }
         /* getters and setters */
         public String Email { get => email; set => email = value; }
         public String PhoneNumber { get => phoneNumber; set => phoneNumber = value; }

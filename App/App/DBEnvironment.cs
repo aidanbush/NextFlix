@@ -89,6 +89,11 @@ namespace App
             return queryObject.Add(con);
         }
 
+        public static bool AddToQueue(IQuery queryObject)
+        {
+            return queryObject.AddToQueue(con);
+        }
+
         public static bool Edit(IQuery queryObject)
         {
             return queryObject.Edit(con);
@@ -173,13 +178,29 @@ namespace App
 
             return employeeList;
         }
-
-        private static BindingList<Movie> RetrieveMovies()
+        public static BindingList<Movie> RetrieveQueue(Customer user)
         {
-            string qString = "SELECT * FROM movie";
-            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
-            DataTable movieTable = new DataTable();
-            adaptor.Fill(movieTable);
+            int cid = user.Id;
+
+            //GET THE MOVIES IN QUEUE
+            string query = "select * from movie " +
+                           "WHERE mid IN " +
+                           "(SELECT mid from queue WHERE cid=" + cid + ")";
+           /* string query = "SELECT * FROM movie" +
+                "WHERE mid" +
+                "IN" +
+                "SELECT * FROM queue, movie WHERE cid=" +
+                cid;*/
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            DataTable queueTable = new DataTable();
+            adaptor.Fill(queueTable);
+            BindingList<Movie> queue = GetMoviesFromQuery(queueTable);
+            
+            return queue;
+
+        }
+        private static BindingList<Movie> GetMoviesFromQuery(DataTable movieTable)
+        {
             BindingList<Movie> movies = new BindingList<Movie>();
 
             foreach (DataRow movieRow in movieTable.Rows)
@@ -187,6 +208,15 @@ namespace App
                 Movie movie = CreateMovieFromRow(movieRow);
                 movies.Add(movie);
             }
+            return movies;
+        }
+        private static BindingList<Movie> RetrieveMovies()
+        {
+            string qString = "SELECT * FROM movie";
+            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
+            DataTable movieTable = new DataTable();
+            adaptor.Fill(movieTable);
+            BindingList<Movie> movies = GetMoviesFromQuery(movieTable);
             return movies;
         }
 
@@ -514,19 +544,14 @@ namespace App
             }
 
             UserName name = new UserName(firstName, lastName);
-
             Address address = new Address(suite, street, house, city, province, postalCode);
-
             ContactInformation contactInfo = new ContactInformation("", phone);
-
             Credentials credentials = new Credentials(row["username"].ToString(), row["passhash"].ToString());
-
             Employee employee = new Employee(name, address, contactInfo, wage, startDate, sin, position)
             {
                 Id = (int)row["eid"],
                 Credentials = credentials
             };
-
             return employee;
         }
 

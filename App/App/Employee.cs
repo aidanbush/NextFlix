@@ -123,5 +123,10 @@ namespace App
             con.Close();
             return true;
         }
+
+        public bool AddToQueue(SqlConnection con)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

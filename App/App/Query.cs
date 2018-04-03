@@ -7,6 +7,7 @@ namespace App
         bool Add(SqlConnection con);
         bool Edit(SqlConnection con);
         bool Delete(SqlConnection con);
+        bool AddToQueue(SqlConnection con);
     }  
     
     

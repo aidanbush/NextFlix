@@ -125,6 +125,11 @@ namespace App
             }
         }
 
+
+        public bool AddToQueue(SqlConnection con)
+        {
+            throw new NotImplementedException();
+        }
         public int fetchId(SqlConnection con)
         {
             int id = -1;
