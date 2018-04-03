@@ -18,6 +18,7 @@ namespace App
         private static BindingList<Customer> customers;
         private static BindingList<Employee> employees;
         private static BindingList<Movie> movies;
+        private static BindingList<Actor> actors;
 
 
         public static BindingList<Customer> GetCustomers()
@@ -28,6 +29,17 @@ namespace App
         public static void SetCustomers()
         {
             customers = RetrieveCustomers();
+        }
+
+        public static void SetActors()
+        {
+            actors = RetreiveActors();
+            
+        }
+        public static BindingList<Actor> GetActors()
+        {
+            return actors;
+
         }
 
         public static BindingList<Employee> GetEmployees()
@@ -94,6 +106,37 @@ namespace App
             return ds;
         }
 
+        public static BindingList<Actor> GetActors(Movie movie)
+        {
+            String qString = "SELECT * FROM starred WHERE mid=" + movie.Id;
+            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
+            BindingList<Actor> Actors = new BindingList<Actor>();
+            DataTable table = new DataTable();
+            adaptor.Fill(table);
+
+            foreach (DataRow aid in table.Rows)
+            {
+                String actorFetch = "SELECT * from actor WHERE aid=" + aid["aid"].ToString();
+                SqlDataAdapter actorAdaptor = new SqlDataAdapter(actorFetch, con);
+                DataTable actorTable = new DataTable();
+                actorAdaptor.Fill(actorTable);
+                foreach (DataRow actor in actorTable.Rows)
+                {
+
+                    UserName name = new UserName(actor["first_name"].ToString(), actor["last_name"].ToString());
+                    string sex = actor["sex"].ToString();
+                    DateTime dateOfBirth = (DateTime)actor["dob"];
+                    string age = actor["age"].ToString();
+                    string rating = actor["rating"].ToString();
+                    string Id = actor["aid"].ToString();
+                    Actor act = new Actor(name, sex, dateOfBirth, Id, age, rating);
+                    Actors.Add(act);
+                }
+            }
+
+            return Actors;
+
+        }
         public static BindingList<Customer> RetrieveCustomers()
         {
             BindingList<Customer> customers = new BindingList<Customer>();
@@ -111,8 +154,8 @@ namespace App
 
             return customers;
         }
+        private static BindingList<Employee>  RetrieveEmployees()
 
-        private static BindingList<Employee> RetrieveEmployees()
         {
             BindingList<Employee> employeeList = new BindingList<Employee>();
 
@@ -147,6 +190,30 @@ namespace App
             return movies;
         }
 
+        public static BindingList<Actor> RetreiveActors()
+        {
+
+            string qString = "SELECT * FROM [actor]";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            DataTable actorTable = new DataTable();
+            adapter.Fill(actorTable);
+            BindingList<Actor> actors = new BindingList<Actor>();
+            
+            foreach (DataRow actor in actorTable.Rows)
+            {
+                UserName name = new UserName(actor["first_name"].ToString(), actor["last_name"].ToString());
+                string sex = actor["sex"].ToString();
+                DateTime dateOfBirth = (DateTime)actor["dob"];
+                string age = actor["age"].ToString();
+                string rating = actor["rating"].ToString();
+                string Id = actor["aid"].ToString();
+                Actor act = new Actor(name, sex, dateOfBirth, Id, age, rating);
+                actors.Add(act);
+            }
+
+            return actors;
+
+        }
         public static BindingList<Order> RetrieveUnfulfilledOrders()
         {
             Debug.WriteLine("Retrieveing orders");

@@ -40,7 +40,7 @@ namespace App
         private void fillMovies()
         {
             MovieGridView.DataSource = movies;
-            MovieGridView.Columns.Remove("id");
+            MovieGridView.Columns.Remove("Id");
             MovieGridView.Columns.Remove("Num_copies");
         }
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
