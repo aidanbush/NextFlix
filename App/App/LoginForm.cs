@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -99,7 +100,7 @@ namespace App
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
             Employee manager;
-
+            
             if (name == "admin" && pass == "pass")
             {
                 manager = DBEnvironment.ValidateManager(name, pass);

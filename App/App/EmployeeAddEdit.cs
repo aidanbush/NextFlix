@@ -60,7 +60,11 @@ namespace App
             UserName user = new UserName(FirstNameBox.Text, LastNameBox.Text);
             Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, PostalBox.Text);
             ContactInformation userInfo = new ContactInformation(null, PhoneBox.Text);
-            Employee newEmployee = new Employee(user, userAddress, userInfo, float.Parse(WageBox.Text, CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, SINBox.Text, Employee.Position.Employee);
+            Credentials credentials = new Credentials(UsernameTextBox.Text, PasswordTextBox.Text);
+            Employee newEmployee = new Employee(user, userAddress, userInfo, float.Parse(WageBox.Text, CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, SINBox.Text, Employee.Position.Employee)
+            {
+                Credentials = credentials
+            };
             return newEmployee;
         }
 
@@ -84,6 +88,7 @@ namespace App
             }
                 return false;
         }
+
         private bool EditUser()
         {
             if ((MessageBox.Show("Edit new Employee with current information?", "Confirm",
@@ -108,30 +113,32 @@ namespace App
 
 
         }
-
-
+        
         private void EmployeeAddEdit_Load(object sender, EventArgs e)
         {
 
         }
-
-
-
-        private bool checkFormInputsGood()
+        
+        private bool checkFormInputs()
         {
             if (!inputHandler.checkNames(FirstNameBox.Text))
                 return false;
+
             if (!inputHandler.checkNames(LastNameBox.Text))
                 return false;
-            try { PossitionBox.SelectedItem.ToString(); }
+
+            try {
+                PossitionBox.SelectedItem.ToString();
+            }
             catch (Exception e)
             {
                 MessageBox.Show("Need to select a possition");
                 return false;
             }
+
             if (!inputHandler.checkSIN(SINBox.Text))
                 return false;
-        
+
             try
             {
                 ContactInformation userInfo = new ContactInformation(null, PhoneBox.Text);
@@ -147,10 +154,21 @@ namespace App
             
             return true;
         }
+
+        private bool ValidUsernamePassword()
+        {
+            if (UsernameTextBox.Text == "" || PasswordTextBox.Text == "")
+                return false;
+
+            if (!DBEnvironment.EmployeeUsernameAvailablility(UsernameTextBox.Text))
+                return false;
+
+            return true;
+        }
+
         private void AddUserButton_Click(object sender, EventArgs e)
         {
-            
-            if (!checkFormInputsGood())
+            if (!checkFormInputs())
             {
                 if (employee == null)
                     Debug.Print("Couldn't add employee");
@@ -161,20 +179,26 @@ namespace App
 
             if (employee == null)
             {
+                if (!ValidUsernamePassword())
+                    return;
+
                 if (InsertUser())
                     parent.FillTable();
             }
             else
+            {
                 if (EditUser())
                     parent.FillTable();
+            }
 
-             this.Close();
+            this.Close();
 
         }
 
         private void CancelButton_Click_1(object sender, EventArgs e)
         {
             Debug.Print("cancelBtn");
+            this.Close();
         }
     }
 }

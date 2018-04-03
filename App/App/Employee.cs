@@ -32,8 +32,8 @@ namespace App
         public bool Add(SqlConnection con)
         {
            
-            String q = "insert into employee(first_name, last_name, phone_number, suite_number, street_number, house_number, postalcode, city, province, start, wage, social_insurance_num, position)" +
-               "values (@first_name, @last_name, @phone_number, @suite_number, @street_number, @house_number, @postalcode, @city, @province, @start, @wage, @social_insurance_num, @position)";
+            String q = "insert into employee(first_name, last_name, phone_number, suite_number, street_number, house_number, postalcode, city, province, start, wage, social_insurance_num, position, username, passhash)" +
+               "values (@first_name, @last_name, @phone_number, @suite_number, @street_number, @house_number, @postalcode, @city, @province, @start, @wage, @social_insurance_num, @position, @username, @passhash)";
             return AddEdit(q, con);
             
         }
@@ -82,6 +82,8 @@ namespace App
                     command.Parameters.AddWithValue("@social_insurance_num", this.SIN);
                     command.Parameters.AddWithValue("@position", this.position.ToString());
                     command.Parameters.AddWithValue("@eid", this.Id.ToString());
+                    command.Parameters.AddWithValue("@username", this.Credentials.Username);
+                    command.Parameters.AddWithValue("@passhash", this.Credentials.PassHash);
 
                     int err = command.ExecuteNonQuery();
                     
