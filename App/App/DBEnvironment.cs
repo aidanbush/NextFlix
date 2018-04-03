@@ -18,6 +18,7 @@ namespace App
         private static BindingList<Customer> customers;
         private static BindingList<Employee> employees;
         private static BindingList<Movie> movies;
+        private static BindingList<Actor> actors;
 
 
         public static BindingList<Customer> GetCustomers()
@@ -28,6 +29,17 @@ namespace App
         public static void SetCustomers()
         {
             customers = RetrieveCustomers();
+        }
+
+        public static void SetActors()
+        {
+            actors = RetreiveActors();
+            
+        }
+        public static BindingList<Actor> GetActors()
+        {
+            return actors;
+
         }
 
         public static BindingList<Employee> GetEmployees()
@@ -99,6 +111,37 @@ namespace App
             return ds;
         }
 
+        public static BindingList<Actor> GetActors(Movie movie)
+        {
+            String qString = "SELECT * FROM starred WHERE mid=" + movie.Id;
+            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
+            BindingList<Actor> Actors = new BindingList<Actor>();
+            DataTable table = new DataTable();
+            adaptor.Fill(table);
+
+            foreach (DataRow aid in table.Rows)
+            {
+                String actorFetch = "SELECT * from actor WHERE aid=" + aid["aid"].ToString();
+                SqlDataAdapter actorAdaptor = new SqlDataAdapter(actorFetch, con);
+                DataTable actorTable = new DataTable();
+                actorAdaptor.Fill(actorTable);
+                foreach (DataRow actor in actorTable.Rows)
+                {
+
+                    UserName name = new UserName(actor["first_name"].ToString(), actor["last_name"].ToString());
+                    string sex = actor["sex"].ToString();
+                    DateTime dateOfBirth = (DateTime)actor["dob"];
+                    string age = actor["age"].ToString();
+                    string rating = actor["rating"].ToString();
+                    string Id = actor["aid"].ToString();
+                    Actor act = new Actor(name, sex, dateOfBirth, Id, age, rating);
+                    Actors.Add(act);
+                }
+            }
+
+            return Actors;
+
+        }
         public static BindingList<Customer> RetrieveCustomers()
         {
             BindingList<Customer> customers = new BindingList<Customer>();
@@ -110,55 +153,14 @@ namespace App
             adaptor.Fill(customerTable);
 
             foreach (DataRow customerRow in customerTable.Rows) {
-                UserName name = new UserName(customerRow["first_name"].ToString(), customerRow["last_name"].ToString());
-                String postalCode;
-                try
-                {
-                    postalCode = customerRow["postalcode"].ToString();
-                }
-                catch(PostalCodeException)
-                {
-                    postalCode = "";
-                }
-
-                Address address = new Address(customerRow["suite_number"].ToString(), customerRow["street_number"].ToString(),
-                                              customerRow["house_number"].ToString(), customerRow["city"].ToString(),
-                                              customerRow["province"].ToString(), postalCode);
-                Customer.AccountType account = Customer.AccountType.Limited;
-                switch (customerRow["account_type"].ToString())
-                {
-                    case "Disabled":
-                        account = Customer.AccountType.Disabled;
-                        break;
-                    case "Limited":
-                        account = Customer.AccountType.Limited;
-                        break;
-                    case "Bronze":
-                        account = Customer.AccountType.Bronze;
-                        break;
-                    case "Silver":
-                        account = Customer.AccountType.Silver;
-                        break;
-                    case "Gold":
-                        account = Customer.AccountType.Gold;
-                        break;
-                    default:
-                        Debug.Write("Read customer without account type.");
-                        continue;
-                }
-
-                ContactInformation newContact = new ContactInformation(customerRow["email"].ToString(), customerRow["phone_number"].ToString());
-                Customer customer = new Customer(name, address, newContact, account);
-                customer.CreationDate = (DateTime)customerRow["creation_date"];
-                customer.Id = (int)customerRow["cid"];
-
+                Customer customer = CreateCustomerFromRow(customerRow);
                 customers.Add(customer);
             }
 
             return customers;
         }
+        private static BindingList<Employee>  RetrieveEmployees()
 
-        private static BindingList<Employee> RetrieveEmployees()
         {
             BindingList<Employee> employeeList = new BindingList<Employee>();
 
@@ -170,23 +172,8 @@ namespace App
 
             foreach (DataRow employeeRow in employeeTable.Rows)
             {
-                UserName name = new UserName(employeeRow["first_name"].ToString(), employeeRow["last_name"].ToString());
-
-                Address address = new Address(employeeRow["suite_number"].ToString(), employeeRow["street_number"].ToString(),
-                                              employeeRow["house_number"].ToString(), employeeRow["city"].ToString(),
-                                              employeeRow["province"].ToString(), employeeRow["postalcode"].ToString());
-
-
-                ContactInformation contactInfo = new ContactInformation(null, employeeRow["phone_number"].ToString());
-                Employee.Position position = Employee.Position.Employee;
-                if (employeeRow["position"].ToString() == "Manager")
-                {
-                    position = Employee.Position.Manager;
-                }
-                Employee e = new Employee(name, address, contactInfo, float.Parse(employeeRow["wage"].ToString(), CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, employeeRow["social_insurance_num"].ToString(), position);
-                e.Id = int.Parse(employeeRow["eid"].ToString());
-
-                employeeList.Add(e);
+                Employee employee = CreateEmployeeFromRow(employeeRow);
+                employeeList.Add(employee);
             }
 
             return employeeList;
@@ -218,17 +205,7 @@ namespace App
 
             foreach (DataRow movieRow in movieTable.Rows)
             {
-
-                string name = movieRow["name"].ToString();
-                string genre = movieRow["genre"].ToString();
-                float fees = float.Parse(movieRow["fees"].ToString());
-                int num_copies = int.Parse(movieRow["num_copies"].ToString());
-                int copies = int.Parse(movieRow["copies_available"].ToString());
-                int id = (int)movieRow["mid"];
-                //rating don't work?
-                //movieRow["rating"].ToString();
-                Movie movie = new Movie(name, genre, fees, num_copies, copies, 1);
-                movie.Id = id;
+                Movie movie = CreateMovieFromRow(movieRow);
                 movies.Add(movie);
             }
             return movies;
@@ -243,6 +220,30 @@ namespace App
             return movies;
         }
 
+        public static BindingList<Actor> RetreiveActors()
+        {
+
+            string qString = "SELECT * FROM [actor]";
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            DataTable actorTable = new DataTable();
+            adapter.Fill(actorTable);
+            BindingList<Actor> actors = new BindingList<Actor>();
+            
+            foreach (DataRow actor in actorTable.Rows)
+            {
+                UserName name = new UserName(actor["first_name"].ToString(), actor["last_name"].ToString());
+                string sex = actor["sex"].ToString();
+                DateTime dateOfBirth = (DateTime)actor["dob"];
+                string age = actor["age"].ToString();
+                string rating = actor["rating"].ToString();
+                string Id = actor["aid"].ToString();
+                Actor act = new Actor(name, sex, dateOfBirth, Id, age, rating);
+                actors.Add(act);
+            }
+
+            return actors;
+
+        }
         public static BindingList<Order> RetrieveUnfulfilledOrders()
         {
             Debug.WriteLine("Retrieveing orders");
@@ -365,9 +366,37 @@ namespace App
             return null;
         }
 
+        public static bool CustomerUsernameAvailablility(string username)
+        {
+            // use top so it breaks out early
+            string qString = "SELECT TOP 1 * FROM customer WHERE username LIKE @username";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            return table.Rows.Count == 0;
+        }
+
+        public static bool EmployeeUsernameAvailablility(string username)
+        {
+            // use top so it breaks out early
+            string qString = "SELECT TOP 1 * FROM employee WHERE username LIKE @username";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@username", username);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            return table.Rows.Count == 0;
+        }
+
         public static Customer ValidateCustomer(string username, string passhash)
         {
-            string qString = "SELECT * FROM customer WHERE cid IN (SELECT cid from customer_accounts WHERE username LIKE @username and passhash LIKE @passhash)";
+            string qString = "SELECT * FROM customer WHERE username LIKE @username AND passhash LIKE @passhash";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
@@ -387,7 +416,7 @@ namespace App
 
         public static Employee ValidateEmployee(string username, string passhash)
         {
-            string qString = "SELECT * FROM employee WHERE eid IN (SELECT eid from employee_accounts WHERE username LIKE @username and passhash LIKE @passhash)";
+            string qString = "SELECT * FROM employee WHERE username LIKE @username AND passhash LIKE @passhash";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
@@ -407,7 +436,7 @@ namespace App
 
         public static Employee ValidateManager(string username, string passhash)
         {
-            string qString = "SELECT * FROM employee WHERE eid IN (SELECT eid from employee_accounts WHERE username LIKE @username AND passhash LIKE @passhash) AND position = 'manager'";
+            string qString = "SELECT * FROM employee WHERE username LIKE @username AND passhash LIKE @passhash AND position = 'manager'";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
@@ -517,9 +546,12 @@ namespace App
             UserName name = new UserName(firstName, lastName);
             Address address = new Address(suite, street, house, city, province, postalCode);
             ContactInformation contactInfo = new ContactInformation("", phone);
-            Employee employee = new Employee(name, address, contactInfo, wage, startDate, sin, position);
-            employee.Id = (int)row["eid"];
-
+            Credentials credentials = new Credentials(row["username"].ToString(), row["passhash"].ToString());
+            Employee employee = new Employee(name, address, contactInfo, wage, startDate, sin, position)
+            {
+                Id = (int)row["eid"],
+                Credentials = credentials
+            };
             return employee;
         }
 
@@ -626,11 +658,17 @@ namespace App
             Address address = new Address(suite, street, house, city, province, postalCode);
 
             ContactInformation newContact = new ContactInformation(email, phone);
-            Customer customer = new Customer(name, address, newContact, account);
-            customer.CreationDate = creationDate;
-            customer.CreditCard = creditCard;
-            customer.Id = (int)row["cid"];
-            customer.Rating = (int)row["rating"];
+
+            Credentials credentials = new Credentials(row["username"].ToString(), row["passhash"].ToString());
+
+            Customer customer = new Customer(name, address, newContact, account)
+            {
+                CreationDate = creationDate,
+                CreditCard = creditCard,
+                Id = (int)row["cid"],
+                Rating = (int)row["rating"],
+                Credentials = credentials
+            };
 
             return customer;
         }

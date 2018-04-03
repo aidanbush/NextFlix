@@ -44,20 +44,19 @@ namespace App
             customers = DBEnvironment.GetCustomers();
             movies = DBEnvironment.GetMovies();
             employees = DBEnvironment.GetEmployees();
-            
+
             customerView = new CustomerView(this);
             employeeView = new EmployeeView(this);
             movieView = new MovieView(this);
             managerView = new ManagerView(this);
             orderView = new OrderView(this);
 
-
             InitializeComponent();
             
             if (user.EmployeePosition != Employee.Position.Manager)
             {
                 this.Text = "Employee";
-                customerRepresentativesToolStripMenuItem.Visible = false;
+                //customerRepresentativesToolStripMenuItem.Visible = false;
                 salesReportsToolStripMenuItem.Visible = false;
             }
 
@@ -138,7 +137,7 @@ namespace App
                     addForm.Show();
                     break;
                 case FormType.movie:
-                    AddMovieForm addMovieForm = new AddMovieForm(this);
+                    AddMovieForm addMovieForm = new AddMovieForm(this, null);
                     addMovieForm.Show();
                     break;
                 case FormType.manager:
@@ -181,7 +180,7 @@ namespace App
                     break;
                 case FormType.movie:
                     Movie selectedMovie = movies.ElementAt(index);
-                    EditMovieForm editMovieForm = new EditMovieForm(selectedMovie, this);
+                    AddMovieForm editMovieForm = new AddMovieForm(this, selectedMovie);
                     editMovieForm.Show();
                     break;
                 case FormType.manager:
@@ -334,6 +333,7 @@ namespace App
                 parent.dataGridView1.Columns.Remove("Address");
                 parent.dataGridView1.Columns.Remove("Name");
                 parent.dataGridView1.Columns.Remove("ContactInformation");
+                parent.dataGridView1.Columns.Remove("Credentials");
 
                 parent.Refresh();
             }
@@ -378,6 +378,12 @@ namespace App
                 parent.dataGridView1.Columns.Remove("Address");
                 parent.dataGridView1.Columns.Remove("Name");
                 parent.dataGridView1.Columns.Remove("ContactInformation");
+
+                if (parent.user.EmployeePosition != Employee.Position.Manager)
+                    parent.dataGridView1.Columns.Remove("Wage");
+
+                parent.dataGridView1.Columns.Remove("Credentials");
+
 
                 parent.Refresh();
             }

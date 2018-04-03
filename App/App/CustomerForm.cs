@@ -57,7 +57,9 @@ namespace App
         {
             MovieGridView.DataSource = movies;
             MoviesQueuedGridView.DataSource = userQueue;
-            
+            MovieGridView.Columns.Remove("Id");
+            MovieGridView.Columns.Remove("Num_copies");
+
         }
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
