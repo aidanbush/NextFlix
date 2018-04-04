@@ -61,7 +61,7 @@ namespace App
             Actor newActor;
             if (FemaleRadio.Checked)
                 //Need to fix on database, reinit constraint from G to F
-                newActor = new Actor(name, "G", validator.getDBReadyDate(DateOfBirthBox.Text), "", "", "");
+                newActor = new Actor(name, "F", validator.getDBReadyDate(DateOfBirthBox.Text), "", "", "");
             else if (MaleRadio.Checked)
                 newActor = new Actor(name, "M", validator.getDBReadyDate(DateOfBirthBox.Text), "", "", "");
             else

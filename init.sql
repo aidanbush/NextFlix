@@ -92,7 +92,7 @@ create table actor (
 	first_name text not null,
 	last_name text,
 	sex char,
-	CONSTRAINT sex CHECK (sex IN ('M', 'G')),
+	CONSTRAINT sex CHECK (sex IN ('M', 'F')),
 	dob date check(dob <= getdate()),
 	age as datediff(hour, dob, getdate())/8766,
 	rating int check(1 <= rating and rating <= 5),
