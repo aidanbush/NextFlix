@@ -30,6 +30,11 @@ namespace App
             return true;
         }
 
+        public bool AddToQueue(SqlConnection con)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(SqlConnection con)
         {
             con.Open();
