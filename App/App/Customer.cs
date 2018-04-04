@@ -146,7 +146,18 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
-            
+            if (this.Address.PostalCode == "")
+            {
+                this.Address.PostalCode = null;
+            }
+            if (this.ContactInformation.Email == "")
+            {
+                this.ContactInformation.Email = null;
+            }
+            if (this.ContactInformation.PhoneNumber == "")
+            {
+                this.ContactInformation.PhoneNumber = null;
+            }
             String qString = "UPDATE customer SET first_name=@first_name, " + 
                     "last_name=@last_name, " + 
                     "phone_number=@phone_number, " + 
