@@ -16,10 +16,12 @@ namespace App
         private DateTime placedDate;
 
 
-        public Order(int newMovieID, int newcustomerID)
+        public Order(int newMovieID, int newcustomerID, int newEmployeeID)
         {
-            MovieID = newMovieID;
-            CustomerID = newcustomerID;
+            movieID = newMovieID;
+            customerID = newcustomerID;
+            employeeID = newEmployeeID;
+            placedDate = DateTime.Now;
         }
 
         /* getters and setters */
@@ -32,7 +34,29 @@ namespace App
         /* sql functions */
         public bool Add(SqlConnection con)
         {
-            throw new NotImplementedException();
+            string query = "insert into [order](cid, mid, eid, order_placed)" +
+                "values (@cid, @mid, @eid, @date_added)";
+
+            con.Open();
+            using (SqlCommand command = new SqlCommand(query, con))
+            try
+            {
+                command.Parameters.AddWithValue("@cid", this.customerID);
+                command.Parameters.AddWithValue("@mid", this.movieID);
+                command.Parameters.AddWithValue("@eid", this.employeeID);
+                command.Parameters.AddWithValue("@date_added", this.placedDate);
+
+                int err = command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                con.Close();
+                return false;
+            }
+            con.Close();
+            return true;
+            
         }
 
         public bool AddToQueue(SqlConnection con)

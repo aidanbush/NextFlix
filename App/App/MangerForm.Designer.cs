@@ -38,12 +38,14 @@ namespace App
             this.moviesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salesReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customerQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EditButton = new System.Windows.Forms.Button();
             this.DeleteButton = new System.Windows.Forms.Button();
             this.UpdateRatingsButton = new System.Windows.Forms.Button();
             this.FulfillOrderButton = new System.Windows.Forms.Button();
             this.LogoutButton = new System.Windows.Forms.Button();
+            this.OrderMovieButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -55,8 +57,9 @@ namespace App
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(361, 73);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+
+            this.dataGridView1.Location = new System.Drawing.Point(542, 113);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
@@ -97,7 +100,8 @@ namespace App
             this.customerRepresentativesToolStripMenuItem,
             this.moviesToolStripMenuItem,
             this.salesReportsToolStripMenuItem,
-            this.ordersToolStripMenuItem});
+            this.ordersToolStripMenuItem,
+            this.customerQueueToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
             this.menuToolStripMenuItem.Text = "Menu";
@@ -137,6 +141,13 @@ namespace App
             this.ordersToolStripMenuItem.Text = "Orders";
             this.ordersToolStripMenuItem.Click += new System.EventHandler(this.OrderLoad);
             // 
+            // customerQueueToolStripMenuItem
+            // 
+            this.customerQueueToolStripMenuItem.Name = "customerQueueToolStripMenuItem";
+            this.customerQueueToolStripMenuItem.Size = new System.Drawing.Size(391, 38);
+            this.customerQueueToolStripMenuItem.Text = "Customer Queue";
+            this.customerQueueToolStripMenuItem.Click += new System.EventHandler(this.QueueLoad);
+            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -145,10 +156,11 @@ namespace App
             // 
             // EditButton
             // 
-            this.EditButton.Location = new System.Drawing.Point(99, 180);
-            this.EditButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+
+            this.EditButton.Location = new System.Drawing.Point(148, 281);
+            this.EditButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.EditButton.Name = "EditButton";
-            this.EditButton.Size = new System.Drawing.Size(179, 68);
+            this.EditButton.Size = new System.Drawing.Size(268, 106);
             this.EditButton.TabIndex = 6;
             this.EditButton.Text = "Edit";
             this.EditButton.UseVisualStyleBackColor = true;
@@ -178,10 +190,10 @@ namespace App
             // 
             // FulfillOrderButton
             // 
-            this.FulfillOrderButton.Location = new System.Drawing.Point(99, 96);
-            this.FulfillOrderButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FulfillOrderButton.Location = new System.Drawing.Point(148, 150);
+            this.FulfillOrderButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.FulfillOrderButton.Name = "FulfillOrderButton";
-            this.FulfillOrderButton.Size = new System.Drawing.Size(179, 68);
+            this.FulfillOrderButton.Size = new System.Drawing.Size(268, 106);
             this.FulfillOrderButton.TabIndex = 9;
             this.FulfillOrderButton.Text = "Fulfill order";
             this.FulfillOrderButton.UseVisualStyleBackColor = true;
@@ -191,19 +203,31 @@ namespace App
             // LogoutButton
             // 
             this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LogoutButton.Margin = new System.Windows.Forms.Padding(6);
             this.LogoutButton.Location = new System.Drawing.Point(1355, 43);
             this.LogoutButton.Name = "LogoutButton";
-            this.LogoutButton.Size = new System.Drawing.Size(75, 23);
+            this.LogoutButton.Size = new System.Drawing.Size(150, 44);
             this.LogoutButton.TabIndex = 10;
             this.LogoutButton.Text = "Logout";
             this.LogoutButton.UseVisualStyleBackColor = true;
             this.LogoutButton.Click += new System.EventHandler(this.LogoutButton_Click);
             // 
+            // OrderMovieButton
+            // 
+            this.OrderMovieButton.Location = new System.Drawing.Point(148, 150);
+            this.OrderMovieButton.Name = "OrderMovieButton";
+            this.OrderMovieButton.Size = new System.Drawing.Size(268, 106);
+            this.OrderMovieButton.TabIndex = 11;
+            this.OrderMovieButton.Text = "Place Order";
+            this.OrderMovieButton.UseVisualStyleBackColor = true;
+            this.OrderMovieButton.Click += new System.EventHandler(this.OrderMovieButton_Click);
+            // 
             // ManagerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1442, 686);
+            this.ClientSize = new System.Drawing.Size(1924, 1062);
+            this.Controls.Add(this.OrderMovieButton);
             this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.FulfillOrderButton);
             this.Controls.Add(this.UpdateRatingsButton);
@@ -243,5 +267,7 @@ namespace App
         private System.Windows.Forms.Button UpdateRatingsButton;
         private System.Windows.Forms.Button FulfillOrderButton;
         private System.Windows.Forms.Button LogoutButton;
+        private System.Windows.Forms.Button OrderMovieButton;
+        private System.Windows.Forms.ToolStripMenuItem customerQueueToolStripMenuItem;
     }
 }
