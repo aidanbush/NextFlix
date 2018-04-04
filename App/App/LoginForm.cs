@@ -36,6 +36,7 @@ namespace App
         private void EmployeeButtonClick(object sender, EventArgs e)
         {
             Employee employee = ValidateEmployee();
+            employee.EmployeePosition = Employee.Position.Employee;
             if (employee != null)
             {
                 new ManagerForm(this, employee).Show();
@@ -50,6 +51,7 @@ namespace App
         private void ManagerButtonClick(object sender, EventArgs e)
         {
             Employee manager = ValidateManager();
+            manager.EmployeePosition = Employee.Position.Manager;
             if (manager != null)
             {
                 new ManagerForm(this, manager).Show();

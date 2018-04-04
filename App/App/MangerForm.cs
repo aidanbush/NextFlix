@@ -378,9 +378,8 @@ namespace App
                 parent.dataGridView1.Columns.Remove("Address");
                 parent.dataGridView1.Columns.Remove("Name");
                 parent.dataGridView1.Columns.Remove("ContactInformation");
-
                 if (parent.user.EmployeePosition != Employee.Position.Manager)
-                    parent.dataGridView1.Columns.Remove("Wage");
+                    parent.dataGridView1.Columns["wage"].Visible = false;
 
                 parent.dataGridView1.Columns.Remove("Credentials");
 
