@@ -158,9 +158,10 @@ namespace App
             if (this.ContactInformation.PhoneNumber == "")
             {
                 this.ContactInformation.PhoneNumber = null;
-            }            
-            String qString = "UPDATE customer SET first_name=@first_name, " + 
 
+            }
+
+            String qString = "UPDATE customer SET first_name=@first_name, " + 
                     "last_name=@last_name, " + 
                     "phone_number=@phone_number, " + 
                     "email=@email, " + 

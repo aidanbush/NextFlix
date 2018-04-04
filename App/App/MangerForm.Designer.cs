@@ -57,6 +57,7 @@ namespace App
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+
             this.dataGridView1.Location = new System.Drawing.Point(542, 113);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.dataGridView1.Name = "dataGridView1";
@@ -129,7 +130,6 @@ namespace App
             // salesReportsToolStripMenuItem
             // 
             this.salesReportsToolStripMenuItem.Name = "salesReportsToolStripMenuItem";
-            this.salesReportsToolStripMenuItem.Size = new System.Drawing.Size(391, 38);
             this.salesReportsToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
             this.salesReportsToolStripMenuItem.Text = "Sales Reports";
             this.salesReportsToolStripMenuItem.Click += new System.EventHandler(this.SalesRepotsLoad);
@@ -190,10 +190,10 @@ namespace App
             // 
             // FulfillOrderButton
             // 
-            this.FulfillOrderButton.Location = new System.Drawing.Point(99, 96);
-            this.FulfillOrderButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FulfillOrderButton.Location = new System.Drawing.Point(148, 150);
+            this.FulfillOrderButton.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.FulfillOrderButton.Name = "FulfillOrderButton";
-            this.FulfillOrderButton.Size = new System.Drawing.Size(179, 68);
+            this.FulfillOrderButton.Size = new System.Drawing.Size(268, 106);
             this.FulfillOrderButton.TabIndex = 9;
             this.FulfillOrderButton.Text = "Fulfill order";
             this.FulfillOrderButton.UseVisualStyleBackColor = true;
@@ -203,6 +203,7 @@ namespace App
             // LogoutButton
             // 
             this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LogoutButton.Margin = new System.Windows.Forms.Padding(6);
             this.LogoutButton.Location = new System.Drawing.Point(1355, 43);
             this.LogoutButton.Name = "LogoutButton";
             this.LogoutButton.Size = new System.Drawing.Size(150, 44);
@@ -223,9 +224,10 @@ namespace App
             // 
             // ManagerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1442, 686);
+            this.ClientSize = new System.Drawing.Size(1924, 1062);
+            this.Controls.Add(this.OrderMovieButton);
             this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.FulfillOrderButton);
             this.Controls.Add(this.UpdateRatingsButton);
