@@ -31,8 +31,14 @@ namespace App
             DBEnvironment.SetMovies();
             movies = DBEnvironment.GetMovies();
             userQueue = DBEnvironment.RetrieveQueue(user);
+            fillMovies();
             MoviesQueuedGridView.AutoGenerateColumns = true;
             MovieGridView.AutoGenerateColumns = true;
+            MovieGridView.Columns["Id"].Visible = false;
+            MovieGridView.Columns["Num_copies"].Visible = false;
+            MoviesQueuedGridView.Columns["Id"].Visible = false;
+            MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
+
             HidePanels();
             
         }
@@ -57,8 +63,6 @@ namespace App
         {
             MovieGridView.DataSource = movies;
             MoviesQueuedGridView.DataSource = userQueue;
-            MovieGridView.Columns.Remove("Id");
-            MovieGridView.Columns.Remove("Num_copies");
 
         }
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)

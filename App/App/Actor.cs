@@ -106,5 +106,9 @@ namespace App
             return AddEdit(q, con, result);
         }
 
+        public bool AddToQueue(SqlConnection con)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
