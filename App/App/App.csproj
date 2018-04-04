@@ -143,11 +143,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query.cs" />
-<<<<<<< HEAD
     <Compile Include="Queue.cs" />
-=======
     <Compile Include="Starred.cs" />
->>>>>>> bb252f7dec74aa9e6dfbac6cb1bf535ee676403d
     <Compile Include="UserName.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Employee.cs" />

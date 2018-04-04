@@ -46,21 +46,14 @@ namespace App
             customers = DBEnvironment.GetCustomers();
             movies = DBEnvironment.GetMovies();
             employees = DBEnvironment.GetEmployees();
-<<<<<<< HEAD
             queue = DBEnvironment.RetrieveAllQueue();
-            
-=======
 
->>>>>>> bb252f7dec74aa9e6dfbac6cb1bf535ee676403d
             customerView = new CustomerView(this);
             employeeView = new EmployeeView(this);
             movieView = new MovieView(this);
             managerView = new ManagerView(this);
             orderView = new OrderView(this);
-<<<<<<< HEAD
             queueView = new QueueView(this);
-=======
->>>>>>> bb252f7dec74aa9e6dfbac6cb1bf535ee676403d
 
             InitializeComponent();
             
