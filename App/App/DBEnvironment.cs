@@ -191,19 +191,37 @@ namespace App
 
             return employeeList;
         }
-        public static BindingList<Movie> RetrieveQueue(Customer user)
+        public static BindingList<Queue> RetrieveAllQueue()
+        {
+            //THis is wrong??????
+            string query = "SELECT * FROM queue ORDER BY date_added";
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            DataTable queueTable = new DataTable();
+            adaptor.Fill(queueTable);
+            BindingList<Queue> queue = new BindingList<Queue>();
+
+            foreach (DataRow queueRow in queueTable.Rows)
+            {
+                int cid = int.Parse(queueRow["cid"].ToString());
+                int mid = int.Parse(queueRow["mid"].ToString());
+                DateTime date = DateTime.Parse(queueRow["date_added"].ToString());
+                Queue newQueue = new Queue(cid, mid, date);
+                queue.Add(newQueue);
+                
+            }
+                return queue;
+
+        }
+
+        public static BindingList<Movie> RetrieveCustomerQueue(Customer user)
         {
             int cid = user.Id;
 
-            //GET THE MOVIES IN QUEUE
             string query = "select * from movie " +
                            "WHERE mid IN " +
                            "(SELECT mid from queue WHERE cid=" + cid + ")";
-           /* string query = "SELECT * FROM movie" +
-                "WHERE mid" +
-                "IN" +
-                "SELECT * FROM queue, movie WHERE cid=" +
-                cid;*/
+           
             SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
             DataTable queueTable = new DataTable();
             adaptor.Fill(queueTable);
@@ -261,7 +279,7 @@ namespace App
                 int cid = (int)orderRow["cid"];
                 DateTime placedDate = (DateTime)orderRow["order_placed"];
 
-                Order order = new Order(mid, cid)
+                Order order = new Order(mid, cid, 0)
                 {
                     Id = oid,
                     PlacedDate = placedDate
