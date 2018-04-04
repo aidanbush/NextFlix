@@ -8,12 +8,14 @@ namespace App
         private UserName name;
         private ContactInformation contactInformation;
         private Address address;
+        private Credentials credentials;
 
         /* Getters and Setters */
         public int Id { get => id; set => id = value; }
         public UserName Name { get => name; set => name = value; }
         public ContactInformation ContactInformation { get => contactInformation; set => contactInformation = value; }
         public Address Address { get => address; set => address = value; }
+        public Credentials Credentials { get => credentials; set => credentials = value; }
 
         /* name getters */
         public string FirstName { get => name.FirstName; }
@@ -26,6 +28,9 @@ namespace App
         public string City { get => address.City; }
         public string Province { get => address.Province; }
         public string PostalCode { get => address.PostalCode; }
+
+        /* username getter */
+        public string Username { get => credentials.Username; }
     }
 
 }
