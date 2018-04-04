@@ -30,12 +30,8 @@ namespace App
             FillUserInfo();
             DBEnvironment.SetMovies();
             movies = DBEnvironment.GetMovies();
-<<<<<<< HEAD
             userQueue = DBEnvironment.RetrieveCustomerQueue(user);
-=======
-            userQueue = DBEnvironment.RetrieveQueue(user);
             fillMovies();
->>>>>>> bb252f7dec74aa9e6dfbac6cb1bf535ee676403d
             MoviesQueuedGridView.AutoGenerateColumns = true;
             MovieGridView.AutoGenerateColumns = true;
             MovieGridView.Columns["Id"].Visible = false;
