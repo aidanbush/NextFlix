@@ -249,11 +249,12 @@ begin
 	declare @temp table (mid int, date_added date);
 	declare @cur_orders table (mid int);
 
-	-- get bottom 4 from queue
+	-- get bottom 4 from queue that have copies available
 	insert into @temp (mid, date_added)
 		select top 4 mid, date_added
-			from [queue]
-			where cid = @id
+			from (select q.mid, q.date_added 
+					from [queue] as q, movie as m
+					where q.cid = @id and q.mid = m.mid and m.copies_available > 0) as t
 			order by date_added desc;
 
 	-- get list of current orders
@@ -274,6 +275,10 @@ begin
 				values (@id, @mid, getdate());
 			-- remove from queue
 			delete from [queue] where cid = @id and mid = @mid;
+			-- update copies available
+			update movie
+				set copies_available = copies_available -1
+				where mid = @mid;
 			-- return
 			return
 		end
@@ -383,8 +388,8 @@ after insert, update
 as
 begin
 	update customer
-	set postalcode = upper(postalcode)
-	where customer.cid in (select cid from inserted);
+		set postalcode = upper(postalcode)
+		where customer.cid in (select cid from inserted);
 end
 go
 
@@ -398,8 +403,8 @@ begin
 		return
 	end
 	update customer
-	set email = lower(email)
-	where customer.cid in (select cid from inserted)
+		set email = lower(email)
+		where customer.cid in (select cid from inserted);
 end
 go
 
@@ -410,8 +415,8 @@ after insert, delete
 as
 begin
 	update movie
-	set rating = (select avg(rating) from movie_rating where mid = movie.mid) -- test
-	where movie.mid in (select mid from inserted) or movie.mid in (select mid from deleted)
+		set rating = (select avg(rating) from movie_rating where mid = movie.mid) -- test
+		where movie.mid in (select mid from inserted) or movie.mid in (select mid from deleted);
 end;
 go
 
@@ -421,9 +426,29 @@ after insert, delete
 as
 begin
 	update actor
-	set rating = (select avg(rating) from actor_rating where aid = actor.aid) -- test
-	where actor.aid in (select aid from inserted) or actor.aid in (select aid from deleted)
+		set rating = (select avg(rating) from actor_rating where aid = actor.aid) -- test
+		where actor.aid in (select aid from inserted) or actor.aid in (select aid from deleted)
 end;
+go
+
+-- needs more testing
+-- if returned increment counter
+create trigger movie_available_on_return_trigger
+on [order]
+after update
+as
+begin
+	declare @temp table (mid int);
+	-- check if return
+	insert into @temp
+		select mid
+			from inserted
+			where date_returned is not null;
+	-- increment counter
+	update movie
+		set copies_available = copies_available + 1
+		where mid in (select mid from @temp);
+end
 go
 
 insert into employee (position, first_name, last_name, [start], wage, username, passhash)
