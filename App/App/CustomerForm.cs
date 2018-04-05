@@ -30,9 +30,15 @@ namespace App
             FillUserInfo();
             DBEnvironment.SetMovies();
             movies = DBEnvironment.GetMovies();
-            userQueue = DBEnvironment.RetrieveQueue(user);
+            userQueue = DBEnvironment.RetrieveCustomerQueue(user);
+            fillMovies();
             MoviesQueuedGridView.AutoGenerateColumns = true;
             MovieGridView.AutoGenerateColumns = true;
+            MovieGridView.Columns["Id"].Visible = false;
+            MovieGridView.Columns["Num_copies"].Visible = false;
+            MoviesQueuedGridView.Columns["Id"].Visible = false;
+            MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
+
             HidePanels();
             
         }
@@ -57,13 +63,12 @@ namespace App
         {
             MovieGridView.DataSource = movies;
             MoviesQueuedGridView.DataSource = userQueue;
-            MovieGridView.Columns.Remove("Id");
-            MovieGridView.Columns.Remove("Num_copies");
 
         }
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.myMovies;
             Console.WriteLine("Showing Movies");
             myMoviesPanel.Visible = true;
@@ -73,23 +78,26 @@ namespace App
         private void movieHomeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.rentMovie;
             rentMoviePanel.Visible = true;
-            fillMovies();
+            
         }
         //Rent Movie Button
         private void RentMovieButton_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.rentMovie;
             Console.WriteLine("Showing Rent Movies");
             rentMoviePanel.Visible = true;
-            fillMovies();
+            
         }
         //MyProfile
         private void myProfileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.profile;
             Console.WriteLine("Showing profile");
             ProfilePanel.Visible = true;  
@@ -97,6 +105,7 @@ namespace App
         private void homeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.home;
             Console.WriteLine("Showing home");
             HomePanel.Visible = true;

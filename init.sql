@@ -16,7 +16,10 @@ drop table customer;
 
 --drop functions / stored procedures
 drop function limit_score;
+drop function can_order;
 drop proc calc_cust_rating;
+drop proc make_order;
+drop proc fill_orders;
 
 create table customer (
 	cid int not null primary key identity,
@@ -73,9 +76,12 @@ create table [order] (
 	cid int not null,
 	eid int,
 	order_placed date not null check(order_placed <= getdate()),
+	date_returned date,
 	foreign key (mid) references movie(mid),
 	foreign key (cid) references customer(cid),
 	foreign key (eid) references employee(eid),
+	constraint ck_date_returned
+		check(date_returned is null or date_returned >= order_placed)
 );
 
 create table [queue] (
@@ -91,8 +97,7 @@ create table actor (
 	aid int not null primary key identity,
 	first_name text not null,
 	last_name text,
-	sex char,
-	CONSTRAINT sex CHECK (sex IN ('M', 'G')),
+	sex char check (sex is null or sex IN ('M', 'F')),
 	dob date check(dob <= getdate()),
 	age as datediff(hour, dob, getdate())/8766,
 	rating int check(1 <= rating and rating <= 5),
@@ -124,25 +129,9 @@ create table actor_rating (
 	foreign key (cid) references customer(cid),
 );
 
-create table customer_accounts (
-	cid int not null,
-	username text not null,
-	passhash text not null,
-	primary key (cid),
-	foreign key (cid) references customer(cid),
-);
-
-create table employee_accounts (
-	eid int not null,
-	username text not null,
-	passhash text not null,
-	primary key (eid),
-	foreign key (eid) references employee(eid),
-);
-
 go
 
---functions
+-- functions
 create function limit_score (@score float)
 returns int
 as
@@ -155,7 +144,71 @@ begin
 end
 go
 
+create function can_order (@id int)
+returns int
+as
+begin
+	declare @account_type varchar(10);
+	declare @cur_orders int;
+	declare @num_orders int;
+	declare @start_of_month date;
 
+	select @start_of_month = dateadd(mm, datediff(mm, 0, getdate()), 0);
+
+	select @cur_orders = count(*)
+		from [order]
+		where cid = @id and date_returned is null;
+
+	select @account_type = account_type
+		from customer
+		where cid = @id;
+
+	if @account_type like 'Limited'
+	begin
+		-- if no movies out and <= 1 this month
+
+		if @cur_orders = 0
+		begin
+			--test num ordered this month
+			select @num_orders = count(*)
+				from [order]
+				where cid = @id and order_placed >= @start_of_month;
+			-- if <= 1
+			if @num_orders <= 1
+			begin
+				return 1;
+			end
+		end
+	end
+	else if @account_type like 'Bronze'
+	begin
+		-- if no orders
+		if @cur_orders = 0
+		begin
+			return 1;
+		end
+	end
+	else if @account_type like 'Silver'
+	begin
+		-- if <= 1 order
+		if @cur_orders <= 1
+		begin
+			return 1;
+		end
+	end
+	else if @account_type like 'Gold'
+	begin
+		-- if <= 2 orders
+		if @cur_orders <= 2
+		begin
+			return 1;
+		end
+	end
+	return 0;
+end
+go
+
+-- stored procedures
 create proc calc_cust_rating
 as
 begin
@@ -166,7 +219,7 @@ begin
 			from [order]
 			where datediff(mm, order_placed, getdate()) < 1
 			group by cid;
-		
+
 	-- get average and standard deviation
 	declare @avg float;
 	declare @stdev float;
@@ -189,8 +242,121 @@ begin
 end;
 go
 
+create proc make_order (@id int)
+as
+begin
+	declare @mid int;
+	--get bottom of queue
+	select top 1 @mid = mid
+		from [queue]
+		where cid = @id
+		order by date_added desc;
+	-- got something
+	if @@ROWCOUNT = 1
+	begin
+		-- insert into order
+		insert [order] (cid, mid, order_placed)
+			values (@id, @mid, getdate());
+		-- remove from queue
+		delete from [queue] where cid = @id and mid = @mid;
+	end
+end
+go
 
---triggers
+create proc fill_orders
+as
+begin
+	--for each cid
+	declare @temp table (cid int, size int);
+	declare @id int;
+	declare @size int;
+
+	insert into @temp (cid, size)
+		select cid, count(*)
+			from [queue]
+			group by cid;
+
+	--while can make order on cid and non empty queue
+	while exists (select * from @temp)
+	begin
+		select top 1 @id = cid, @size = size from @temp
+		-- if can create order and size > 0
+		if dbo.can_order(@id) = 1 and @size > 0
+		begin
+			-- make order
+			exec dbo.make_order @id;
+			-- decrement size
+			update @temp
+				set size = @size - 1
+				where cid = @id;
+		end
+		else
+		begin
+			-- delete from table
+			delete from @temp
+				where cid = @id;
+		end
+	end
+end
+go
+
+-- triggers
+create trigger cust_create_order_from_queue_trigger
+on [queue]
+after insert
+as
+begin
+	declare @temp table (cid int);
+	declare @id int;
+
+	insert into @temp (cid)
+		select cid
+			from inserted;
+	while exists (select * from @temp)
+	begin
+		select top 1 @id = cid from @temp;
+
+		-- check id if can add another order
+		if dbo.can_order(@id) = 1
+		begin
+			-- if true create order
+			exec dbo.make_order @id;
+		end
+
+		delete top (1) from @temp
+			where cid = @id;
+	end
+end
+go
+
+create trigger cust_create_order_from_order_trigger
+on [order]
+after update
+as
+begin
+	declare @temp table (cid int);
+	declare @id int;
+
+	insert into @temp (cid)
+		select cid
+			from inserted;
+	while exists (select * from @temp)
+	begin
+		select top 1 @id = cid from @temp;
+		
+		-- check id if can add another order
+		if dbo.can_order(@id) = 1
+		begin
+			-- if true create order
+			exec dbo.make_order @id;
+		end
+
+		delete top (1) from @temp
+			where cid = @id;
+	end
+end
+go
+
 create trigger cust_postal_code_upper_trigger
 on customer
 after insert, update
