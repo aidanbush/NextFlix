@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -32,13 +33,18 @@ namespace App
             movies = DBEnvironment.GetMovies();
             userQueue = DBEnvironment.RetrieveCustomerQueue(user);
             fillMovies();
-            MoviesQueuedGridView.AutoGenerateColumns = true;
-            MovieGridView.AutoGenerateColumns = true;
             MovieGridView.Columns["Id"].Visible = false;
             MovieGridView.Columns["Num_copies"].Visible = false;
+
             MoviesQueuedGridView.Columns["Id"].Visible = false;
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
 
+            RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
+            
+            RentedMoviesGridView.Columns["Id"].Visible = false;
+            RentedMoviesGridView.Columns["Num_copies"].Visible = false;
+
+         
             HidePanels();
             
         }
@@ -68,6 +74,7 @@ namespace App
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            userQueue = DBEnvironment.RetrieveCustomerQueue(user);
             fillMovies();
             currentType = CustomerFormType.myMovies;
             Console.WriteLine("Showing Movies");
@@ -155,6 +162,14 @@ namespace App
 
         private void MovieGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+                return;
+            index = e.RowIndex;
+        }
+        private void MoviesQueuedGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
             index = e.RowIndex;
         }
     }

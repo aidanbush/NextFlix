@@ -111,6 +111,25 @@ namespace App
             return ds;
         }
 
+        public static BindingList<Movie> GetCurrentlyRentedMovies(Customer user)
+        {
+
+            BindingList<Movie> Movies = new BindingList<Movie>();
+            String qString = "SELECT * FROM movie where" +
+                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id+ " and eid != NULL and date_returned = NULL)";
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
+            DataTable table = new DataTable();
+            adaptor.Fill(table);
+
+            foreach (DataRow movie in table.Rows)
+            {
+                Movies.Add(CreateMovieFromRow(movie));
+            }
+            return Movies;
+
+        }
+
         public static BindingList<Actor> GetActors(Movie movie)
         {
             String qString = "SELECT * FROM starred WHERE mid=" + movie.Id;
@@ -343,6 +362,7 @@ namespace App
             {
                 DataRow row = table.Rows[0];
                 return CreateMovieFromRow(row);
+
             }
 
             return null;
