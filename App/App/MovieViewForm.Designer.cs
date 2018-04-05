@@ -33,7 +33,7 @@
             this.GenreLabel = new System.Windows.Forms.Label();
             this.CopyLabel = new System.Windows.Forms.Label();
             this.RentButton = new System.Windows.Forms.Button();
-            this.RatingButton = new System.Windows.Forms.Label();
+            this.RatingLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // NameLabel
@@ -80,22 +80,23 @@
             this.RentButton.TabIndex = 4;
             this.RentButton.Text = "Rent This Movie";
             this.RentButton.UseVisualStyleBackColor = true;
+            this.RentButton.Click += new System.EventHandler(this.RentButton_Click);
             // 
-            // RatingButton
+            // RatingLabel
             // 
-            this.RatingButton.AutoSize = true;
-            this.RatingButton.Location = new System.Drawing.Point(36, 548);
-            this.RatingButton.Name = "RatingButton";
-            this.RatingButton.Size = new System.Drawing.Size(74, 25);
-            this.RatingButton.TabIndex = 5;
-            this.RatingButton.Text = "Rating";
+            this.RatingLabel.AutoSize = true;
+            this.RatingLabel.Location = new System.Drawing.Point(36, 548);
+            this.RatingLabel.Name = "RatingLabel";
+            this.RatingLabel.Size = new System.Drawing.Size(74, 25);
+            this.RatingLabel.TabIndex = 5;
+            this.RatingLabel.Text = "Rating";
             // 
             // MovieViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(691, 715);
-            this.Controls.Add(this.RatingButton);
+            this.Controls.Add(this.RatingLabel);
             this.Controls.Add(this.RentButton);
             this.Controls.Add(this.CopyLabel);
             this.Controls.Add(this.GenreLabel);
@@ -115,6 +116,6 @@
         private System.Windows.Forms.Label GenreLabel;
         private System.Windows.Forms.Label CopyLabel;
         private System.Windows.Forms.Button RentButton;
-        private System.Windows.Forms.Label RatingButton;
+        private System.Windows.Forms.Label RatingLabel;
     }
 }

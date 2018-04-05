@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Data.SqlClient;
 using System;
+using System.Data;
 
 namespace App
 {
@@ -122,6 +123,51 @@ namespace App
                 Console.WriteLine("User could not be updated");
                 return false;
             }
+        }
+
+
+        public bool AddToQueue(SqlConnection con)
+        {
+            throw new NotImplementedException();
+        }
+        public int fetchId(SqlConnection con)
+        {
+            int id = -1;
+            String q = "SELECT mid FROM movie" +
+                    " WHERE name like @name AND " +
+                       "genre like @genre AND " +
+                      "fees like @fees AND " +
+                      "num_copies like @num_copies";
+                      
+            using (SqlCommand command = new SqlCommand(q, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@name", Name);
+                    command.Parameters.AddWithValue("@genre", Genre);
+                    command.Parameters.AddWithValue("@fees", Fees);
+                    command.Parameters.AddWithValue("@num_copies", Num_copies);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            this.id = int.Parse(reader["mid"].ToString());
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    return -1;
+                }
+
+            }
+            
+            if (id < 0)
+                return -1;
+            
+            return id;
+           
         }
     }
 }

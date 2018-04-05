@@ -49,7 +49,6 @@ namespace App
         private bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
-            Console.WriteLine("CHecking with " + this.Name.FirstName + " and " + this.Name.LastName);
             using (SqlCommand command = new SqlCommand(queryString, con))
             {
                 try
@@ -85,7 +84,50 @@ namespace App
             Console.WriteLine("Database edit successful");
             return true;
         }
+        
+        public int GetMoviesAllowedAtATime()
+        {
+            int count;
 
+            switch (type)
+            {
+                case (AccountType.Bronze):
+                    count = 1;
+                    break;
+                case (AccountType.Silver):
+                    count = 2;
+                    break;
+                case (AccountType.Gold):
+                    count = 3;
+                    break;
+                case (AccountType.Limited):
+                    count = 1;
+                    break;
+                default:
+                    count = 0;
+                    break;  
+            }
+
+            return count;
+        }
+        public int GetMoviesRentablePerMonth()
+        {
+            int count;
+            switch (type)
+            {
+                case (AccountType.Limited):
+                    count = 2;
+                    break;
+                case (AccountType.Disabled):
+                    count = 0;
+                    break;
+                default:
+                    //3 have unlimited rentals
+                    count = 3;
+                    break;
+            }
+            return count;
+        }
         public bool Add(SqlConnection con)
         {
             if(this.Address.PostalCode == "")
@@ -104,7 +146,21 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
-            
+
+            if (this.Address.PostalCode == "")
+            {
+                this.Address.PostalCode = null;
+            }
+            if (this.ContactInformation.Email == "")
+            {
+                this.ContactInformation.Email = null;
+            }
+            if (this.ContactInformation.PhoneNumber == "")
+            {
+                this.ContactInformation.PhoneNumber = null;
+
+            }
+
             String qString = "UPDATE customer SET first_name=@first_name, " + 
                     "last_name=@last_name, " + 
                     "phone_number=@phone_number, " + 
@@ -145,6 +201,11 @@ namespace App
             con.Close();
             return true;
             
+        }
+
+        public bool AddToQueue(SqlConnection con)
+        {
+            throw new NotImplementedException();
         }
     }
 }

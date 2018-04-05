@@ -83,7 +83,7 @@ namespace App
             string name = NameTextBox.Text;
             string pass = PasswordTextBox.Text;
             Employee employee;
-
+            
             if (name == "admin" && pass == "pass")
             {
                 employee = DBEnvironment.ValidateEmployee(name, pass);
