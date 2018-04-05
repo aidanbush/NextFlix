@@ -31,6 +31,7 @@ namespace App
         {
             return Id.ToString() + " " + Name.ToString() + " " + Type.ToString();
         }
+
         private Object CheckNulls(String value)
         {
             Console.WriteLine("checking " + value);
@@ -110,6 +111,7 @@ namespace App
 
             return count;
         }
+
         public int GetMoviesRentablePerMonth()
         {
             int count;
@@ -128,6 +130,7 @@ namespace App
             }
             return count;
         }
+
         public bool Add(SqlConnection con)
         {
             if(this.Address.PostalCode == "")
@@ -180,7 +183,7 @@ namespace App
 
         public bool Delete(SqlConnection con)
         {
-            String q = "DELETE FROM customer WHERE cid=@cid";
+            String q = "UPDATE customer SET account_type = 'Disabled' WHERE cid = @cid";
 
             con.Open();
             using (SqlCommand command = new SqlCommand(q, con))
@@ -191,7 +194,7 @@ namespace App
                     int err = command.ExecuteNonQuery();
                 }
 
-                catch (Exception e)
+                catch (Exception)
                 {
                     con.Close();
                     Console.WriteLine("Database failed to delete record");

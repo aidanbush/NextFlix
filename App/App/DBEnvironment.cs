@@ -414,7 +414,7 @@ namespace App
 
         public static Customer ValidateCustomer(string username, string passhash)
         {
-            string qString = "SELECT * FROM customer WHERE username LIKE @username AND passhash LIKE @passhash";
+            string qString = "SELECT * FROM customer WHERE username LIKE @username AND passhash LIKE @passhash AND account_type NOT LIKE 'Disabled'";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
