@@ -2,8 +2,6 @@
 --create database project;
 
 --drop tables
-drop table customer_accounts;
-drop table employee_accounts;
 drop table actor_rating;
 drop table movie_rating;
 drop table starred;
@@ -75,19 +73,19 @@ create table [order] (
 	mid int not null,
 	cid int not null,
 	eid int,
-	order_placed date not null check(order_placed <= getdate()),
-	date_returned date,
+	order_placed datetime not null check(order_placed <= getdate()),
+	date_returned datetime,
 	foreign key (mid) references movie(mid),
 	foreign key (cid) references customer(cid),
 	foreign key (eid) references employee(eid),
 	constraint ck_date_returned
-		check(date_returned is null or date_returned >= order_placed)
+		check(date_returned is null or date_returned > order_placed)
 );
 
 create table [queue] (
 	cid int not null,
 	mid int not null,
-	date_added date not null check(date_added <= getdate()),
+	date_added datetime not null check(date_added <= getdate()),
 	primary key (cid, mid),
 	foreign key (mid) references movie(mid),
 	foreign key (cid) references customer(cid),
@@ -151,7 +149,7 @@ begin
 	declare @account_type varchar(10);
 	declare @cur_orders int;
 	declare @num_orders int;
-	declare @start_of_month date;
+	declare @start_of_month datetime;
 
 	select @start_of_month = dateadd(mm, datediff(mm, 0, getdate()), 0);
 
@@ -246,19 +244,41 @@ create proc make_order (@id int)
 as
 begin
 	declare @mid int;
-	--get bottom of queue
-	select top 1 @mid = mid
-		from [queue]
-		where cid = @id
-		order by date_added desc;
-	-- got something
-	if @@ROWCOUNT = 1
+	set @mid = null;
+
+	declare @temp table (mid int, date_added date);
+	declare @cur_orders table (mid int);
+
+	-- get bottom 4 from queue
+	insert into @temp (mid, date_added)
+		select top 4 mid, date_added
+			from [queue]
+			where cid = @id
+			order by date_added desc;
+
+	-- get list of current orders
+	insert into @cur_orders (mid)
+		select mid from [order]
+			where cid = @id and date_returned is null;
+
+	-- get mid
+	while exists (select * from @temp)
 	begin
-		-- insert into order
-		insert [order] (cid, mid, order_placed)
-			values (@id, @mid, getdate());
-		-- remove from queue
-		delete from [queue] where cid = @id and mid = @mid;
+		select top 1 @mid = mid
+			from @temp order by date_added;
+
+		if @mid not in (select mid from @cur_orders)
+		begin
+			-- make order
+			insert [order] (cid, mid, order_placed)
+				values (@id, @mid, getdate());
+			-- remove from queue
+			delete from [queue] where cid = @id and mid = @mid;
+			-- return
+			return
+		end
+		-- remove mid from @temp
+		delete from @temp where mid = @mid;
 	end
 end
 go
