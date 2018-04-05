@@ -14,6 +14,7 @@ namespace App
         private int customerID;
         private int employeeID;
         private DateTime placedDate;
+        private DateTime dateReturned;
 
 
         public Order(int newMovieID, int newcustomerID)
@@ -28,6 +29,7 @@ namespace App
         public int CustomerID { get => customerID; set => customerID = value; }
         public int EmployeeID { get => employeeID; set => employeeID = value; }
         public DateTime PlacedDate { get => placedDate; set => placedDate = value; }
+        public DateTime DateReturned { get => dateReturned; set => dateReturned = value; }
 
         /* sql functions */
         public bool Add(SqlConnection con)
