@@ -25,6 +25,7 @@ namespace App
         public int Rating { get => rating; set => rating = value; }
         public string CreditCard { get => creditCard; set => creditCard = value; }
         public AccountType Type { get => type; set => type = value; }
+        public string Email { get => ContactInformation.Email; }
         
         /* function Overrides */
         public override string ToString()

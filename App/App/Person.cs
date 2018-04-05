@@ -10,6 +10,9 @@ namespace App
         private Address address;
         private Credentials credentials;
 
+        /* phonenumber getter */
+        public string PhoneNumber { get => ContactInformation.PhoneNumber; }
+
         /* Getters and Setters */
         public int Id { get => id; set => id = value; }
         public UserName Name { get => name; set => name = value; }
@@ -31,6 +34,7 @@ namespace App
 
         /* username getter */
         public string Username { get => credentials.Username; }
+
     }
 
 }
