@@ -28,10 +28,10 @@ select @cid4 = cid from customer where username like 'myusername1';
 
 --create movie
 insert into movie (name, fees, num_copies, copies_available)
-	values ('59.59 seconds', 59.59, 60, 30);
+	values ('59.59 seconds', 59.59, 60, 2);
 
 insert into movie (name, fees, num_copies, copies_available)
-	values ('Speed', 50, 50, 50);
+	values ('Speed', 50, 50, 1);
 
 insert into movie (name, fees, num_copies, copies_available)
 	values ('Back to the Future', 1985, 88, 88);
@@ -45,45 +45,42 @@ select @mid3 = mid from movie where name like 'Back to the Future';
 select @mid4 = mid from movie where name like 'The Room';
 
 --add to queue
-insert into [queue] (mid, cid, date_added)
-	values (@mid1, @cid1, getdate());
+-- cid 1 queue = [1, 4]
+insert into [queue] (mid, cid, date_added) values (@mid1, @cid1, getdate());
+insert into [queue] (mid, cid, date_added) values (@mid4, @cid1, getdate());
 
-insert into [queue] (mid, cid, date_added)
-	values (@mid4, @cid1, getdate());
+-- cid 2 queue = [2,3]
+insert into [queue] (mid, cid, date_added) values (@mid2, @cid2, getdate());
+insert into [queue] (mid, cid, date_added) values (@mid3, @cid2, getdate());
 
-insert into [queue] (mid, cid, date_added)
-	values (@mid2, @cid2, getdate());
+-- cid 3 queue = [4]
+insert into [queue] (mid, cid, date_added) values (@mid4, @cid3, getdate());
 
-insert into [queue] (mid, cid, date_added)
-	values (@mid3, @cid2, getdate());
+-- cid 4 queue = [1,2,3,4]
+insert into [queue] (mid, cid, date_added) values (@mid1, @cid4, getdate());
+insert into [queue] (mid, cid, date_added) values (@mid2, @cid4, getdate());
+insert into [queue] (mid, cid, date_added) values (@mid3, @cid4, getdate());
+insert into [queue] (mid, cid, date_added) values (@mid4, @cid4, getdate());
 
-insert into [queue] (mid, cid, date_added)
-	values (@mid4, @cid3, getdate());
-
-insert into [queue] (mid, cid, date_added)
-	values (@mid1, @cid4, getdate());
-
-insert into [queue] (mid, cid, date_added)
-	values (@mid2, @cid4, getdate());
-
-insert into [queue] (mid, cid, date_added)
-	values (@mid3, @cid4, getdate());
-
-insert into [queue] (mid, cid, date_added)
-	values (@mid4, @cid4, getdate());
-
---check orders
+-- check orders
 select * from [queue];
 select * from [order];
+-- check movies available
+select * from movie;
 
---remove order
+-- return orders
 update [order]
 	set date_returned = getdate()
 	where cid = @cid1 and mid = @mid1;
+update [order]
+	set date_returned = getdate()
+	where cid = @cid4 and mid = @mid1;
 
---check orders again
+-- check orders again
 select * from [queue];
 select * from [order];
+-- check movies available again
+select * from movie;
 
 --test fill_orders
 exec dbo.fill_orders;
