@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Security.Cryptography;
-
+using System.Data.SqlTypes;
 namespace App
 {
     internal static class DBEnvironment
@@ -131,15 +131,19 @@ namespace App
         }
         public static BindingList<Movie> GetCurrentlyRentedMoviesInThisMonth(Customer user)
         {
-            Debug.Print("getting currently rented movies this month");
+    
+            DateTime now = DateTime.Now;
+            now = now.AddDays(-DateTime.Now.Day);
+ 
             String qString = "SELECT * FROM movie where" +
-                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + " and eid IS NOT NULL and date_returned IS NULL)";
+                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + 
+                " and eid IS NOT NULL and order_placed BETWEEN '"+ now.ToString("yyyy-MM-dd HH:mm:ss.fff")  +"' AND '"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "')";
 
-            return fetchMoviesFromTable(qString); ;
+            Debug.Print(qString);
+            return fetchMoviesFromTable(qString);
         }
         public static BindingList<Movie> GetCurrentlyRentedMovies(Customer user)
         {
-            Debug.Print("getting currently selected movies");
 
             String qString = "SELECT * FROM movie where" +
                 " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + " and eid IS NOT NULL and date_returned IS NULL)";

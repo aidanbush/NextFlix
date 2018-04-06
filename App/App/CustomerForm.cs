@@ -18,6 +18,7 @@ namespace App
         private BindingList<Movie> movies;
         private BindingList<Movie> userQueue;
         private int index;
+        private int indexRentedThisMonth = -1;
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
 
@@ -43,11 +44,10 @@ namespace App
             RentedMoviesGridView.Columns["Id"].Visible = false;
             RentedMoviesGridView.Columns["Num_copies"].Visible = false;
 
-            
-            //R.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
-            //RentedMoviesGridView.Columns["Id"].Visible = false;
-            //RentedMoviesGridView.Columns["Num_copies"].Visible = false;
 
+            MoviesRentedThisMonth.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
+            MoviesRentedThisMonth.Columns["Id"].Visible = false;
+            MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
             HidePanels();
             
         }
@@ -175,6 +175,23 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             index = e.RowIndex;
+        }
+
+        private void MoviesRentedThisMonth_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            indexRentedThisMonth = e.RowIndex;
+        }
+
+        private void RateMovieButton_Click(object sender, EventArgs e)
+        {
+            if (indexRentedThisMonth < 0)
+                return;
+
+            Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user);
+            movieForm.Show();
         }
     }
 }
