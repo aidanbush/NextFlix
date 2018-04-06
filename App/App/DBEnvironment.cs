@@ -111,22 +111,40 @@ namespace App
             return ds;
         }
 
-        public static BindingList<Movie> GetCurrentlyRentedMovies(Customer user)
+
+        private static BindingList<Movie> fetchMoviesFromTable(String query)
         {
 
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
             BindingList<Movie> Movies = new BindingList<Movie>();
-            String qString = "SELECT * FROM movie where" +
-                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id+ " and eid != NULL and date_returned = NULL)";
-
-            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
             DataTable table = new DataTable();
             adaptor.Fill(table);
 
             foreach (DataRow movie in table.Rows)
             {
-                Movies.Add(CreateMovieFromRow(movie));
+                Movie MovieFromDatabase = CreateMovieFromRow(movie);
+                Debug.Print(MovieFromDatabase.ToString());
+                Movies.Add(MovieFromDatabase);
             }
+
             return Movies;
+        }
+        public static BindingList<Movie> GetCurrentlyRentedMoviesInThisMonth(Customer user)
+        {
+            Debug.Print("getting currently rented movies this month");
+            String qString = "SELECT * FROM movie where" +
+                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + " and eid IS NOT NULL and date_returned IS NULL)";
+
+            return fetchMoviesFromTable(qString); ;
+        }
+        public static BindingList<Movie> GetCurrentlyRentedMovies(Customer user)
+        {
+            Debug.Print("getting currently selected movies");
+
+            String qString = "SELECT * FROM movie where" +
+                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + " and eid IS NOT NULL and date_returned IS NULL)";
+
+            return fetchMoviesFromTable(qString);
 
         }
 

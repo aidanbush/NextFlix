@@ -40,11 +40,14 @@ namespace App
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
 
             RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
-            
             RentedMoviesGridView.Columns["Id"].Visible = false;
             RentedMoviesGridView.Columns["Num_copies"].Visible = false;
 
-         
+            
+            //R.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
+            //RentedMoviesGridView.Columns["Id"].Visible = false;
+            //RentedMoviesGridView.Columns["Num_copies"].Visible = false;
+
             HidePanels();
             
         }
@@ -53,7 +56,7 @@ namespace App
             HomePanel.Visible = true;
             ProfilePanel.Visible = false;
             rentMoviePanel.Visible = false;
-            myMoviesPanel.Visible = false;
+            myMoviesPanel.Visible = true;
         }
         private void FillUserInfo()
         {
@@ -78,6 +81,7 @@ namespace App
             fillMovies();
             currentType = CustomerFormType.myMovies;
             Console.WriteLine("Showing Movies");
+            
             myMoviesPanel.Visible = true;
         }
 

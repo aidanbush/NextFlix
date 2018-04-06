@@ -56,7 +56,8 @@ namespace App
             queueView = new QueueView(this);
 
             InitializeComponent();
-            
+
+
             if (user.EmployeePosition != Employee.Position.Manager)
             {
                 this.Text = "Employee";
@@ -337,6 +338,7 @@ namespace App
                 parent.EditButton.Hide();
                 parent.DeleteButton.Hide();
                 parent.UpdateRatingsButton.Hide();
+                parent.OrderMovieButton.Hide();
                 // other
                 parent.dataGridView1.Hide();
                 parent.dataGridView1.DataSource = null;
