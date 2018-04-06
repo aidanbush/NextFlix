@@ -14,7 +14,7 @@ namespace App
     {
         Movie movie;
         Customer user;
-        public MovieViewForm(Movie selectedMovie, Customer CurrentUser)
+        public MovieViewForm(Movie selectedMovie, Customer CurrentUser, bool canRate)
         {
             movie = selectedMovie;
             user = CurrentUser;

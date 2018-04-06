@@ -154,13 +154,12 @@ namespace App
 
         private void rentMoviePanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void RentButton_click(object sender, EventArgs e)
         {
             Movie selectedMovie = movies.ElementAt(index);
-            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, false);
             movieForm.Show();
         }
 
@@ -190,7 +189,7 @@ namespace App
                 return;
 
             Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
-            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true);
             movieForm.Show();
         }
     }
