@@ -14,7 +14,7 @@ namespace App
     {
         Movie movie;
         Customer user;
-        public MovieViewForm(Movie selectedMovie, Customer CurrentUser)
+        public MovieViewForm(Movie selectedMovie, Customer CurrentUser, bool canRate)
         {
             movie = selectedMovie;
             user = CurrentUser;
@@ -23,7 +23,6 @@ namespace App
             GenreLabel.Text = movie.Genre;
             RatingLabel.Text = movie.Rating.ToString();
             CopyLabel.Text = movie.Num_copies.ToString();
-
         }
 
         private void RentButton_Click(object sender, EventArgs e)
@@ -32,6 +31,7 @@ namespace App
             if (adder.MovieInQueue())
             {
                 MessageBox.Show("Movie is already in your queue");
+                this.Close();
                 return;
             }
             if (DBEnvironment.AddToQueue(adder))
@@ -42,6 +42,7 @@ namespace App
             {
                 MessageBox.Show("Movie could not be added");
             }
+            this.Close();
         }
     }
 }

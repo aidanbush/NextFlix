@@ -18,6 +18,7 @@ namespace App
         private BindingList<Movie> movies;
         private BindingList<Movie> userQueue;
         private int index;
+        private int indexRentedThisMonth = -1;
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
 
@@ -40,11 +41,13 @@ namespace App
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
 
             RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
-            
             RentedMoviesGridView.Columns["Id"].Visible = false;
             RentedMoviesGridView.Columns["Num_copies"].Visible = false;
 
-         
+
+            MoviesRentedThisMonth.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
+            MoviesRentedThisMonth.Columns["Id"].Visible = false;
+            MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
             HidePanels();
             
         }
@@ -53,7 +56,7 @@ namespace App
             HomePanel.Visible = true;
             ProfilePanel.Visible = false;
             rentMoviePanel.Visible = false;
-            myMoviesPanel.Visible = false;
+            myMoviesPanel.Visible = true;
         }
         private void FillUserInfo()
         {
@@ -78,6 +81,7 @@ namespace App
             fillMovies();
             currentType = CustomerFormType.myMovies;
             Console.WriteLine("Showing Movies");
+            
             myMoviesPanel.Visible = true;
         }
 
@@ -150,13 +154,12 @@ namespace App
 
         private void rentMoviePanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void RentButton_click(object sender, EventArgs e)
         {
             Movie selectedMovie = movies.ElementAt(index);
-            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, false);
             movieForm.Show();
         }
 
@@ -171,6 +174,23 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             index = e.RowIndex;
+        }
+
+        private void MoviesRentedThisMonth_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            indexRentedThisMonth = e.RowIndex;
+        }
+
+        private void RateMovieButton_Click(object sender, EventArgs e)
+        {
+            if (indexRentedThisMonth < 0)
+                return;
+
+            Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true);
+            movieForm.Show();
         }
     }
 }

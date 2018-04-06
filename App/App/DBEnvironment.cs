@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Security.Cryptography;
-
+using System.Data.SqlTypes;
 namespace App
 {
     internal static class DBEnvironment
@@ -111,22 +111,44 @@ namespace App
             return ds;
         }
 
-        public static BindingList<Movie> GetCurrentlyRentedMovies(Customer user)
+
+        private static BindingList<Movie> fetchMoviesFromTable(String query)
         {
 
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
             BindingList<Movie> Movies = new BindingList<Movie>();
-            String qString = "SELECT * FROM movie where" +
-                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id+ " and eid != NULL and date_returned = NULL)";
-
-            SqlDataAdapter adaptor = new SqlDataAdapter(qString, con);
             DataTable table = new DataTable();
             adaptor.Fill(table);
 
             foreach (DataRow movie in table.Rows)
             {
-                Movies.Add(CreateMovieFromRow(movie));
+                Movie MovieFromDatabase = CreateMovieFromRow(movie);
+                Debug.Print(MovieFromDatabase.ToString());
+                Movies.Add(MovieFromDatabase);
             }
+
             return Movies;
+        }
+        public static BindingList<Movie> GetCurrentlyRentedMoviesInThisMonth(Customer user)
+        {
+    
+            DateTime now = DateTime.Now;
+            now = now.AddDays(-DateTime.Now.Day);
+ 
+            String qString = "SELECT * FROM movie where" +
+                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + 
+                " and eid IS NOT NULL and order_placed BETWEEN '"+ now.ToString("yyyy-MM-dd HH:mm:ss.fff")  +"' AND '"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "')";
+
+            Debug.Print(qString);
+            return fetchMoviesFromTable(qString);
+        }
+        public static BindingList<Movie> GetCurrentlyRentedMovies(Customer user)
+        {
+
+            String qString = "SELECT * FROM movie where" +
+                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + " and eid IS NOT NULL and date_returned IS NULL)";
+
+            return fetchMoviesFromTable(qString);
 
         }
 
