@@ -320,11 +320,13 @@ namespace App
                 int mid = (int)orderRow["mid"];
                 int cid = (int)orderRow["cid"];
                 DateTime placedDate = (DateTime)orderRow["order_placed"];
+                DateTime dateReturned = (DateTime)orderRow["date_returned"];
 
                 Order order = new Order(mid, cid, 0)
                 {
                     Id = oid,
-                    PlacedDate = placedDate
+                    PlacedDate = placedDate,
+                    DateReturned = dateReturned,
                 };
 
                 orders.Add(order);
@@ -512,6 +514,41 @@ namespace App
             }
 
             return null;
+        }
+
+        public static BindingList<Order> GetOrdersOverTime(DateTime from, DateTime to)
+        {
+            string qString = "SELECT * FROM [order] WHERE order_placed BETWEEN @from AND @to";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@from", from);
+            adapter.SelectCommand.Parameters.AddWithValue("@to", to);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            BindingList<Order> orders = new BindingList<Order>();
+
+            foreach (DataRow orderRow in table.Rows)
+            {
+                Debug.WriteLine("new order");
+                int oid = (int)orderRow["oid"];
+                int mid = (int)orderRow["mid"];
+                int cid = (int)orderRow["cid"];
+                DateTime placedDate = (DateTime)orderRow["order_placed"];
+                DateTime dateReturned = (DateTime)orderRow["date_returned"];
+
+                Order order = new Order(mid, cid, 0)
+                {
+                    Id = oid,
+                    PlacedDate = placedDate,
+                    DateReturned = dateReturned,
+                };
+
+                orders.Add(order);
+            }
+
+            return orders;
         }
 
         private static Employee CreateEmployeeFromRow(DataRow row)
