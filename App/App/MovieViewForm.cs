@@ -15,8 +15,10 @@ namespace App
     {
         Movie movie;
         Customer user;
-        public MovieViewForm(Movie selectedMovie, Customer CurrentUser, bool canRate)
+        CustomerForm parent;
+        public MovieViewForm(Movie selectedMovie, Customer CurrentUser, bool canRate, CustomerForm parent)
         {
+            this.parent = parent;
             movie = selectedMovie;
             user = CurrentUser;
             InitializeComponent();
@@ -72,9 +74,18 @@ namespace App
         private void RatingButton_Click(object sender, EventArgs e)
         {
             if (DBEnvironment.AddMovieRating(movie, user, int.Parse(RatingLabel.Text)))
+            {
+                Debug.Print("Adding movie rating!");
                 return;
+            }
             else
+            {
+                Debug.Print("Updating movie rating");
                 DBEnvironment.EditMovieRating(movie, user, int.Parse(RatingLabel.Text));
+                this.parent.fillMovies();
+                this.Close();
+            }
+                
         }
     }
 }

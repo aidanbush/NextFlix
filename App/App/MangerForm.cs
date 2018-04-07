@@ -239,6 +239,7 @@ namespace App
             Order selectedOrder = orders[index];
             FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
             fufillForm.Show();
+            FillTable();
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -450,7 +451,6 @@ namespace App
                 // buttons
                 parent.AddButton.Show();
                 parent.EditButton.Show();
-                parent.DeleteButton.Show();
                 // other
                 parent.dataGridView1.Show();
 

@@ -411,7 +411,7 @@ go
 
 create trigger movie_rating_trigger
 on movie_rating
-after insert, delete
+after insert, delete, update
 as
 begin
 	update movie
