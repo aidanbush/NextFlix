@@ -320,11 +320,13 @@ namespace App
                 int mid = (int)orderRow["mid"];
                 int cid = (int)orderRow["cid"];
                 DateTime placedDate = (DateTime)orderRow["order_placed"];
+                DateTime dateReturned = (DateTime)orderRow["date_returned"];
 
                 Order order = new Order(mid, cid, 0)
                 {
                     Id = oid,
-                    PlacedDate = placedDate
+                    PlacedDate = placedDate,
+                    DateReturned = dateReturned,
                 };
 
                 orders.Add(order);
@@ -512,6 +514,75 @@ namespace App
             }
 
             return null;
+        }
+
+        public static BindingList<SaleReport> GetOrdersOverTime(DateTime from, DateTime to)
+        {
+            string qString = "SELECT m.name, m.genre, c.mid, c.count " +
+                "FROM (SELECT mid, COUNT(*) as count FROM [order] WHERE order_placed BETWEEN @from AND @to GROUP BY mid) AS c, movie AS m " +
+                "WHERE c.mid = m.mid;";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@from", from);
+            adapter.SelectCommand.Parameters.AddWithValue("@to", to);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            BindingList<SaleReport> reports = new BindingList<SaleReport>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                Debug.WriteLine("new order");
+                int mid = (int)row["mid"];
+                int count = (int)row["count"];
+                string name = (string)row["name"];
+                
+                SaleReport report = new SaleReport(mid, name, count);
+                if (!row.IsNull("genre"))
+                {
+                    report.Genre = (string)row["genre"];
+                }
+
+                reports.Add(report);
+            }
+
+            return reports;
+        }
+
+        public static BindingList<SaleReport> GetOrdersOverTimeLimitGenre(DateTime from, DateTime to, string genre)
+        {
+            string qString = "SELECT m.name, m.genre, c.mid, c.count " +
+                "FROM (SELECT mid, COUNT(*) as count FROM [order] WHERE order_placed BETWEEN @from AND @to GROUP BY mid) AS c, movie AS m " +
+                "WHERE c.mid = m.mid AND m.genre LIKE @genre";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@from", from);
+            adapter.SelectCommand.Parameters.AddWithValue("@to", to);
+            adapter.SelectCommand.Parameters.AddWithValue("@genre", genre);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            BindingList<SaleReport> reports = new BindingList<SaleReport>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                Debug.WriteLine("new order");
+                int mid = (int)row["mid"];
+                int count = (int)row["count"];
+                string name = (string)row["name"];
+
+                SaleReport report = new SaleReport(mid, name, count);
+                if (!row.IsNull("genre"))
+                {
+                    report.Genre = (string)row["genre"];
+                }
+
+                reports.Add(report);
+            }
+
+            return reports;
         }
 
         private static Employee CreateEmployeeFromRow(DataRow row)
