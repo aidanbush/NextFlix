@@ -89,6 +89,47 @@ namespace App
             return queryObject.Add(con);
         }
 
+        public static bool MovieRatingQuery(String query, Movie movie, Customer user, int rating)
+        {
+            con.Open();
+            using (SqlCommand command = new SqlCommand(query, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@mid", movie.Id);
+                    command.Parameters.AddWithValue("@cid", user.Id);
+                    command.Parameters.AddWithValue("@rating", rating);
+                    int err = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    con.Close();
+                    return false;
+                }
+
+            }
+            con.Close();
+            return true;
+        }
+        public static bool EditMovieRating(Movie movie, Customer user, int rating)
+        {
+            String q = "UPDATE movie_rating SET rating=@rating where mid=@mid and cid=@cid";
+            return MovieRatingQuery(q, movie, user, rating);
+        }
+
+        public static bool AddMovieRating(Movie movie, Customer user, int rating)
+        {
+            String q = "insert into movie_rating (mid, cid, rating) values (@mid, @cid, @rating);";
+            return MovieRatingQuery(q, movie, user, rating);
+        }
+
+        public static bool EditRating(IRating queryObject)
+        {
+            return queryObject.EditRating(con);
+        }
+
+     
         public static bool AddToQueue(IQuery queryObject)
         {
             return queryObject.AddToQueue(con);

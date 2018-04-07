@@ -253,7 +253,11 @@ namespace App
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+                return;
             index = e.RowIndex;
+            dataGridView1.Rows[index].Selected = true;
+            //dataGridView1.Rows[index].DefaultCellStyle.SelectionBackColor = Color.Green;
         }
 
         private void CustomerLoad(object sender, EventArgs e)
@@ -541,6 +545,11 @@ namespace App
                 parent.dataGridView1.DataSource = parent.queue;
                 parent.Refresh();
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

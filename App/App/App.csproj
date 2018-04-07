@@ -92,6 +92,7 @@
     <Compile Include="EmployeeAddEdit.Designer.cs">
       <DependentUpon>EmployeeAddEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="IRating.cs" />
     <Compile Include="MangerForm.cs">
       <SubType>Form</SubType>
     </Compile>

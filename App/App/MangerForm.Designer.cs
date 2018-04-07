@@ -29,7 +29,6 @@ namespace App
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.AddButton = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,26 +45,10 @@ namespace App
             this.FulfillOrderButton = new System.Windows.Forms.Button();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.OrderMovieButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(361, 72);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(932, 474);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // AddButton
             // 
@@ -87,7 +70,7 @@ namespace App
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(1281, 26);
+            this.menuStrip1.Size = new System.Drawing.Size(1924, 26);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -201,8 +184,8 @@ namespace App
             // LogoutButton
             // 
             this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.LogoutButton.Location = new System.Drawing.Point(1146, 36);
-            this.LogoutButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LogoutButton.Location = new System.Drawing.Point(1789, 36);
+            this.LogoutButton.Margin = new System.Windows.Forms.Padding(4);
             this.LogoutButton.Name = "LogoutButton";
             this.LogoutButton.Size = new System.Drawing.Size(100, 28);
             this.LogoutButton.TabIndex = 10;
@@ -213,7 +196,7 @@ namespace App
             // OrderMovieButton
             // 
             this.OrderMovieButton.Location = new System.Drawing.Point(129, 72);
-            this.OrderMovieButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OrderMovieButton.Margin = new System.Windows.Forms.Padding(2);
             this.OrderMovieButton.Name = "OrderMovieButton";
             this.OrderMovieButton.Size = new System.Drawing.Size(179, 68);
             this.OrderMovieButton.TabIndex = 11;
@@ -221,11 +204,29 @@ namespace App
             this.OrderMovieButton.UseVisualStyleBackColor = true;
             this.OrderMovieButton.Click += new System.EventHandler(this.OrderMovieButton_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.Desktop;
+            this.dataGridView1.Location = new System.Drawing.Point(343, 72);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(1569, 664);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1281, 675);
+            this.ClientSize = new System.Drawing.Size(1924, 933);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.OrderMovieButton);
             this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.FulfillOrderButton);
@@ -233,7 +234,6 @@ namespace App
             this.Controls.Add(this.DeleteButton);
             this.Controls.Add(this.EditButton);
             this.Controls.Add(this.AddButton);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -241,17 +241,15 @@ namespace App
             this.Text = "Manager";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ManagerFormClosed);
             this.Load += new System.EventHandler(this.Form2_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button AddButton;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -268,5 +266,6 @@ namespace App
         private System.Windows.Forms.Button LogoutButton;
         private System.Windows.Forms.Button OrderMovieButton;
         private System.Windows.Forms.ToolStripMenuItem customerQueueToolStripMenuItem;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
