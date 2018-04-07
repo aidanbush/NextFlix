@@ -124,11 +124,6 @@ namespace App
             return MovieRatingQuery(q, movie, user, rating);
         }
 
-        public static bool EditRating(IRating queryObject)
-        {
-            return queryObject.EditRating(con);
-        }
-
      
         public static bool AddToQueue(IQuery queryObject)
         {
