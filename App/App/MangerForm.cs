@@ -26,6 +26,7 @@ namespace App
         private BindingList<Movie> movies;
         private BindingList<Employee> employees;
         private BindingList<Order> orders;
+        private BindingList<Order> managerViewOrders;
         private BindingList<Queue> queue;
 
         private CustomerView customerView;
@@ -543,6 +544,27 @@ namespace App
                 parent.dataGridView1.DataSource = parent.queue;
                 parent.Refresh();
             }
+        }
+
+        private void GenerateReportButton_Click(object sender, EventArgs e)
+        {
+            // get dates
+            DateTime from = FromDateTimePicker.Value;
+            DateTime to = ToDateTimePicker.Value;
+
+            // get genre
+            string genre = GenreTextBox.Text;
+
+            if (genre == "")
+            {
+                managerViewOrders = DBEnvironment.GetOrdersOverTime(from, to);
+            }
+            else
+            {
+                // do with genre
+            }
+
+            ManagerViewDataGridView.DataSource = managerViewOrders;
         }
     }
 }

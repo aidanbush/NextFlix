@@ -337,6 +337,7 @@ namespace App
             this.GenerateReportButton.TabIndex = 9;
             this.GenerateReportButton.Text = "Generate Report";
             this.GenerateReportButton.UseVisualStyleBackColor = true;
+            this.GenerateReportButton.Click += new System.EventHandler(this.GenerateReportButton_Click);
             // 
             // ManagerForm
             // 
