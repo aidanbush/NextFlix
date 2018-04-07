@@ -26,7 +26,7 @@ namespace App
         private BindingList<Movie> movies;
         private BindingList<Employee> employees;
         private BindingList<Order> orders;
-        private BindingList<Order> managerViewOrders;
+        private BindingList<SaleReport> sales;
         private BindingList<Queue> queue;
 
         private CustomerView customerView;
@@ -557,14 +557,14 @@ namespace App
 
             if (genre == "")
             {
-                managerViewOrders = DBEnvironment.GetOrdersOverTime(from, to);
+                sales = DBEnvironment.GetOrdersOverTime(from, to);
             }
             else
             {
-                // do with genre
+                sales = DBEnvironment.GetOrdersOverTimeLimitGenre(from, to, genre);
             }
 
-            ManagerViewDataGridView.DataSource = managerViewOrders;
+            ManagerViewDataGridView.DataSource = sales;
         }
     }
 }
