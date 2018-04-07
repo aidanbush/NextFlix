@@ -46,8 +46,21 @@ namespace App
             this.FulfillOrderButton = new System.Windows.Forms.Button();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.OrderMovieButton = new System.Windows.Forms.Button();
+            this.ManagerViewPanel = new System.Windows.Forms.Panel();
+            this.SalesReportLabel = new System.Windows.Forms.Label();
+            this.DateRangeLabel = new System.Windows.Forms.Label();
+            this.FromLabel = new System.Windows.Forms.Label();
+            this.ToLabel = new System.Windows.Forms.Label();
+            this.FromDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.ToDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.GenreLabel = new System.Windows.Forms.Label();
+            this.GenreTextBox = new System.Windows.Forms.TextBox();
+            this.ManagerViewDataGridView = new System.Windows.Forms.DataGridView();
+            this.GenerateReportButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.ManagerViewPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ManagerViewDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -220,11 +233,117 @@ namespace App
             this.OrderMovieButton.UseVisualStyleBackColor = true;
             this.OrderMovieButton.Click += new System.EventHandler(this.OrderMovieButton_Click);
             // 
+            // ManagerViewPanel
+            // 
+            this.ManagerViewPanel.Controls.Add(this.GenerateReportButton);
+            this.ManagerViewPanel.Controls.Add(this.ManagerViewDataGridView);
+            this.ManagerViewPanel.Controls.Add(this.GenreTextBox);
+            this.ManagerViewPanel.Controls.Add(this.GenreLabel);
+            this.ManagerViewPanel.Controls.Add(this.ToDateTimePicker);
+            this.ManagerViewPanel.Controls.Add(this.FromDateTimePicker);
+            this.ManagerViewPanel.Controls.Add(this.ToLabel);
+            this.ManagerViewPanel.Controls.Add(this.FromLabel);
+            this.ManagerViewPanel.Controls.Add(this.DateRangeLabel);
+            this.ManagerViewPanel.Controls.Add(this.SalesReportLabel);
+            this.ManagerViewPanel.Location = new System.Drawing.Point(0, 58);
+            this.ManagerViewPanel.Name = "ManagerViewPanel";
+            this.ManagerViewPanel.Size = new System.Drawing.Size(961, 490);
+            this.ManagerViewPanel.TabIndex = 12;
+            this.ManagerViewPanel.Visible = false;
+            // 
+            // SalesReportLabel
+            // 
+            this.SalesReportLabel.AutoSize = true;
+            this.SalesReportLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalesReportLabel.Location = new System.Drawing.Point(13, 41);
+            this.SalesReportLabel.Name = "SalesReportLabel";
+            this.SalesReportLabel.Size = new System.Drawing.Size(102, 20);
+            this.SalesReportLabel.TabIndex = 0;
+            this.SalesReportLabel.Text = "Sales Report";
+            // 
+            // DateRangeLabel
+            // 
+            this.DateRangeLabel.AutoSize = true;
+            this.DateRangeLabel.Location = new System.Drawing.Point(17, 71);
+            this.DateRangeLabel.Name = "DateRangeLabel";
+            this.DateRangeLabel.Size = new System.Drawing.Size(65, 13);
+            this.DateRangeLabel.TabIndex = 1;
+            this.DateRangeLabel.Text = "Date Range";
+            // 
+            // FromLabel
+            // 
+            this.FromLabel.AutoSize = true;
+            this.FromLabel.Location = new System.Drawing.Point(17, 88);
+            this.FromLabel.Name = "FromLabel";
+            this.FromLabel.Size = new System.Drawing.Size(33, 13);
+            this.FromLabel.TabIndex = 2;
+            this.FromLabel.Text = "From:";
+            // 
+            // ToLabel
+            // 
+            this.ToLabel.AutoSize = true;
+            this.ToLabel.Location = new System.Drawing.Point(17, 115);
+            this.ToLabel.Name = "ToLabel";
+            this.ToLabel.Size = new System.Drawing.Size(20, 13);
+            this.ToLabel.TabIndex = 3;
+            this.ToLabel.Text = "To";
+            // 
+            // FromDateTimePicker
+            // 
+            this.FromDateTimePicker.Location = new System.Drawing.Point(57, 88);
+            this.FromDateTimePicker.Name = "FromDateTimePicker";
+            this.FromDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.FromDateTimePicker.TabIndex = 4;
+            // 
+            // ToDateTimePicker
+            // 
+            this.ToDateTimePicker.Location = new System.Drawing.Point(57, 115);
+            this.ToDateTimePicker.Name = "ToDateTimePicker";
+            this.ToDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.ToDateTimePicker.TabIndex = 5;
+            // 
+            // GenreLabel
+            // 
+            this.GenreLabel.AutoSize = true;
+            this.GenreLabel.Location = new System.Drawing.Point(17, 141);
+            this.GenreLabel.Name = "GenreLabel";
+            this.GenreLabel.Size = new System.Drawing.Size(36, 13);
+            this.GenreLabel.TabIndex = 6;
+            this.GenreLabel.Text = "Genre";
+            // 
+            // GenreTextBox
+            // 
+            this.GenreTextBox.Location = new System.Drawing.Point(17, 158);
+            this.GenreTextBox.Name = "GenreTextBox";
+            this.GenreTextBox.Size = new System.Drawing.Size(100, 20);
+            this.GenreTextBox.TabIndex = 7;
+            // 
+            // ManagerViewDataGridView
+            // 
+            this.ManagerViewDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ManagerViewDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.ManagerViewDataGridView.Location = new System.Drawing.Point(271, 71);
+            this.ManagerViewDataGridView.Name = "ManagerViewDataGridView";
+            this.ManagerViewDataGridView.Size = new System.Drawing.Size(690, 419);
+            this.ManagerViewDataGridView.TabIndex = 8;
+            // 
+            // GenerateReportButton
+            // 
+            this.GenerateReportButton.Location = new System.Drawing.Point(17, 194);
+            this.GenerateReportButton.Name = "GenerateReportButton";
+            this.GenerateReportButton.Size = new System.Drawing.Size(100, 40);
+            this.GenerateReportButton.TabIndex = 9;
+            this.GenerateReportButton.Text = "Generate Report";
+            this.GenerateReportButton.UseVisualStyleBackColor = true;
+            // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(961, 548);
+            this.Controls.Add(this.ManagerViewPanel);
             this.Controls.Add(this.OrderMovieButton);
             this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.FulfillOrderButton);
@@ -243,6 +362,9 @@ namespace App
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.ManagerViewPanel.ResumeLayout(false);
+            this.ManagerViewPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ManagerViewDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,5 +389,16 @@ namespace App
         private System.Windows.Forms.Button LogoutButton;
         private System.Windows.Forms.Button OrderMovieButton;
         private System.Windows.Forms.ToolStripMenuItem customerQueueToolStripMenuItem;
+        private System.Windows.Forms.Panel ManagerViewPanel;
+        private System.Windows.Forms.Label SalesReportLabel;
+        private System.Windows.Forms.Label DateRangeLabel;
+        private System.Windows.Forms.Label FromLabel;
+        private System.Windows.Forms.Label ToLabel;
+        private System.Windows.Forms.DateTimePicker ToDateTimePicker;
+        private System.Windows.Forms.DateTimePicker FromDateTimePicker;
+        private System.Windows.Forms.Label GenreLabel;
+        private System.Windows.Forms.TextBox GenreTextBox;
+        private System.Windows.Forms.DataGridView ManagerViewDataGridView;
+        private System.Windows.Forms.Button GenerateReportButton;
     }
 }

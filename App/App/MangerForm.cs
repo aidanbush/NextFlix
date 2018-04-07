@@ -470,10 +470,12 @@ namespace App
 
             public void HideView()
             {
+                parent.ManagerViewPanel.Hide();
             }
 
             public void ShowView()
             {
+                parent.ManagerViewPanel.Show();
             }
         }
 
