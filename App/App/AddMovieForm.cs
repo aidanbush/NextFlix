@@ -32,10 +32,18 @@ namespace App
             ActorList.DataSource = actors;
             MovieActorList.DataSource = movieActors;
             ActorList.AutoGenerateColumns = true;
+            MovieActorList.Columns["Id"].Visible = false;
+            MovieActorList.Columns["Sex"].Visible = false;
+            MovieActorList.Columns["DateOfBirth"].Visible = false;
+            MovieActorList.Columns["Age"].Visible = false;
+            MovieActorList.Columns["Rating"].Visible = false;
+
             if (selectedMovie == null)
                 return;
             movieActors = DBEnvironment.GetActors(selectedMovie);
             MovieActorList.DataSource = movieActors;
+            
+
             fillForm();
         }
 
@@ -213,6 +221,7 @@ namespace App
                 return;
             var index = ActorList.CurrentRow.Index;
             selectedActor = this.actors.ElementAt(index);
+            ActorList.Rows[index].Selected = true;
         }
         private bool InsertActors(Movie movie)
         {
@@ -269,6 +278,12 @@ namespace App
                 return;
             var index = MovieActorList.CurrentRow.Index;
             selectedActorInMovieList = this.movieActors.ElementAt(index);
+            MovieActorList.Rows[index].Selected = true;
+        }
+
+        private void MovieActorList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

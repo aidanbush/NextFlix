@@ -39,12 +39,13 @@ namespace App
 
             MoviesQueuedGridView.Columns["Id"].Visible = false;
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
-            
+
             RentedMoviesGridView.Columns["Id"].Visible = false;
             RentedMoviesGridView.Columns["Num_copies"].Visible = false;
 
             MoviesRentedThisMonth.Columns["Id"].Visible = false;
             MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
+
             HidePanels();
             
         }
@@ -166,12 +167,11 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             index = e.RowIndex;
+            MovieGridView.Rows[index].Selected = true;
         }
         private void MoviesQueuedGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
-            index = e.RowIndex;
+
         }
 
         private void MoviesRentedThisMonth_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -179,6 +179,7 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             indexRentedThisMonth = e.RowIndex;
+            MoviesRentedThisMonth.Rows[index].Selected = true;
         }
 
         private void RateMovieButton_Click(object sender, EventArgs e)

@@ -168,7 +168,7 @@
             // 
             // AddActor
             // 
-            this.AddActor.Location = new System.Drawing.Point(353, 437);
+            this.AddActor.Location = new System.Drawing.Point(505, 437);
             this.AddActor.Margin = new System.Windows.Forms.Padding(2);
             this.AddActor.Name = "AddActor";
             this.AddActor.Size = new System.Drawing.Size(98, 36);
@@ -180,6 +180,7 @@
             // ActorList
             // 
             this.ActorList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.ActorList.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ActorList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ActorList.Location = new System.Drawing.Point(268, 35);
             this.ActorList.Name = "ActorList";
@@ -187,14 +188,14 @@
             this.ActorList.RowHeadersVisible = false;
             this.ActorList.RowHeadersWidth = 25;
             this.ActorList.RowTemplate.Height = 24;
-            this.ActorList.Size = new System.Drawing.Size(388, 397);
+            this.ActorList.Size = new System.Drawing.Size(540, 397);
             this.ActorList.TabIndex = 34;
             this.ActorList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ActorList_CellClick);
             this.ActorList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ActorList_CellContentClick);
             // 
             // DeleteActor
             // 
-            this.DeleteActor.Location = new System.Drawing.Point(553, 437);
+            this.DeleteActor.Location = new System.Drawing.Point(705, 437);
             this.DeleteActor.Margin = new System.Windows.Forms.Padding(2);
             this.DeleteActor.Name = "DeleteActor";
             this.DeleteActor.Size = new System.Drawing.Size(103, 36);
@@ -205,7 +206,7 @@
             // 
             // EditActor
             // 
-            this.EditActor.Location = new System.Drawing.Point(455, 437);
+            this.EditActor.Location = new System.Drawing.Point(607, 437);
             this.EditActor.Margin = new System.Windows.Forms.Padding(2);
             this.EditActor.Name = "EditActor";
             this.EditActor.Size = new System.Drawing.Size(94, 36);
@@ -227,6 +228,8 @@
             // 
             // MovieActorList
             // 
+            this.MovieActorList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MovieActorList.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             this.MovieActorList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MovieActorList.Location = new System.Drawing.Point(12, 282);
             this.MovieActorList.Name = "MovieActorList";
@@ -235,6 +238,7 @@
             this.MovieActorList.Size = new System.Drawing.Size(173, 150);
             this.MovieActorList.TabIndex = 38;
             this.MovieActorList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SelectActorInMovieList);
+            this.MovieActorList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MovieActorList_CellContentClick);
             // 
             // label7
             // 
@@ -261,7 +265,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(688, 516);
+            this.ClientSize = new System.Drawing.Size(820, 516);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.MovieActorList);

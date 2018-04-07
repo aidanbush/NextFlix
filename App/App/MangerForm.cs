@@ -451,6 +451,7 @@ namespace App
                 // buttons
                 parent.AddButton.Show();
                 parent.EditButton.Show();
+                parent.DeleteButton.Show();
                 // other
                 parent.dataGridView1.Show();
 
