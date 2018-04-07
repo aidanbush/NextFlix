@@ -320,14 +320,16 @@ namespace App
                 int mid = (int)orderRow["mid"];
                 int cid = (int)orderRow["cid"];
                 DateTime placedDate = (DateTime)orderRow["order_placed"];
-                DateTime dateReturned = (DateTime)orderRow["date_returned"];
 
                 Order order = new Order(mid, cid, 0)
                 {
                     Id = oid,
                     PlacedDate = placedDate,
-                    DateReturned = dateReturned,
                 };
+                if (!orderRow.IsNull("date_returned"))
+                {
+                    order.DateReturned = (DateTime)orderRow["date_returned"];
+                }
 
                 orders.Add(order);
             }
