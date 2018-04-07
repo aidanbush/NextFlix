@@ -40,14 +40,12 @@ namespace App
             MoviesQueuedGridView.Columns["Id"].Visible = false;
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
 
-            RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
             RentedMoviesGridView.Columns["Id"].Visible = false;
             RentedMoviesGridView.Columns["Num_copies"].Visible = false;
 
-
-            MoviesRentedThisMonth.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
             MoviesRentedThisMonth.Columns["Id"].Visible = false;
             MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
+
             HidePanels();
             
         }
@@ -68,11 +66,12 @@ namespace App
             EmailLabel.Text = "Email: " + user.ContactInformation.Email;
         }
         
-        private void fillMovies()
+        public void fillMovies()
         {
-            MovieGridView.DataSource = movies;
-            MoviesQueuedGridView.DataSource = userQueue;
-
+            MovieGridView.DataSource = DBEnvironment.GetMovies(); ;
+            MoviesQueuedGridView.DataSource = DBEnvironment.RetrieveCustomerQueue(user); ;
+            RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
+            MoviesRentedThisMonth.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
         }
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -159,7 +158,7 @@ namespace App
         private void RentButton_click(object sender, EventArgs e)
         {
             Movie selectedMovie = movies.ElementAt(index);
-            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, false);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, false, this);
             movieForm.Show();
         }
 
@@ -168,12 +167,11 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             index = e.RowIndex;
+            MovieGridView.Rows[index].Selected = true;
         }
         private void MoviesQueuedGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
-            index = e.RowIndex;
+
         }
 
         private void MoviesRentedThisMonth_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -181,6 +179,7 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             indexRentedThisMonth = e.RowIndex;
+            MoviesRentedThisMonth.Rows[index].Selected = true;
         }
 
         private void RateMovieButton_Click(object sender, EventArgs e)
@@ -189,7 +188,7 @@ namespace App
                 return;
 
             Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
-            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true, this);
             movieForm.Show();
         }
     }
