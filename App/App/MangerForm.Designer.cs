@@ -57,22 +57,22 @@ namespace App
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(361, 72);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dataGridView1.Location = new System.Drawing.Point(271, 58);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(932, 474);
+            this.dataGridView1.Size = new System.Drawing.Size(690, 490);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(129, 72);
-            this.AddButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.AddButton.Location = new System.Drawing.Point(97, 58);
+            this.AddButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(179, 71);
+            this.AddButton.Size = new System.Drawing.Size(134, 58);
             this.AddButton.TabIndex = 1;
             this.AddButton.Text = "Add";
             this.AddButton.UseVisualStyleBackColor = true;
@@ -86,8 +86,8 @@ namespace App
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(1281, 26);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(2, 1, 0, 1);
+            this.menuStrip1.Size = new System.Drawing.Size(961, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -102,48 +102,48 @@ namespace App
             this.ordersToolStripMenuItem,
             this.customerQueueToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
-            this.menuToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 22);
             this.menuToolStripMenuItem.Text = "Menu";
             // 
             // customersToolStripMenuItem
             // 
             this.customersToolStripMenuItem.Name = "customersToolStripMenuItem";
-            this.customersToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.customersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.customersToolStripMenuItem.Text = "Customers";
             this.customersToolStripMenuItem.Click += new System.EventHandler(this.CustomerLoad);
             // 
             // customerRepresentativesToolStripMenuItem
             // 
             this.customerRepresentativesToolStripMenuItem.Name = "customerRepresentativesToolStripMenuItem";
-            this.customerRepresentativesToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.customerRepresentativesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.customerRepresentativesToolStripMenuItem.Text = "Customer Representatives";
             this.customerRepresentativesToolStripMenuItem.Click += new System.EventHandler(this.CustomerRepLoad);
             // 
             // moviesToolStripMenuItem
             // 
             this.moviesToolStripMenuItem.Name = "moviesToolStripMenuItem";
-            this.moviesToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.moviesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.moviesToolStripMenuItem.Text = "Movies";
             this.moviesToolStripMenuItem.Click += new System.EventHandler(this.MoviesLoad);
             // 
             // salesReportsToolStripMenuItem
             // 
             this.salesReportsToolStripMenuItem.Name = "salesReportsToolStripMenuItem";
-            this.salesReportsToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.salesReportsToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.salesReportsToolStripMenuItem.Text = "Sales Reports";
             this.salesReportsToolStripMenuItem.Click += new System.EventHandler(this.SalesRepotsLoad);
             // 
             // ordersToolStripMenuItem
             // 
             this.ordersToolStripMenuItem.Name = "ordersToolStripMenuItem";
-            this.ordersToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.ordersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.ordersToolStripMenuItem.Text = "Orders";
             this.ordersToolStripMenuItem.Click += new System.EventHandler(this.OrderLoad);
             // 
             // customerQueueToolStripMenuItem
             // 
             this.customerQueueToolStripMenuItem.Name = "customerQueueToolStripMenuItem";
-            this.customerQueueToolStripMenuItem.Size = new System.Drawing.Size(255, 26);
+            this.customerQueueToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.customerQueueToolStripMenuItem.Text = "Customer Queue";
             this.customerQueueToolStripMenuItem.Click += new System.EventHandler(this.QueueLoad);
             // 
@@ -155,10 +155,10 @@ namespace App
             // 
             // EditButton
             // 
-            this.EditButton.Location = new System.Drawing.Point(129, 159);
-            this.EditButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.EditButton.Location = new System.Drawing.Point(97, 129);
+            this.EditButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.EditButton.Name = "EditButton";
-            this.EditButton.Size = new System.Drawing.Size(179, 68);
+            this.EditButton.Size = new System.Drawing.Size(134, 55);
             this.EditButton.TabIndex = 6;
             this.EditButton.Text = "Edit";
             this.EditButton.UseVisualStyleBackColor = true;
@@ -166,10 +166,10 @@ namespace App
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(129, 245);
-            this.DeleteButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.DeleteButton.Location = new System.Drawing.Point(97, 199);
+            this.DeleteButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.DeleteButton.Name = "DeleteButton";
-            this.DeleteButton.Size = new System.Drawing.Size(179, 75);
+            this.DeleteButton.Size = new System.Drawing.Size(134, 61);
             this.DeleteButton.TabIndex = 7;
             this.DeleteButton.Text = "Delete";
             this.DeleteButton.UseVisualStyleBackColor = true;
@@ -177,10 +177,10 @@ namespace App
             // 
             // UpdateRatingsButton
             // 
-            this.UpdateRatingsButton.Location = new System.Drawing.Point(129, 336);
-            this.UpdateRatingsButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.UpdateRatingsButton.Location = new System.Drawing.Point(97, 273);
+            this.UpdateRatingsButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.UpdateRatingsButton.Name = "UpdateRatingsButton";
-            this.UpdateRatingsButton.Size = new System.Drawing.Size(179, 85);
+            this.UpdateRatingsButton.Size = new System.Drawing.Size(134, 69);
             this.UpdateRatingsButton.TabIndex = 8;
             this.UpdateRatingsButton.Text = "Update Customer Ratings";
             this.UpdateRatingsButton.UseVisualStyleBackColor = true;
@@ -188,10 +188,10 @@ namespace App
             // 
             // FulfillOrderButton
             // 
-            this.FulfillOrderButton.Location = new System.Drawing.Point(129, 73);
-            this.FulfillOrderButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FulfillOrderButton.Location = new System.Drawing.Point(97, 59);
+            this.FulfillOrderButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.FulfillOrderButton.Name = "FulfillOrderButton";
-            this.FulfillOrderButton.Size = new System.Drawing.Size(179, 68);
+            this.FulfillOrderButton.Size = new System.Drawing.Size(134, 55);
             this.FulfillOrderButton.TabIndex = 9;
             this.FulfillOrderButton.Text = "Fulfill order";
             this.FulfillOrderButton.UseVisualStyleBackColor = true;
@@ -201,10 +201,9 @@ namespace App
             // LogoutButton
             // 
             this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.LogoutButton.Location = new System.Drawing.Point(1146, 36);
-            this.LogoutButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LogoutButton.Location = new System.Drawing.Point(860, 29);
             this.LogoutButton.Name = "LogoutButton";
-            this.LogoutButton.Size = new System.Drawing.Size(100, 28);
+            this.LogoutButton.Size = new System.Drawing.Size(75, 23);
             this.LogoutButton.TabIndex = 10;
             this.LogoutButton.Text = "Logout";
             this.LogoutButton.UseVisualStyleBackColor = true;
@@ -212,10 +211,10 @@ namespace App
             // 
             // OrderMovieButton
             // 
-            this.OrderMovieButton.Location = new System.Drawing.Point(129, 72);
-            this.OrderMovieButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.OrderMovieButton.Location = new System.Drawing.Point(97, 58);
+            this.OrderMovieButton.Margin = new System.Windows.Forms.Padding(2);
             this.OrderMovieButton.Name = "OrderMovieButton";
-            this.OrderMovieButton.Size = new System.Drawing.Size(179, 68);
+            this.OrderMovieButton.Size = new System.Drawing.Size(134, 55);
             this.OrderMovieButton.TabIndex = 11;
             this.OrderMovieButton.Text = "Place Order";
             this.OrderMovieButton.UseVisualStyleBackColor = true;
@@ -223,9 +222,9 @@ namespace App
             // 
             // ManagerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1281, 675);
+            this.ClientSize = new System.Drawing.Size(961, 548);
             this.Controls.Add(this.OrderMovieButton);
             this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.FulfillOrderButton);
@@ -236,7 +235,7 @@ namespace App
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ManagerForm";
             this.Text = "Manager";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ManagerFormClosed);
