@@ -105,8 +105,8 @@ create table starred (
 	aid int not null,
 	mid int not null,
 	primary key (aid, mid),
-	foreign key (aid) references actor(aid),
-	foreign key (mid) references movie(mid),
+	foreign key (aid) references actor(aid) ON DELETE CASCADE,
+	foreign key (mid) references movie(mid) ON DELETE CASCADE,
 );
 
 create table movie_rating (
@@ -114,8 +114,8 @@ create table movie_rating (
 	cid int not null,
 	rating int not null,
 	primary key (mid, cid),
-	foreign key (mid) references movie(mid),
-	foreign key (cid) references customer(cid),
+	foreign key (mid) references movie(mid) ON DELETE CASCADE,
+	foreign key (cid) references customer(cid) ON DELETE CASCADE,
 );
 
 create table actor_rating (
@@ -123,8 +123,8 @@ create table actor_rating (
 	cid int not null,
 	rating int not null,
 	primary key (aid, cid),
-	foreign key (aid) references actor(aid),
-	foreign key (cid) references customer(cid),
+	foreign key (aid) references actor(aid) ON DELETE CASCADE,
+	foreign key (cid) references customer(cid) ON DELETE CASCADE,
 );
 
 go
@@ -451,11 +451,24 @@ begin
 end
 go
 
+
 insert into employee (position, first_name, last_name, [start], wage, username, passhash)
 values ('manager', 'admin', 'admin', getdate(), 1, 'admin', 'pass');
 
 insert into customer (first_name, last_name, account_type, creation_date, username, passhash)
 values ('admin', 'admin', 'Gold', getdate(), 'admin', 'pass');
+
+insert into movie ([name], genre, fees, num_copies, copies_available)
+values ('ThisMovie', 'space', '12', '22', '2');
+
+insert into movie_rating (mid, cid, rating)
+values ('1','1','5');
+
+insert into actor (first_name, last_name, sex, dob)
+values ('Evan', 'Test', 'M', getdate());
+
+insert into starred (mid, aid)
+values (1, 1)
 
 select * from employee;
 select * from customer;
