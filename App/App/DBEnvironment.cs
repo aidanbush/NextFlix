@@ -433,6 +433,14 @@ namespace App
             con.Close();
         }
 
+        public static BindingList<Movie> searchForMovies(String Query)
+        {
+            SqlDataAdapter adaptor = new SqlDataAdapter(Query, con);
+            DataTable movieTable = new DataTable();
+            adaptor.Fill(movieTable); 
+            return GetMoviesFromQuery(movieTable);
+        }
+
         public static Movie GetMovieByID(int id)
         {
             string qString = "SELECT * FROM movie WHERE mid = @id";

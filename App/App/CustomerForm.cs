@@ -68,10 +68,15 @@ namespace App
         
         public void fillMovies()
         {
-            MovieGridView.DataSource = DBEnvironment.GetMovies(); ;
-            MoviesQueuedGridView.DataSource = DBEnvironment.RetrieveCustomerQueue(user); ;
+            MovieGridView.DataSource = DBEnvironment.GetMovies();
+            MoviesQueuedGridView.DataSource = DBEnvironment.RetrieveCustomerQueue(user);
             RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
             MoviesRentedThisMonth.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
+        }
+
+        public void fillSearch(BindingList<Movie> movies)
+        {
+            MovieGridView.DataSource = movies;
         }
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -190,6 +195,22 @@ namespace App
             Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
             MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true, this);
             movieForm.Show();
+        }
+
+        private void CustomerForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            SearchMovieForm f = new SearchMovieForm(this);
+            f.Show();
         }
     }
 }
