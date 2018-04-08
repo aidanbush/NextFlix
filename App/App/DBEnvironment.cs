@@ -33,7 +33,7 @@ namespace App
 
         public static void SetActors()
         {
-            actors = RetreiveActors();
+            actors = RetrieveActors();
             
         }
         public static BindingList<Actor> GetActors()
@@ -279,7 +279,7 @@ namespace App
             return movies;
         }
 
-        public static BindingList<Actor> RetreiveActors()
+        public static BindingList<Actor> RetrieveActors()
         {
 
             string qString = "SELECT * FROM [actor]";

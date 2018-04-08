@@ -12,14 +12,29 @@ namespace App
 {
     public partial class EditCustomerForm : Form
     {
-        Customer customer;
-        ManagerForm parent;
+        private Customer customer;
+        private ManagerForm managerParent;
+        private CustomerForm customerParent;
+        private enum ParentType { Customer, Manager };
+        private ParentType type;
         
         public EditCustomerForm(Customer selectedCustomer, ManagerForm form)
         {
             customer = selectedCustomer;
-            parent = form;
+            managerParent = form;
+            type = ParentType.Manager;
             InitializeComponent();
+            EditCustInfoButton.Visible = false;
+            FillTextBoxes();
+        }
+        public EditCustomerForm(Customer selectedCustomer, CustomerForm form)
+        {
+            customer = selectedCustomer;
+            customerParent = form;
+            type = ParentType.Customer;
+            InitializeComponent();
+            EditUserButton.Visible = false;
+            TypeBox.Visible = false;
             FillTextBoxes();
         }
         private void FillTextBoxes()
@@ -140,22 +155,28 @@ namespace App
         }
         private void EditUserButton_Click(object sender, EventArgs e)
         {
+            buttonClick();   
+        }
+
+        private void buttonClick()
+        {
             if ((MessageBox.Show("Edit Customer with current information?", "Confirm",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+    MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+    MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
                 EditUser();
-                parent.FillTable();
+                if (type == ParentType.Manager)
+                {
+                    managerParent.FillTable();
+                }
+                else
+                {
+                    customerParent.FillUserInfo();
+                }
+
                 this.Close();
             }
-            
-        }
-
-        private void EditCustomerForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        }        
         private void CancelButton_Click(object sender, EventArgs e)
         {
             if ((MessageBox.Show("Cancel Customer Update? (Information will not be saved)", "Cancel",
@@ -164,6 +185,11 @@ namespace App
             {
                 this.Close();
             }
+        }
+
+        private void EditCustInfoButton_Click(object sender, EventArgs e)
+        {
+            buttonClick();
         }
     }
 }

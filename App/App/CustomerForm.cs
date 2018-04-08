@@ -58,8 +58,9 @@ namespace App
             rentMoviePanel.Visible = false;
             myMoviesPanel.Visible = true;
         }
-        private void FillUserInfo()
+        public void FillUserInfo()
         {
+            user = DBEnvironment.GetCustomerByID(user.Id);
             NameLabel.Text = "Name:" + user.Name.FirstName + " " + user.Name.LastName;
             AddressLabel.Text = "Address: " + user.Address.HouseNumber + " " + user.Address.StreetNumber;
             PhoneLabel.Text = "Phone number: " + user.ContactInformation.CleanNumberForOutput();
@@ -191,6 +192,12 @@ namespace App
             Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
             MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true);
             movieForm.Show();
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            EditCustomerForm editForm = new EditCustomerForm(user, this);
+            editForm.Show();
         }
     }
 }
