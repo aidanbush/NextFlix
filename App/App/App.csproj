@@ -145,6 +145,12 @@
     <Compile Include="Query.cs" />
     <Compile Include="Queue.cs" />
     <Compile Include="SaleReport.cs" />
+    <Compile Include="SearchMovieFcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchMovieFcs.Designer.cs">
+      <DependentUpon>SearchMovieFcs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Starred.cs" />
     <Compile Include="UserName.cs" />
     <Compile Include="Person.cs" />
@@ -196,6 +202,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SearchMovieFcs.resx">
+      <DependentUpon>SearchMovieFcs.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
