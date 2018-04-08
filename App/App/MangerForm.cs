@@ -171,6 +171,7 @@ namespace App
             this.Refresh();
 
         }
+
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 

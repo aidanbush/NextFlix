@@ -15,8 +15,10 @@ namespace App
     {
         Movie movie;
         Customer user;
+        BindingList<Actor> actorsInMovie;
         CustomerForm parent;
         public MovieViewForm(Movie selectedMovie, Customer CurrentUser, bool canRate, CustomerForm parent)
+
         {
             this.parent = parent;
             movie = selectedMovie;
@@ -26,6 +28,30 @@ namespace App
             GenreLabel.Text = movie.Genre;
             RatingLabel.Text = movie.Rating.ToString();
             CopyLabel.Text = movie.Num_copies.ToString();
+
+            BindingList<Actor> actors = DBEnvironment.RetreiveActors();
+            Starred starred = new Starred(actors.ToArray(), null, movie);
+            actorsInMovie = DBEnvironment.GetStarred(movie);
+            MovieCastLabel.Text = CreateStarredText();
+        }
+        private string CreateStarredText()
+        {
+            string outString = "Starring: ";
+            string actors = "";
+            foreach(Actor actor in actorsInMovie)
+            {
+                actors += actor.Name.GetFullName() + ", ";
+            }
+            int index = actors.LastIndexOf(",");
+            
+            Debug.WriteLine("INDEX AT " + index.ToString());
+            Debug.WriteLine("PRE " + actors+ "!");
+            actors = actors.Remove(index);
+            //actors = actors.Remove(index);
+            Debug.WriteLine("POS " + actors + "!");
+            outString += actors;
+            return outString;
+
             RatingButton.Hide();
             RatingSlider.Hide();
 
@@ -35,8 +61,8 @@ namespace App
                 RatingSlider.Show();
                 RentButton.Hide();
             }
-        }
 
+        }
         private void RentButton_Click(object sender, EventArgs e)
         {
             AddToQueue adder = new AddToQueue(movie, user);
