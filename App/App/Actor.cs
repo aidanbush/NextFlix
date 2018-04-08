@@ -93,7 +93,7 @@ namespace App
             con.Close();
             return true;
         }
-
+        
         public bool Edit(SqlConnection con)
         {
             String q = "UPDATE actor SET first_name=@first_name, " +

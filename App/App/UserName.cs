@@ -21,6 +21,11 @@ namespace App
         public string FirstName { get => firstName; set => firstName = value; }
         public string LastName { get => lastName; set => lastName = value; }
 
+        public string GetFullName()
+        {
+            string outString = firstName + " " + lastName;
+            return outString;
+        }
         /* function Overrides */
         public override string ToString()
         {

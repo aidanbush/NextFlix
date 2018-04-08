@@ -303,6 +303,28 @@ namespace App
             return actors;
 
         }
+
+        public static Actor RetreiveActorByID(int aid)
+        {
+            Actor act;
+            string qString = "SELECT * FROM [actor] where aid = " + aid;
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            DataTable actorTable = new DataTable();
+            adapter.Fill(actorTable);
+            BindingList<Actor> actors = new BindingList<Actor>();
+            DataRow actor = actorTable.Rows[0];
+            
+            UserName name = new UserName(actor["first_name"].ToString(), actor["last_name"].ToString());
+            string sex = actor["sex"].ToString();
+            DateTime dateOfBirth = (DateTime)actor["dob"];
+            string age = actor["age"].ToString();
+            string rating = actor["rating"].ToString();
+            string Id = actor["aid"].ToString();
+            act = new Actor(name, sex, dateOfBirth, Id, age, rating);
+            
+            return act;
+
+        }
         public static BindingList<Order> RetrieveUnfulfilledOrders()
         {
             Debug.WriteLine("Retrieveing orders");
@@ -795,5 +817,29 @@ namespace App
 
             return Convert.ToBase64String(hash);
         }
+        public static BindingList<Actor> GetStarred(Movie movie)
+        {
+            int mid = movie.Id;
+            BindingList<Actor> actors = new BindingList<Actor>();
+            BindingList<Actor> allActors = DBEnvironment.GetActors();
+
+            String query = "SELECT aid FROM starred WHERE mid = " + mid;
+            SqlDataAdapter adapter = new SqlDataAdapter(query, con);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+
+            foreach (DataRow actorID in table.Rows)
+            {
+                int aid = int.Parse(actorID["aid"].ToString());
+                Actor movieActor = DBEnvironment.RetreiveActorByID(aid);
+                Debug.WriteLine("ACTOR " + movieActor.Name.FirstName + " " + movieActor.Name.LastName);
+                actors.Add(movieActor);
+            }
+
+            return actors;
+
+        }
+
     }
 }

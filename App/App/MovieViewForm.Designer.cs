@@ -76,7 +76,7 @@
             // 
             this.RentButton.Location = new System.Drawing.Point(36, 367);
             this.RentButton.Name = "RentButton";
-            this.RentButton.Size = new System.Drawing.Size(369, 154);
+            this.RentButton.Size = new System.Drawing.Size(181, 94);
             this.RentButton.TabIndex = 4;
             this.RentButton.Text = "Rent This Movie";
             this.RentButton.UseVisualStyleBackColor = true;

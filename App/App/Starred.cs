@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Diagnostics;
 
@@ -53,7 +54,6 @@ namespace App
             Delete(con);
             return true;
         }
-
 
         private bool query(Actor actor, Movie movie, String q, SqlConnection con)
         {
