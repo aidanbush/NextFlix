@@ -33,7 +33,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.TitleBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.GenreBox = new System.Windows.Forms.TextBox();
             this.CopyAmountBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -48,6 +47,7 @@
             this.MovieActorList = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.GenreComboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.ActorList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MovieActorList)).BeginInit();
             this.SuspendLayout();
@@ -101,14 +101,6 @@
             this.label2.Size = new System.Drawing.Size(52, 17);
             this.label2.TabIndex = 23;
             this.label2.Text = "Genre:";
-            // 
-            // GenreBox
-            // 
-            this.GenreBox.Location = new System.Drawing.Point(12, 90);
-            this.GenreBox.Margin = new System.Windows.Forms.Padding(2);
-            this.GenreBox.Name = "GenreBox";
-            this.GenreBox.Size = new System.Drawing.Size(93, 22);
-            this.GenreBox.TabIndex = 24;
             // 
             // CopyAmountBox
             // 
@@ -261,11 +253,25 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // GenreComboBox
+            // 
+            this.GenreComboBox.FormattingEnabled = true;
+            this.GenreComboBox.Items.AddRange(new object[] {
+            "Comedy",
+            "Drama",
+            "Action",
+            "Foreign"});
+            this.GenreComboBox.Location = new System.Drawing.Point(12, 85);
+            this.GenreComboBox.Name = "GenreComboBox";
+            this.GenreComboBox.Size = new System.Drawing.Size(130, 24);
+            this.GenreComboBox.TabIndex = 41;
+            // 
             // AddMovieForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 516);
+            this.Controls.Add(this.GenreComboBox);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.MovieActorList);
@@ -280,7 +286,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.CopyAmountBox);
-            this.Controls.Add(this.GenreBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TitleBox);
             this.Controls.Add(this.label1);
@@ -303,7 +308,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TitleBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox GenreBox;
         private System.Windows.Forms.TextBox CopyAmountBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
@@ -318,5 +322,6 @@
         private System.Windows.Forms.DataGridView MovieActorList;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox GenreComboBox;
     }
 }

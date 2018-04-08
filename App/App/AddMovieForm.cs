@@ -50,7 +50,7 @@ namespace App
         private void fillForm()
         {
             CopyAmountBox.Text = movie.Num_copies.ToString();
-            GenreBox.Text = movie.Genre;
+            GenreComboBox.Text = movie.Genre;
             TitleBox.Text = movie.Name;
             FeesBox.Text = movie.Fees.ToString();
             AddMovieButton.Text = "Edit";
@@ -64,7 +64,7 @@ namespace App
                 try
                 {
                     String title = TitleBox.Text;
-                    String genre = GenreBox.Text;
+                    String genre = GenreComboBox.Text;
                     int copies = int.Parse(CopyAmountBox.Text);
                     float fees = float.Parse(FeesBox.Text);
                     Movie newMovie = new Movie(title, genre, fees, copies, copies, 0);
@@ -154,7 +154,7 @@ namespace App
                 try
                 {
                     String title = TitleBox.Text;
-                    String genre = GenreBox.Text;
+                    String genre = GenreComboBox.Text;
                     int copies = int.Parse(CopyAmountBox.Text);
                     float fees = float.Parse(FeesBox.Text);
                     Movie newMovie = new Movie(title, genre, fees, copies, copies, 0);
