@@ -26,6 +26,7 @@ namespace App
         private BindingList<Movie> movies;
         private BindingList<Employee> employees;
         private BindingList<Order> orders;
+        private BindingList<SaleReport> sales;
         private BindingList<Queue> queue;
 
         private CustomerView customerView;
@@ -240,6 +241,7 @@ namespace App
             Order selectedOrder = orders[index];
             FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
             fufillForm.Show();
+            FillTable();
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -254,7 +256,11 @@ namespace App
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+                return;
             index = e.RowIndex;
+            dataGridView1.Rows[index].Selected = true;
+            //dataGridView1.Rows[index].DefaultCellStyle.SelectionBackColor = Color.Green;
         }
 
         private void CustomerLoad(object sender, EventArgs e)
@@ -471,10 +477,12 @@ namespace App
 
             public void HideView()
             {
+                parent.ManagerViewPanel.Hide();
             }
 
             public void ShowView()
             {
+                parent.ManagerViewPanel.Show();
             }
         }
 
@@ -542,6 +550,32 @@ namespace App
                 parent.dataGridView1.DataSource = parent.queue;
                 parent.Refresh();
             }
+        }
+        
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void GenerateReportButton_Click(object sender, EventArgs e)
+        {
+            // get dates
+            DateTime from = FromDateTimePicker.Value;
+            DateTime to = ToDateTimePicker.Value;
+
+            // get genre
+            string genre = GenreTextBox.Text;
+
+            if (genre == "")
+            {
+                sales = DBEnvironment.GetOrdersOverTime(from, to);
+            }
+            else
+            {
+                sales = DBEnvironment.GetOrdersOverTimeLimitGenre(from, to, genre);
+            }
+
+            ManagerViewDataGridView.DataSource = sales;
+
         }
     }
 }
