@@ -14,7 +14,7 @@ namespace App
 
         }
         
-        private bool doesNotContainSemiColonOrSingleQuote(string text)
+        public bool doesNotContainSemiColonOrSingleQuote(string text)
         {
             if (text.Contains(";"))
             {

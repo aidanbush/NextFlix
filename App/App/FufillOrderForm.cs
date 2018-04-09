@@ -25,11 +25,10 @@ namespace App
 
         private void FufillOrderButton_Click(object sender, EventArgs e)
         {
-            // create report
-            // add employee id
             if (DBEnvironment.FulfillOrder(order.Id, parent.User.Id))
             {
-                // remove from parent list
+                // update parent table
+                parent.FillTable();
             }
             Close();
         }

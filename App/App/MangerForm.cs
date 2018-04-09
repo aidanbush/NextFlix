@@ -64,7 +64,10 @@ namespace App
                 this.Text = "Employee";
                 //customerRepresentativesToolStripMenuItem.Visible = false;
                 salesReportsToolStripMenuItem.Visible = false;
+                customerRepresentativesToolStripMenuItem.Visible = false;
             }
+
+            customerQueueToolStripMenuItem.Visible = false;
 
             dataGridView1.AutoGenerateColumns = true;
             ChangeView(FormType.customer);
@@ -237,11 +240,11 @@ namespace App
         private void FulfillOrderButton_Click(object sender, EventArgs e)
         {
             // TODO: implement
-            //Order selectedOrder = orders.ElementAt(index);
+            if (index >= orders.Count)
+                return;
             Order selectedOrder = orders[index];
             FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
             fufillForm.Show();
-            FillTable();
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -300,22 +303,51 @@ namespace App
         private void DeleteCustomer()
         {
             Customer selectedCustomer = customers.ElementAt(index);
-            ConfirmationForm confirmation = new ConfirmationForm(this, selectedCustomer, "are you sure you want to delete " + selectedCustomer.FirstName + " " + selectedCustomer.LastName + "?");
-            confirmation.Show();
+            if ((MessageBox.Show("Delete Customer: "+selectedCustomer.Name +"?" , "Cancel",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+
+                if (!DBEnvironment.Delete(selectedCustomer))
+                {
+                    MessageBox.Show("Could not delete Customer, A customer has a movie rented");
+                }
+                FillTable();
+            }
         }
 
         private void DeleteMovie()
         {
             Movie selectedMovie = movies.ElementAt(index);
-            ConfirmationForm confirmation = new ConfirmationForm(this, selectedMovie, "are you sure you want to delete " + selectedMovie.Name + "?");
-            confirmation.Show();
+
+            if ((MessageBox.Show("Delete Movie: "+selectedMovie.Name+"?", "Cancel",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+
+                if (!DBEnvironment.Delete(selectedMovie))
+                {
+                    MessageBox.Show("Could not delete Movie, A customer has this movie rented");
+                }
+                FillTable();
+            }
         }
 
         private void DeleteEmployee()
         {
             Employee selectedEmployee = employees.ElementAt(index);
-            ConfirmationForm confirmation = new ConfirmationForm(this, selectedEmployee, "are you sure you want to delete " + selectedEmployee.FirstName + " " + selectedEmployee.LastName + "?");
-            confirmation.Show();
+            if ((MessageBox.Show("Delete Customer Representative: " + selectedEmployee.Name + "?", "Cancel",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+
+                if (!DBEnvironment.Delete(selectedEmployee))
+                {
+                    MessageBox.Show("Could not delete Customer Representative");
+                }
+                FillTable();
+
+            }
         }
 
         public void Reload(object sender, EventArgs e)
@@ -415,9 +447,8 @@ namespace App
                 parent.dataGridView1.Columns.Remove("Address");
                 parent.dataGridView1.Columns.Remove("Name");
                 parent.dataGridView1.Columns.Remove("ContactInformation");
-
                 if (parent.user.EmployeePosition != Employee.Position.Manager)
-                    parent.dataGridView1.Columns.Remove("Wage");
+                    parent.dataGridView1.Columns["wage"].Visible = false;
 
                 parent.dataGridView1.Columns.Remove("Credentials");
 
@@ -461,6 +492,7 @@ namespace App
                 DBEnvironment.SetMovies();
                 parent.movies = DBEnvironment.GetMovies();
                 parent.dataGridView1.DataSource = parent.movies;
+                parent.dataGridView1.Columns["customerRating"].Visible = false;
 
                 parent.Refresh();
             }
@@ -575,6 +607,11 @@ namespace App
             }
 
             ManagerViewDataGridView.DataSource = sales;
+
+        }
+
+        private void ToLabel_Click(object sender, EventArgs e)
+        {
 
         }
     }

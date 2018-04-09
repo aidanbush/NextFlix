@@ -417,6 +417,14 @@ begin
 	update movie
 		set rating = (select avg(rating) from movie_rating where mid = movie.mid) -- test
 		where movie.mid in (select mid from inserted) or movie.mid in (select mid from deleted);
+
+	update actor set actor.rating = averages.rating
+		from (select aid, avg(rating) as rating from 
+		movie, starred where
+		movie.mid = starred.mid
+		group by aid) as averages where
+		actor.aid = averages.aid;
+
 end;
 go
 
@@ -459,16 +467,31 @@ insert into customer (first_name, last_name, account_type, creation_date, userna
 values ('admin', 'admin', 'Gold', getdate(), 'admin', 'pass');
 
 insert into movie ([name], genre, fees, num_copies, copies_available)
-values ('ThisMovie', 'space', '12', '22', '2');
+values ('ThisMovie', 'Comedy', '12', '22', '2');
+
+insert into movie ([name], genre, fees, num_copies, copies_available)
+values ('SpaceJam', 'Drama', '12', '22', '2');
 
 insert into movie_rating (mid, cid, rating)
 values ('1','1','5');
 
 insert into actor (first_name, last_name, sex, dob)
-values ('Evan', 'Test', 'M', getdate());
+values ('Lucy', 'Lu', 'F', getdate());
+
+insert into actor (first_name, last_name, sex, dob)
+values ('Arnald', 'steroids', 'M', getdate());
+
+insert into actor (first_name, last_name, sex, dob)
+values ('Evanina', 'test', 'F', getdate());
 
 insert into starred (mid, aid)
 values (1, 1)
+
+insert into starred (mid, aid)
+values (2, 1)
+
+insert into starred (mid, aid)
+values (3, 2)
 
 select * from employee;
 select * from customer;
