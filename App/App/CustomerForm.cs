@@ -310,5 +310,16 @@ namespace App
             recommendedMoviesIndex = e.RowIndex;
             personalSuggestionsDataGridView.Rows[recommendedMoviesIndex].Selected = true;
         }
+
+        private void RentSuggestionButton_click(object sender, EventArgs e)
+        {
+            Debug.Print("Recommended movies" + recommendedMovies.Count);
+            if (recommendedMovies.Count > 0 && recommendedMoviesIndex != -1)
+            {
+                Movie movie = recommendedMovies[recommendedMoviesIndex];
+                MovieViewForm movieForm = new MovieViewForm(movie, this.user, false, this);
+                movieForm.Show();
+            }
+        }
     }
 }

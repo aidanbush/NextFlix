@@ -305,7 +305,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Rent movie";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.RentButton_click);
+            this.button1.Click += new System.EventHandler(this.RentSuggestionButton_click);
             // 
             // personalSuggestionsDataGridView
             // 
