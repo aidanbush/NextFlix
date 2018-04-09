@@ -36,9 +36,10 @@ namespace App
         private void EmployeeButtonClick(object sender, EventArgs e)
         {
             Employee employee = ValidateEmployee();
-            employee.EmployeePosition = Employee.Position.Employee;
             if (employee != null)
             {
+                
+                employee.EmployeePosition = Employee.Position.Employee;
                 new ManagerForm(this, employee).Show();
                 this.Hide();
                 ClearCredentials();
