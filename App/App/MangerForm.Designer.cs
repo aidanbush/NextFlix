@@ -252,10 +252,10 @@ namespace App
             this.ManagerViewPanel.Controls.Add(this.FromLabel);
             this.ManagerViewPanel.Controls.Add(this.DateRangeLabel);
             this.ManagerViewPanel.Controls.Add(this.SalesReportLabel);
-            this.ManagerViewPanel.Location = new System.Drawing.Point(0, 72);
+            this.ManagerViewPanel.Location = new System.Drawing.Point(0, 28);
             this.ManagerViewPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ManagerViewPanel.Name = "ManagerViewPanel";
-            this.ManagerViewPanel.Size = new System.Drawing.Size(1924, 861);
+            this.ManagerViewPanel.Size = new System.Drawing.Size(1924, 905);
             this.ManagerViewPanel.TabIndex = 12;
             this.ManagerViewPanel.Visible = false;
             // 
@@ -277,7 +277,7 @@ namespace App
             this.ManagerViewDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ManagerViewDataGridView.Location = new System.Drawing.Point(271, 71);
             this.ManagerViewDataGridView.Name = "ManagerViewDataGridView";
-            this.ManagerViewDataGridView.Size = new System.Drawing.Size(1653, 790);
+            this.ManagerViewDataGridView.Size = new System.Drawing.Size(1653, 834);
             this.ManagerViewDataGridView.TabIndex = 8;
             // 
             // GenreTextBox
@@ -292,9 +292,9 @@ namespace App
             this.GenreLabel.AutoSize = true;
             this.GenreLabel.Location = new System.Drawing.Point(17, 141);
             this.GenreLabel.Name = "GenreLabel";
-            this.GenreLabel.Size = new System.Drawing.Size(36, 13);
+            this.GenreLabel.Size = new System.Drawing.Size(128, 13);
             this.GenreLabel.TabIndex = 6;
-            this.GenreLabel.Text = "Genre";
+            this.GenreLabel.Text = "Genre (leave blank for all)";
             // 
             // ToDateTimePicker
             // 
@@ -352,10 +352,10 @@ namespace App
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1924, 933);
+            this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.ManagerViewPanel);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.OrderMovieButton);
-            this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.FulfillOrderButton);
             this.Controls.Add(this.UpdateRatingsButton);
             this.Controls.Add(this.DeleteButton);
