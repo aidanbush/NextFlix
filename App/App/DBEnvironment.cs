@@ -314,19 +314,39 @@ namespace App
 
         public static BindingList<Movie> GetRentedInPast(Customer user)
         {
-            string query = "SELECT * FROM movie " +
-                           "WHERE mid IN " +
-                           "(SELECT DISTINCT mid from [order] WHERE cid = @cid AND date_returned IS NOT NULL)";
+            string query = "SELECT m.mid, m.name, m.genre, m.fees, m.num_copies, m.copies_available, m.rating, r.rating AS customer_rating " +
+                           "FROM (SELECT * " +
+                           "FROM movie AS m " +
+                           "WHERE m.mid in " +
+                           "(SELECT DISTINCT mid " +
+                           "FROM [order] " +
+                           "WHERE cid = @cid AND date_returned IS NOT NULL)) AS m " +
+                           "LEFT JOIN movie_rating r ON r.mid = m.mid AND r.cid = @cid";
 
             SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
             adaptor.SelectCommand.Parameters.AddWithValue("@cid", user.Id);
 
             DataTable table = new DataTable();
             adaptor.Fill(table);
-            BindingList<Movie> pending = GetMoviesFromQuery(table);
+            BindingList<Movie> pending = GetCustomerMoviesFromQuery(table);
 
             return pending;
+        }
 
+        private static BindingList<Movie> GetCustomerMoviesFromQuery(DataTable movieTable)
+        {
+            BindingList<Movie> movies = new BindingList<Movie>();
+
+            foreach (DataRow movieRow in movieTable.Rows)
+            {
+                Movie movie = CreateMovieFromRow(movieRow);
+                if (!movieRow.IsNull("customer_rating"))
+                {
+                    movie.CustomerRating = (int)movieRow["customer_rating"];
+                }
+                movies.Add(movie);
+            }
+            return movies;
         }
 
         private static BindingList<Movie> GetMoviesFromQuery(DataTable movieTable)

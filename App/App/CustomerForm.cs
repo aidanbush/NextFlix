@@ -21,7 +21,7 @@ namespace App
         private BindingList<Movie> pending;
         private BindingList<Movie> pastRented;
         private int index;
-        private int indexRentedThisMonth = -1;
+        private int indexRentedThisMonth = 0;
         private int indexCurrentlyRented = 0;
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
@@ -77,22 +77,27 @@ namespace App
             MovieGridView.Columns["Id"].Visible = false;
             MovieGridView.Columns["Num_copies"].Visible = false;
             MovieGridView.Columns["Copies_available"].Visible = false;
+            MovieGridView.Columns["customerRating"].Visible = false;
 
             MoviesQueuedGridView.Columns["Id"].Visible = false;
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
             MoviesQueuedGridView.Columns["Copies_available"].Visible = false;
+            MoviesQueuedGridView.Columns["customerRating"].Visible = false;
 
             RentedMoviesGridView.Columns["Id"].Visible = false;
             RentedMoviesGridView.Columns["Num_copies"].Visible = false;
             RentedMoviesGridView.Columns["Copies_available"].Visible = false;
+            RentedMoviesGridView.Columns["customerRating"].Visible = false;
 
             MoviesRentedThisMonth.Columns["Id"].Visible = false;
             MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
             MoviesRentedThisMonth.Columns["Copies_available"].Visible = false;
+            MoviesRentedThisMonth.Columns["customerRating"].HeaderText = "Your Rating";
 
             MoviesPendingDataGridView.Columns["Id"].Visible = false;
             MoviesPendingDataGridView.Columns["Num_copies"].Visible = false;
             MoviesPendingDataGridView.Columns["Copies_available"].Visible = false;
+            MoviesPendingDataGridView.Columns["customerRating"].Visible = false;
         }
 
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -213,8 +218,8 @@ namespace App
             if (indexRentedThisMonth < 0)
                 return;
 
-            Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
-            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true, this);
+            Movie movie = pastRented[indexRentedThisMonth];
+            MovieViewForm movieForm = new MovieViewForm(movie, this.user, true, this);
             movieForm.Show();
         }
 
@@ -229,10 +234,11 @@ namespace App
 
             if (DBEnvironment.ReturnMovie(movie, user))
             {
-                //if no in add to past
+                //if no in past update past
                 if (pastRented.SingleOrDefault(_ => _.Id == movie.Id) == null)
                 {
-                    pastRented.Add(movie);
+                    pastRented = DBEnvironment.GetRentedInPast(user);
+                    MoviesRentedThisMonth.DataSource = pastRented;
                 }
                 currentlyRented.RemoveAt(indexCurrentlyRented);
             }

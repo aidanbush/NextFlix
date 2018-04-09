@@ -463,6 +463,7 @@ namespace App
                 DBEnvironment.SetMovies();
                 parent.movies = DBEnvironment.GetMovies();
                 parent.dataGridView1.DataSource = parent.movies;
+                parent.dataGridView1.Columns["customerRating"].Visible = false;
 
                 parent.Refresh();
             }
