@@ -78,7 +78,7 @@ select * from [order];
 
 --remove order
 update [order]
-	set date_returned = getdate()
+	set eid = 1, date_returned = getdate()
 	where cid = @cid1 and mid = @mid1;
 
 --check orders again
