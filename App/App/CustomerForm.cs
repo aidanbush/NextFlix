@@ -20,6 +20,8 @@ namespace App
         private BindingList<Movie> currentlyRented;
         private BindingList<Movie> pending;
         private BindingList<Movie> pastRented;
+        private BindingList<Movie> recommendedMovies;
+        private int recommendedMoviesIndex = 0;
         private int index = 0;
         private int indexRentedThisMonth = 0;
         private int indexCurrentlyRented = 0;
@@ -76,12 +78,19 @@ namespace App
             pending = DBEnvironment.RetrieveCustomerPending(user);
             currentlyRented = DBEnvironment.GetCurrentlyRentedMovies(user);
             pastRented = DBEnvironment.GetRentedInPast(user);
+            recommendedMovies = DBEnvironment.GetRecommendedMovies(user);
 
             MovieGridView.DataSource = movies;
             MoviesQueuedGridView.DataSource = userQueue;
             RentedMoviesGridView.DataSource = currentlyRented;
             MoviesRentedThisMonth.DataSource = pastRented;
             MoviesPendingDataGridView.DataSource = pending;
+            personalSuggestionsDataGridView.DataSource = recommendedMovies;
+
+            personalSuggestionsDataGridView.Columns["Id"].Visible = false;
+            personalSuggestionsDataGridView.Columns["Num_copies"].Visible = false;
+            personalSuggestionsDataGridView.Columns["Copies_available"].Visible = false;
+            personalSuggestionsDataGridView.Columns["customerRating"].Visible = false;
 
             MovieGridView.Columns["Id"].Visible = false;
             MovieGridView.Columns["Num_copies"].Visible = false;
@@ -210,6 +219,8 @@ namespace App
                 return;
             index = e.RowIndex;
             MovieGridView.Rows[index].Selected = true;
+           
+
         }
 
         private void MoviesQueuedGridView_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -291,6 +302,25 @@ namespace App
                 return;
             indexCurrentlyRented = e.RowIndex;
 
+        }
+
+        private void personalSuggestionsDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            recommendedMoviesIndex = e.RowIndex;
+            personalSuggestionsDataGridView.Rows[recommendedMoviesIndex].Selected = true;
+        }
+
+        private void RentSuggestionButton_click(object sender, EventArgs e)
+        {
+            Debug.Print("Recommended movies" + recommendedMovies.Count);
+            if (recommendedMoviesIndex < recommendedMovies.Count)
+            {
+                Movie movie = recommendedMovies[recommendedMoviesIndex];
+                MovieViewForm movieForm = new MovieViewForm(movie, this.user, false, this);
+                movieForm.Show();
+            }
         }
     }
 }
