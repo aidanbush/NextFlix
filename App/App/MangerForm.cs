@@ -64,7 +64,10 @@ namespace App
                 this.Text = "Employee";
                 //customerRepresentativesToolStripMenuItem.Visible = false;
                 salesReportsToolStripMenuItem.Visible = false;
+                customerRepresentativesToolStripMenuItem.Visible = false;
             }
+
+            customerQueueToolStripMenuItem.Visible = false;
 
             dataGridView1.AutoGenerateColumns = true;
             ChangeView(FormType.customer);
