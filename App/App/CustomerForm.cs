@@ -247,7 +247,7 @@ namespace App
 
         private void ReturnMovieButton_Click(object sender, EventArgs e)
         {
-            if (indexCurrentlyRented < currentlyRented.Count)
+            if (indexCurrentlyRented >= currentlyRented.Count)
             {
                 return;
             }
