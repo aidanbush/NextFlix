@@ -21,8 +21,8 @@ namespace App
         private BindingList<Movie> pending;
         private BindingList<Movie> pastRented;
         private int index;
-        private int indexRentedThisMonth = 0;
-        private int indexCurrentlyRented = 0;
+        private int indexRentedThisMonth = -1;
+        private int indexCurrentlyRented = -1;
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
 
