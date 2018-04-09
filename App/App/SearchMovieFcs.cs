@@ -110,15 +110,35 @@ namespace App
         private void SearchButton_Click(object sender, EventArgs e)
         {
             FormInputHandler inputcleaner = new FormInputHandler();
-            BindingList<Movie> values = new BindingList<Movie>();
-
-            String Query = "";
+            
+            List<String> queryList = new List<String>();
 
             if (!inputcleaner.doesNotContainSemiColonOrSingleQuote(TitleBox.Text))
                 return;
 
+            String q = "Select * from movie where [name] like '%" + TitleBox.Text + "%' ";
 
-            parent.fillSearch(values);
+            if (GenreComboBox.Text != "")
+                queryList.Add("genre like '" + GenreComboBox.Text + "'");
+
+            if (movieActors.Count != 0)
+            {
+                string actors = "";
+                foreach (Actor actor in movieActors)
+                {
+                    actors += actor.Id.ToString() + ", ";
+                }
+                //remove the last 2 characters
+                actors = actors.Remove(actors.Length - 2);
+                queryList.Add("mid in (select mid from starred where aid in ("+actors+"))");
+                
+            }
+            
+            foreach(string s in queryList)
+            {
+                q += "and " + s;
+            }
+            parent.fillSearch(DBEnvironment.searchForMovies(q));
         }
     }
 }
