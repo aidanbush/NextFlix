@@ -198,7 +198,7 @@ namespace App
             // 
             this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LogoutButton.Location = new System.Drawing.Point(2385, 44);
-            this.LogoutButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.LogoutButton.Margin = new System.Windows.Forms.Padding(5);
             this.LogoutButton.Name = "LogoutButton";
             this.LogoutButton.Size = new System.Drawing.Size(100, 28);
             this.LogoutButton.TabIndex = 10;
@@ -219,20 +219,17 @@ namespace App
             // 
             // dataGridView1
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.Desktop;
-            this.dataGridView1.Location = new System.Drawing.Point(457, 89);
+            this.dataGridView1.Location = new System.Drawing.Point(361, 71);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(2092, 817);
+            this.dataGridView1.Size = new System.Drawing.Size(1521, 817);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -250,7 +247,7 @@ namespace App
             this.ManagerViewPanel.Controls.Add(this.DateRangeLabel);
             this.ManagerViewPanel.Controls.Add(this.SalesReportLabel);
             this.ManagerViewPanel.Location = new System.Drawing.Point(0, 71);
-            this.ManagerViewPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ManagerViewPanel.Margin = new System.Windows.Forms.Padding(4);
             this.ManagerViewPanel.Name = "ManagerViewPanel";
             this.ManagerViewPanel.Size = new System.Drawing.Size(1281, 603);
             this.ManagerViewPanel.TabIndex = 12;
@@ -259,7 +256,7 @@ namespace App
             // GenerateReportButton
             // 
             this.GenerateReportButton.Location = new System.Drawing.Point(23, 239);
-            this.GenerateReportButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GenerateReportButton.Margin = new System.Windows.Forms.Padding(4);
             this.GenerateReportButton.Name = "GenerateReportButton";
             this.GenerateReportButton.Size = new System.Drawing.Size(133, 49);
             this.GenerateReportButton.TabIndex = 9;
@@ -277,7 +274,7 @@ namespace App
             this.ManagerViewDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ManagerViewDataGridView.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ManagerViewDataGridView.Location = new System.Drawing.Point(361, 87);
-            this.ManagerViewDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ManagerViewDataGridView.Margin = new System.Windows.Forms.Padding(4);
             this.ManagerViewDataGridView.Name = "ManagerViewDataGridView";
             this.ManagerViewDataGridView.RowHeadersVisible = false;
             this.ManagerViewDataGridView.Size = new System.Drawing.Size(920, 516);
@@ -286,7 +283,7 @@ namespace App
             // GenreTextBox
             // 
             this.GenreTextBox.Location = new System.Drawing.Point(23, 194);
-            this.GenreTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GenreTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.GenreTextBox.Name = "GenreTextBox";
             this.GenreTextBox.Size = new System.Drawing.Size(132, 22);
             this.GenreTextBox.TabIndex = 7;
@@ -304,7 +301,7 @@ namespace App
             // ToDateTimePicker
             // 
             this.ToDateTimePicker.Location = new System.Drawing.Point(76, 142);
-            this.ToDateTimePicker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ToDateTimePicker.Margin = new System.Windows.Forms.Padding(4);
             this.ToDateTimePicker.Name = "ToDateTimePicker";
             this.ToDateTimePicker.Size = new System.Drawing.Size(265, 22);
             this.ToDateTimePicker.TabIndex = 5;
@@ -312,7 +309,7 @@ namespace App
             // FromDateTimePicker
             // 
             this.FromDateTimePicker.Location = new System.Drawing.Point(76, 108);
-            this.FromDateTimePicker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.FromDateTimePicker.Margin = new System.Windows.Forms.Padding(4);
             this.FromDateTimePicker.Name = "FromDateTimePicker";
             this.FromDateTimePicker.Size = new System.Drawing.Size(265, 22);
             this.FromDateTimePicker.TabIndex = 4;
