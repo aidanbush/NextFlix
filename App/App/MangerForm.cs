@@ -595,7 +595,8 @@ namespace App
             DateTime to = ToDateTimePicker.Value;
 
             // get genre
-            string genre = GenreTextBox.Text;
+            //string genre = GenreTextBox.Text;
+            string genre = GenreComboBox.Text;
 
             if (genre == "")
             {
