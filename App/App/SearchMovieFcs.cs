@@ -118,8 +118,12 @@ namespace App
 
             String q = "Select * from movie where [name] like '%" + TitleBox.Text + "%' ";
 
+            if (!inputcleaner.doesNotContainSemiColonOrSingleQuote(GenreComboBox.Text))
+                return;
+
             if (GenreComboBox.Text != "")
                 queryList.Add("genre like '" + GenreComboBox.Text + "'");
+
 
             if (movieActors.Count != 0)
             {
