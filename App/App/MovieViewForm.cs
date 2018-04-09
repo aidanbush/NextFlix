@@ -35,6 +35,14 @@ namespace App
             Starred starred = new Starred(actors.ToArray(), null, movie);
             actorsInMovie = DBEnvironment.GetStarred(movie);
             MovieCastLabel.Text = CreateStarredText();
+            RatingSlider.Hide();
+            RatingButton.Hide();
+            if (!canRate)
+                return;
+            RatingSlider.Show();
+            RatingButton.Show();
+            RentButton.Hide();
+
         }
         private string CreateStarredText()
         {

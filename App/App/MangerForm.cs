@@ -303,22 +303,51 @@ namespace App
         private void DeleteCustomer()
         {
             Customer selectedCustomer = customers.ElementAt(index);
-            ConfirmationForm confirmation = new ConfirmationForm(this, selectedCustomer, "are you sure you want to delete " + selectedCustomer.FirstName + " " + selectedCustomer.LastName + "?");
-            confirmation.Show();
+            if ((MessageBox.Show("Delete Customer: "+selectedCustomer.Name +"?" , "Cancel",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+
+                if (!DBEnvironment.Delete(selectedCustomer))
+                {
+                    MessageBox.Show("Could not delete Customer, A customer has a movie rented");
+                }
+                FillTable();
+            }
         }
 
         private void DeleteMovie()
         {
             Movie selectedMovie = movies.ElementAt(index);
-            ConfirmationForm confirmation = new ConfirmationForm(this, selectedMovie, "are you sure you want to delete " + selectedMovie.Name + "?");
-            confirmation.Show();
+
+            if ((MessageBox.Show("Delete Movie: "+selectedMovie.Name+"?", "Cancel",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+
+                if (!DBEnvironment.Delete(selectedMovie))
+                {
+                    MessageBox.Show("Could not delete Movie, A customer has this movie rented");
+                }
+                FillTable();
+            }
         }
 
         private void DeleteEmployee()
         {
             Employee selectedEmployee = employees.ElementAt(index);
-            ConfirmationForm confirmation = new ConfirmationForm(this, selectedEmployee, "are you sure you want to delete " + selectedEmployee.FirstName + " " + selectedEmployee.LastName + "?");
-            confirmation.Show();
+            if ((MessageBox.Show("Delete Customer Representative: " + selectedEmployee.Name + "?", "Cancel",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+
+                if (!DBEnvironment.Delete(selectedEmployee))
+                {
+                    MessageBox.Show("Could not delete Customer Representative");
+                }
+                FillTable();
+
+            }
         }
 
         public void Reload(object sender, EventArgs e)
