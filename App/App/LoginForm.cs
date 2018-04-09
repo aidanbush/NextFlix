@@ -51,9 +51,9 @@ namespace App
         private void ManagerButtonClick(object sender, EventArgs e)
         {
             Employee manager = ValidateManager();
-            manager.EmployeePosition = Employee.Position.Manager;
             if (manager != null)
             {
+                manager.EmployeePosition = Employee.Position.Manager;
                 new ManagerForm(this, manager).Show();
                 this.Hide();
                 ClearCredentials();
