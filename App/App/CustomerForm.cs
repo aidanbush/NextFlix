@@ -58,6 +58,7 @@ namespace App
         }
         public void FillUserInfo()
         {
+            this.Text = "Greetings, " + user.Name.GetFullName();
             user = DBEnvironment.GetCustomerByID(user.Id);
             NameLabel.Text = "Name:" + user.Name.FirstName + " " + user.Name.LastName;
             AddressLabel.Text = "Address: " + user.Address.HouseNumber + " " + user.Address.StreetNumber;
@@ -75,6 +76,7 @@ namespace App
             RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
             MoviesRentedThisMonth.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
         }
+
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
