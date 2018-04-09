@@ -81,7 +81,6 @@ namespace App
 
         public bool Delete(SqlConnection con)
         {
-
             String q = "DELETE FROM movie WHERE mid=@mid";
 
             con.Open();
@@ -169,5 +168,6 @@ namespace App
             return id;
            
         }
+
     }
 }

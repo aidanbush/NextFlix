@@ -89,7 +89,7 @@ namespace App
             {   
                 if(PostalBox.Text == "")
                 {
-                    updatedCustomer.Address.PostalCode = null;
+                    updatedCustomer.Address.PostalCode = "";
                 }
                 else
                 {
@@ -112,7 +112,7 @@ namespace App
             {
                 if (EmailBox.Text == "")
                 {
-                    updatedCustomer.ContactInformation.Email = null;
+                    updatedCustomer.ContactInformation.Email = "";
                 }
                 else
                 {
@@ -121,7 +121,14 @@ namespace App
             }
             if (customer.ContactInformation.PhoneNumber != PhoneBox.Text)
             {
-                updatedCustomer.ContactInformation.PhoneNumber = PhoneBox.Text;
+                if (PhoneBox.Text == "")
+                {
+                    updatedCustomer.ContactInformation.PhoneNumber = "";
+                }
+                else
+                {
+                    updatedCustomer.ContactInformation.PhoneNumber = PhoneBox.Text;
+                }
             }
             if (customer.Type.ToString() != TypeBox.SelectedItem.ToString())
             {
@@ -138,7 +145,6 @@ namespace App
                 MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
                 EditUser();
-                Console.WriteLine("REFRESH");
                 parent.FillTable();
                 this.Close();
             }

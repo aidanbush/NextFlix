@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Security.Cryptography;
-
+using System.Data.SqlTypes;
 namespace App
 {
     internal static class DBEnvironment
@@ -89,6 +89,42 @@ namespace App
             return queryObject.Add(con);
         }
 
+        public static bool MovieRatingQuery(String query, Movie movie, Customer user, int rating)
+        {
+            con.Open();
+            using (SqlCommand command = new SqlCommand(query, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@mid", movie.Id);
+                    command.Parameters.AddWithValue("@cid", user.Id);
+                    command.Parameters.AddWithValue("@rating", rating);
+                    int err = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    con.Close();
+                    return false;
+                }
+
+            }
+            con.Close();
+            return true;
+        }
+        public static bool EditMovieRating(Movie movie, Customer user, int rating)
+        {
+            String q = "UPDATE movie_rating SET rating=@rating where mid=@mid and cid=@cid";
+            return MovieRatingQuery(q, movie, user, rating);
+        }
+
+        public static bool AddMovieRating(Movie movie, Customer user, int rating)
+        {
+            String q = "insert into movie_rating (mid, cid, rating) values (@mid, @cid, @rating);";
+            return MovieRatingQuery(q, movie, user, rating);
+        }
+
+     
         public static bool AddToQueue(IQuery queryObject)
         {
             return queryObject.AddToQueue(con);
@@ -109,6 +145,47 @@ namespace App
             DataSet ds = new DataSet();
             sda.Fill(ds, dataSet);
             return ds;
+        }
+
+
+        private static BindingList<Movie> fetchMoviesFromTable(String query)
+        {
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            BindingList<Movie> Movies = new BindingList<Movie>();
+            DataTable table = new DataTable();
+            adaptor.Fill(table);
+
+            foreach (DataRow movie in table.Rows)
+            {
+                Movie MovieFromDatabase = CreateMovieFromRow(movie);
+                Debug.Print(MovieFromDatabase.ToString());
+                Movies.Add(MovieFromDatabase);
+            }
+
+            return Movies;
+        }
+        public static BindingList<Movie> GetCurrentlyRentedMoviesInThisMonth(Customer user)
+        {
+    
+            DateTime now = DateTime.Now;
+            now = now.AddDays(-DateTime.Now.Day);
+ 
+            String qString = "SELECT * FROM movie where" +
+                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + 
+                " and eid IS NOT NULL and order_placed BETWEEN '"+ now.ToString("yyyy-MM-dd HH:mm:ss.fff")  +"' AND '"+ DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "')";
+
+            Debug.Print(qString);
+            return fetchMoviesFromTable(qString);
+        }
+        public static BindingList<Movie> GetCurrentlyRentedMovies(Customer user)
+        {
+
+            String qString = "SELECT * FROM movie where" +
+                " mid in (SELECT mid FROM [order] WHERE cid=" + user.Id + " and eid IS NOT NULL and date_returned IS NULL)";
+
+            return fetchMoviesFromTable(qString);
+
         }
 
         public static BindingList<Actor> GetActors(Movie movie)
@@ -178,19 +255,37 @@ namespace App
 
             return employeeList;
         }
-        public static BindingList<Movie> RetrieveQueue(Customer user)
+        public static BindingList<Queue> RetrieveAllQueue()
+        {
+            //THis is wrong??????
+            string query = "SELECT * FROM queue ORDER BY date_added";
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            DataTable queueTable = new DataTable();
+            adaptor.Fill(queueTable);
+            BindingList<Queue> queue = new BindingList<Queue>();
+
+            foreach (DataRow queueRow in queueTable.Rows)
+            {
+                int cid = int.Parse(queueRow["cid"].ToString());
+                int mid = int.Parse(queueRow["mid"].ToString());
+                DateTime date = DateTime.Parse(queueRow["date_added"].ToString());
+                Queue newQueue = new Queue(cid, mid, date);
+                queue.Add(newQueue);
+                
+            }
+                return queue;
+
+        }
+
+        public static BindingList<Movie> RetrieveCustomerQueue(Customer user)
         {
             int cid = user.Id;
 
-            //GET THE MOVIES IN QUEUE
             string query = "select * from movie " +
                            "WHERE mid IN " +
                            "(SELECT mid from queue WHERE cid=" + cid + ")";
-           /* string query = "SELECT * FROM movie" +
-                "WHERE mid" +
-                "IN" +
-                "SELECT * FROM queue, movie WHERE cid=" +
-                cid;*/
+           
             SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
             DataTable queueTable = new DataTable();
             adaptor.Fill(queueTable);
@@ -244,6 +339,28 @@ namespace App
             return actors;
 
         }
+
+        public static Actor RetreiveActorByID(int aid)
+        {
+            Actor act;
+            string qString = "SELECT * FROM [actor] where aid = " + aid;
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            DataTable actorTable = new DataTable();
+            adapter.Fill(actorTable);
+            BindingList<Actor> actors = new BindingList<Actor>();
+            DataRow actor = actorTable.Rows[0];
+            
+            UserName name = new UserName(actor["first_name"].ToString(), actor["last_name"].ToString());
+            string sex = actor["sex"].ToString();
+            DateTime dateOfBirth = (DateTime)actor["dob"];
+            string age = actor["age"].ToString();
+            string rating = actor["rating"].ToString();
+            string Id = actor["aid"].ToString();
+            act = new Actor(name, sex, dateOfBirth, Id, age, rating);
+            
+            return act;
+
+        }
         public static BindingList<Order> RetrieveUnfulfilledOrders()
         {
             Debug.WriteLine("Retrieveing orders");
@@ -262,11 +379,15 @@ namespace App
                 int cid = (int)orderRow["cid"];
                 DateTime placedDate = (DateTime)orderRow["order_placed"];
 
-                Order order = new Order(mid, cid)
+                Order order = new Order(mid, cid, 0)
                 {
                     Id = oid,
-                    PlacedDate = placedDate
+                    PlacedDate = placedDate,
                 };
+                if (!orderRow.IsNull("date_returned"))
+                {
+                    order.DateReturned = (DateTime)orderRow["date_returned"];
+                }
 
                 orders.Add(order);
             }
@@ -312,6 +433,14 @@ namespace App
             con.Close();
         }
 
+        public static BindingList<Movie> searchForMovies(String Query)
+        {
+            SqlDataAdapter adaptor = new SqlDataAdapter(Query, con);
+            DataTable movieTable = new DataTable();
+            adaptor.Fill(movieTable); 
+            return GetMoviesFromQuery(movieTable);
+        }
+
         public static Movie GetMovieByID(int id)
         {
             string qString = "SELECT * FROM movie WHERE mid = @id";
@@ -325,6 +454,7 @@ namespace App
             {
                 DataRow row = table.Rows[0];
                 return CreateMovieFromRow(row);
+
             }
 
             return null;
@@ -396,7 +526,7 @@ namespace App
 
         public static Customer ValidateCustomer(string username, string passhash)
         {
-            string qString = "SELECT * FROM customer WHERE username LIKE @username AND passhash LIKE @passhash";
+            string qString = "SELECT * FROM customer WHERE username LIKE @username AND passhash LIKE @passhash AND account_type NOT LIKE 'Disabled'";
             SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
             adapter.SelectCommand.Parameters.AddWithValue("@username", username);
             adapter.SelectCommand.Parameters.AddWithValue("@passhash", passhash);
@@ -452,6 +582,75 @@ namespace App
             }
 
             return null;
+        }
+
+        public static BindingList<SaleReport> GetOrdersOverTime(DateTime from, DateTime to)
+        {
+            string qString = "SELECT m.name, m.genre, c.mid, c.count " +
+                "FROM (SELECT mid, COUNT(*) as count FROM [order] WHERE order_placed BETWEEN @from AND @to GROUP BY mid) AS c, movie AS m " +
+                "WHERE c.mid = m.mid;";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@from", from);
+            adapter.SelectCommand.Parameters.AddWithValue("@to", to);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            BindingList<SaleReport> reports = new BindingList<SaleReport>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                Debug.WriteLine("new order");
+                int mid = (int)row["mid"];
+                int count = (int)row["count"];
+                string name = (string)row["name"];
+                
+                SaleReport report = new SaleReport(mid, name, count);
+                if (!row.IsNull("genre"))
+                {
+                    report.Genre = (string)row["genre"];
+                }
+
+                reports.Add(report);
+            }
+
+            return reports;
+        }
+
+        public static BindingList<SaleReport> GetOrdersOverTimeLimitGenre(DateTime from, DateTime to, string genre)
+        {
+            string qString = "SELECT m.name, m.genre, c.mid, c.count " +
+                "FROM (SELECT mid, COUNT(*) as count FROM [order] WHERE order_placed BETWEEN @from AND @to GROUP BY mid) AS c, movie AS m " +
+                "WHERE c.mid = m.mid AND m.genre LIKE @genre";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@from", from);
+            adapter.SelectCommand.Parameters.AddWithValue("@to", to);
+            adapter.SelectCommand.Parameters.AddWithValue("@genre", genre);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            BindingList<SaleReport> reports = new BindingList<SaleReport>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                Debug.WriteLine("new order");
+                int mid = (int)row["mid"];
+                int count = (int)row["count"];
+                string name = (string)row["name"];
+
+                SaleReport report = new SaleReport(mid, name, count);
+                if (!row.IsNull("genre"))
+                {
+                    report.Genre = (string)row["genre"];
+                }
+
+                reports.Add(report);
+            }
+
+            return reports;
         }
 
         private static Employee CreateEmployeeFromRow(DataRow row)
@@ -735,5 +934,29 @@ namespace App
 
             return Convert.ToBase64String(hash);
         }
+        public static BindingList<Actor> GetStarred(Movie movie)
+        {
+            int mid = movie.Id;
+            BindingList<Actor> actors = new BindingList<Actor>();
+            BindingList<Actor> allActors = DBEnvironment.GetActors();
+
+            String query = "SELECT aid FROM starred WHERE mid = " + mid;
+            SqlDataAdapter adapter = new SqlDataAdapter(query, con);
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+
+            foreach (DataRow actorID in table.Rows)
+            {
+                int aid = int.Parse(actorID["aid"].ToString());
+                Actor movieActor = DBEnvironment.RetreiveActorByID(aid);
+                Debug.WriteLine("ACTOR " + movieActor.Name.FirstName + " " + movieActor.Name.LastName);
+                actors.Add(movieActor);
+            }
+
+            return actors;
+
+        }
+
     }
 }

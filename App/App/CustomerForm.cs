@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace App
         private BindingList<Movie> movies;
         private BindingList<Movie> userQueue;
         private int index;
+        private int indexRentedThisMonth = -1;
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
 
@@ -30,14 +32,19 @@ namespace App
             FillUserInfo();
             DBEnvironment.SetMovies();
             movies = DBEnvironment.GetMovies();
-            userQueue = DBEnvironment.RetrieveQueue(user);
+            userQueue = DBEnvironment.RetrieveCustomerQueue(user);
             fillMovies();
-            MoviesQueuedGridView.AutoGenerateColumns = true;
-            MovieGridView.AutoGenerateColumns = true;
             MovieGridView.Columns["Id"].Visible = false;
             MovieGridView.Columns["Num_copies"].Visible = false;
+
             MoviesQueuedGridView.Columns["Id"].Visible = false;
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
+
+            RentedMoviesGridView.Columns["Id"].Visible = false;
+            RentedMoviesGridView.Columns["Num_copies"].Visible = false;
+
+            MoviesRentedThisMonth.Columns["Id"].Visible = false;
+            MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
 
             HidePanels();
             
@@ -47,7 +54,7 @@ namespace App
             HomePanel.Visible = true;
             ProfilePanel.Visible = false;
             rentMoviePanel.Visible = false;
-            myMoviesPanel.Visible = false;
+            myMoviesPanel.Visible = true;
         }
         private void FillUserInfo()
         {
@@ -59,17 +66,26 @@ namespace App
             EmailLabel.Text = "Email: " + user.ContactInformation.Email;
         }
         
-        private void fillMovies()
+        public void fillMovies()
+        {
+            MovieGridView.DataSource = DBEnvironment.GetMovies();
+            MoviesQueuedGridView.DataSource = DBEnvironment.RetrieveCustomerQueue(user);
+            RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
+            MoviesRentedThisMonth.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
+        }
+
+        public void fillSearch(BindingList<Movie> movies)
         {
             MovieGridView.DataSource = movies;
-            MoviesQueuedGridView.DataSource = userQueue;
-
         }
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            userQueue = DBEnvironment.RetrieveCustomerQueue(user);
+            fillMovies();
             currentType = CustomerFormType.myMovies;
             Console.WriteLine("Showing Movies");
+            
             myMoviesPanel.Visible = true;
         }
 
@@ -77,23 +93,26 @@ namespace App
         private void movieHomeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.rentMovie;
             rentMoviePanel.Visible = true;
-            fillMovies();
+            
         }
         //Rent Movie Button
         private void RentMovieButton_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.rentMovie;
             Console.WriteLine("Showing Rent Movies");
             rentMoviePanel.Visible = true;
-            fillMovies();
+            
         }
         //MyProfile
         private void myProfileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.profile;
             Console.WriteLine("Showing profile");
             ProfilePanel.Visible = true;  
@@ -101,6 +120,7 @@ namespace App
         private void homeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
+            fillMovies();
             currentType = CustomerFormType.home;
             Console.WriteLine("Showing home");
             HomePanel.Visible = true;
@@ -138,19 +158,59 @@ namespace App
 
         private void rentMoviePanel_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void RentButton_click(object sender, EventArgs e)
         {
             Movie selectedMovie = movies.ElementAt(index);
-            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, false, this);
             movieForm.Show();
         }
 
         private void MovieGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+                return;
             index = e.RowIndex;
+            MovieGridView.Rows[index].Selected = true;
+        }
+        private void MoviesQueuedGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void MoviesRentedThisMonth_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            indexRentedThisMonth = e.RowIndex;
+            MoviesRentedThisMonth.Rows[index].Selected = true;
+        }
+
+        private void RateMovieButton_Click(object sender, EventArgs e)
+        {
+            if (indexRentedThisMonth < 0)
+                return;
+
+            Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
+            MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true, this);
+            movieForm.Show();
+        }
+
+        private void CustomerForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            SearchMovieForm f = new SearchMovieForm(this);
+            f.Show();
         }
     }
 }

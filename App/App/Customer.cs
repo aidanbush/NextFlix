@@ -25,12 +25,14 @@ namespace App
         public int Rating { get => rating; set => rating = value; }
         public string CreditCard { get => creditCard; set => creditCard = value; }
         public AccountType Type { get => type; set => type = value; }
+        public string Email { get => ContactInformation.Email; }
         
         /* function Overrides */
         public override string ToString()
         {
             return Id.ToString() + " " + Name.ToString() + " " + Type.ToString();
         }
+
         private Object CheckNulls(String value)
         {
             Console.WriteLine("checking " + value);
@@ -110,6 +112,7 @@ namespace App
 
             return count;
         }
+
         public int GetMoviesRentablePerMonth()
         {
             int count;
@@ -128,6 +131,7 @@ namespace App
             }
             return count;
         }
+
         public bool Add(SqlConnection con)
         {
             if(this.Address.PostalCode == "")
@@ -146,7 +150,21 @@ namespace App
 
         public bool Edit(SqlConnection con)
         {
-            
+
+            if (this.Address.PostalCode == "")
+            {
+                this.Address.PostalCode = null;
+            }
+            if (this.ContactInformation.Email == "")
+            {
+                this.ContactInformation.Email = null;
+            }
+            if (this.ContactInformation.PhoneNumber == "")
+            {
+                this.ContactInformation.PhoneNumber = null;
+
+            }
+
             String qString = "UPDATE customer SET first_name=@first_name, " + 
                     "last_name=@last_name, " + 
                     "phone_number=@phone_number, " + 
@@ -166,7 +184,7 @@ namespace App
 
         public bool Delete(SqlConnection con)
         {
-            String q = "DELETE FROM customer WHERE cid=@cid";
+            String q = "UPDATE customer SET account_type = 'Disabled' WHERE cid = @cid";
 
             con.Open();
             using (SqlCommand command = new SqlCommand(q, con))
@@ -177,7 +195,7 @@ namespace App
                     int err = command.ExecuteNonQuery();
                 }
 
-                catch (Exception e)
+                catch (Exception)
                 {
                     con.Close();
                     Console.WriteLine("Database failed to delete record");

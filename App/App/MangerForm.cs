@@ -18,7 +18,7 @@ namespace App
         private Form parent;
 
         private int index;
-        private enum FormType { customer, employee, movie, manager, order};
+        private enum FormType { customer, employee, movie, manager, order, queue};
         private FormType currentFormType;
 
         // binding lists
@@ -26,12 +26,15 @@ namespace App
         private BindingList<Movie> movies;
         private BindingList<Employee> employees;
         private BindingList<Order> orders;
+        private BindingList<SaleReport> sales;
+        private BindingList<Queue> queue;
 
         private CustomerView customerView;
         private EmployeeView employeeView;
         private MovieView movieView;
         private ManagerView managerView;
         private OrderView orderView;
+        private QueueView queueView;
 
         public Employee User { get => user; }
         public BindingList<Order> Orders { get => orders; }
@@ -44,15 +47,18 @@ namespace App
             customers = DBEnvironment.GetCustomers();
             movies = DBEnvironment.GetMovies();
             employees = DBEnvironment.GetEmployees();
+            queue = DBEnvironment.RetrieveAllQueue();
 
             customerView = new CustomerView(this);
             employeeView = new EmployeeView(this);
             movieView = new MovieView(this);
             managerView = new ManagerView(this);
             orderView = new OrderView(this);
+            queueView = new QueueView(this);
 
             InitializeComponent();
-            
+
+
             if (user.EmployeePosition != Employee.Position.Manager)
             {
                 this.Text = "Employee";
@@ -94,6 +100,9 @@ namespace App
                 case FormType.order:
                     orderView.HideView();
                     break;
+                case FormType.queue:
+                    queueView.HideView();
+                    break;
                 default:
                     break;
             }
@@ -117,12 +126,14 @@ namespace App
                 case FormType.order:
                     orderView.ShowView();
                     break;
+                case FormType.queue:
+                    queueView.ShowView();
+                    break;
                 default:
                     Debug.WriteLine("default");
                     break;
             }
         }
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -142,7 +153,23 @@ namespace App
                     break;
                 case FormType.manager:
                     break;
+                
             }
+        }
+        private void OrderMovieButton_Click(object sender, EventArgs e)
+        {
+            Queue selectedQueue = queue.ElementAt(index);
+            int selectedQueueCID = selectedQueue.CustomerID;
+            int selectedQUeueMID = selectedQueue.MovieID;
+            int employeeID = user.Id;
+            Order newOrder = new Order(selectedQueueCID, selectedQUeueMID, employeeID);
+
+            //place order
+            DBEnvironment.Add(newOrder);
+            //remove queue
+            DBEnvironment.Delete(selectedQueue);
+            this.Refresh();
+
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -214,6 +241,7 @@ namespace App
             Order selectedOrder = orders[index];
             FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
             fufillForm.Show();
+            FillTable();
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -228,7 +256,11 @@ namespace App
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex < 0)
+                return;
             index = e.RowIndex;
+            dataGridView1.Rows[index].Selected = true;
+            //dataGridView1.Rows[index].DefaultCellStyle.SelectionBackColor = Color.Green;
         }
 
         private void CustomerLoad(object sender, EventArgs e)
@@ -236,7 +268,11 @@ namespace App
             Debug.WriteLine("CustomerLoad");
             ChangeView(FormType.customer);
         }
-
+        private void QueueLoad(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Queue Load");
+            ChangeView(FormType.queue);
+        }
         private void CustomerRepLoad(object sender, EventArgs e)
         {
             Debug.WriteLine("CustomerRepLoad");
@@ -309,6 +345,7 @@ namespace App
                 parent.EditButton.Hide();
                 parent.DeleteButton.Hide();
                 parent.UpdateRatingsButton.Hide();
+                parent.OrderMovieButton.Hide();
                 // other
                 parent.dataGridView1.Hide();
                 parent.dataGridView1.DataSource = null;
@@ -439,10 +476,12 @@ namespace App
 
             public void HideView()
             {
+                parent.ManagerViewPanel.Hide();
             }
 
             public void ShowView()
             {
+                parent.ManagerViewPanel.Show();
             }
         }
 
@@ -478,6 +517,64 @@ namespace App
                 
                 parent.Refresh();
             }
+        }
+        private class QueueView : IView
+        {
+            private ManagerForm parent;
+
+            public QueueView(ManagerForm newParent)
+            {
+                parent = newParent;
+            }
+
+            public void HideView()
+            {
+                // buttons
+                parent.OrderMovieButton.Hide();
+                // other
+                parent.dataGridView1.Hide();
+                parent.dataGridView1.DataSource = null;
+            }
+
+            public void ShowView()
+            {
+                Debug.WriteLine("Show queueView");
+                // buttons
+                parent.OrderMovieButton.Show();
+                // other
+                parent.dataGridView1.Show();
+
+                // setup dataGridView
+                
+                parent.dataGridView1.DataSource = parent.queue;
+                parent.Refresh();
+            }
+        }
+        
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void GenerateReportButton_Click(object sender, EventArgs e)
+        {
+            // get dates
+            DateTime from = FromDateTimePicker.Value;
+            DateTime to = ToDateTimePicker.Value;
+
+            // get genre
+            string genre = GenreTextBox.Text;
+
+            if (genre == "")
+            {
+                sales = DBEnvironment.GetOrdersOverTime(from, to);
+            }
+            else
+            {
+                sales = DBEnvironment.GetOrdersOverTimeLimitGenre(from, to, genre);
+            }
+
+            ManagerViewDataGridView.DataSource = sales;
+
         }
     }
 }
