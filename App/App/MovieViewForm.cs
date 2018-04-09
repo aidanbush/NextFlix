@@ -17,10 +17,12 @@ namespace App
         Customer user;
         BindingList<Actor> actorsInMovie;
         CustomerForm parent;
+        bool canRate;
         public MovieViewForm(Movie selectedMovie, Customer CurrentUser, bool canRate, CustomerForm parent)
 
         {
             this.parent = parent;
+            this.canRate = canRate;
             movie = selectedMovie;
             user = CurrentUser;
             InitializeComponent();

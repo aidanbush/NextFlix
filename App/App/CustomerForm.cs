@@ -184,7 +184,7 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             indexRentedThisMonth = e.RowIndex;
-            MoviesRentedThisMonth.Rows[index].Selected = true;
+            MoviesRentedThisMonth.Rows[indexRentedThisMonth].Selected = true;
         }
 
         private void RateMovieButton_Click(object sender, EventArgs e)
