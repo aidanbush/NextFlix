@@ -17,8 +17,12 @@ namespace App
         private Customer user;
         private BindingList<Movie> movies;
         private BindingList<Movie> userQueue;
+        private BindingList<Movie> currentlyRented;
+        private BindingList<Movie> pending;
+        private BindingList<Movie> pastRented;
         private int index;
         private int indexRentedThisMonth = -1;
+        private int indexCurrentlyRented = 0;
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
 
@@ -26,36 +30,25 @@ namespace App
         {
             parent = newParent;
             user = newUser;
-            
+
             currentType = CustomerFormType.home;
             InitializeComponent();
             FillUserInfo();
-            DBEnvironment.SetMovies();
-            movies = DBEnvironment.GetMovies();
-            userQueue = DBEnvironment.RetrieveCustomerQueue(user);
+            
             fillMovies();
-            MovieGridView.Columns["Id"].Visible = false;
-            MovieGridView.Columns["Num_copies"].Visible = false;
-
-            MoviesQueuedGridView.Columns["Id"].Visible = false;
-            MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
-
-            RentedMoviesGridView.Columns["Id"].Visible = false;
-            RentedMoviesGridView.Columns["Num_copies"].Visible = false;
-
-            MoviesRentedThisMonth.Columns["Id"].Visible = false;
-            MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
 
             HidePanels();
             
         }
+
         private void HidePanels()
         {
             HomePanel.Visible = true;
             ProfilePanel.Visible = false;
             rentMoviePanel.Visible = false;
-            myMoviesPanel.Visible = true;
+            myMoviesPanel.Visible = false;
         }
+
         private void FillUserInfo()
         {
             NameLabel.Text = "Name:" + user.Name.FirstName + " " + user.Name.LastName;
@@ -68,11 +61,40 @@ namespace App
         
         public void fillMovies()
         {
-            MovieGridView.DataSource = DBEnvironment.GetMovies(); ;
-            MoviesQueuedGridView.DataSource = DBEnvironment.RetrieveCustomerQueue(user); ;
-            RentedMoviesGridView.DataSource = DBEnvironment.GetCurrentlyRentedMovies(user);
-            MoviesRentedThisMonth.DataSource = DBEnvironment.GetCurrentlyRentedMoviesInThisMonth(user);
+            DBEnvironment.SetMovies();
+            movies = DBEnvironment.GetMovies();
+            userQueue = DBEnvironment.RetrieveCustomerQueue(user);
+            pending = DBEnvironment.RetrieveCustomerPending(user);
+            currentlyRented = DBEnvironment.GetCurrentlyRentedMovies(user);
+            pastRented = DBEnvironment.GetRentedInPast(user);
+
+            MovieGridView.DataSource = movies;
+            MoviesQueuedGridView.DataSource = userQueue;
+            RentedMoviesGridView.DataSource = currentlyRented;
+            MoviesRentedThisMonth.DataSource = pastRented;
+            MoviesPendingDataGridView.DataSource = pending;
+
+            MovieGridView.Columns["Id"].Visible = false;
+            MovieGridView.Columns["Num_copies"].Visible = false;
+            MovieGridView.Columns["Copies_available"].Visible = false;
+
+            MoviesQueuedGridView.Columns["Id"].Visible = false;
+            MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
+            MoviesQueuedGridView.Columns["Copies_available"].Visible = false;
+
+            RentedMoviesGridView.Columns["Id"].Visible = false;
+            RentedMoviesGridView.Columns["Num_copies"].Visible = false;
+            RentedMoviesGridView.Columns["Copies_available"].Visible = false;
+
+            MoviesRentedThisMonth.Columns["Id"].Visible = false;
+            MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
+            MoviesRentedThisMonth.Columns["Copies_available"].Visible = false;
+
+            MoviesPendingDataGridView.Columns["Id"].Visible = false;
+            MoviesPendingDataGridView.Columns["Num_copies"].Visible = false;
+            MoviesPendingDataGridView.Columns["Copies_available"].Visible = false;
         }
+
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
@@ -93,6 +115,7 @@ namespace App
             rentMoviePanel.Visible = true;
             
         }
+
         //Rent Movie Button
         private void RentMovieButton_Click(object sender, EventArgs e)
         {
@@ -103,6 +126,7 @@ namespace App
             rentMoviePanel.Visible = true;
             
         }
+
         //MyProfile
         private void myProfileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -112,6 +136,7 @@ namespace App
             Console.WriteLine("Showing profile");
             ProfilePanel.Visible = true;  
         }
+
         private void homeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ChangeFormType();
@@ -169,6 +194,7 @@ namespace App
             index = e.RowIndex;
             MovieGridView.Rows[index].Selected = true;
         }
+
         private void MoviesQueuedGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -179,7 +205,7 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             indexRentedThisMonth = e.RowIndex;
-            MoviesRentedThisMonth.Rows[index].Selected = true;
+            MoviesRentedThisMonth.Rows[indexRentedThisMonth].Selected = true;
         }
 
         private void RateMovieButton_Click(object sender, EventArgs e)
@@ -190,6 +216,33 @@ namespace App
             Movie selectedMovie = movies.ElementAt(indexRentedThisMonth);
             MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, true, this);
             movieForm.Show();
+        }
+
+        private void ReturnMovieButton_Click(object sender, EventArgs e)
+        {
+            if (indexCurrentlyRented < currentlyRented.Count)
+            {
+                Debug.WriteLine("returnMovieBtn Click ", indexCurrentlyRented);
+            }
+
+            Movie movie = currentlyRented[indexCurrentlyRented];
+
+            if (DBEnvironment.ReturnMovie(movie, user))
+            {
+                //if no in add to past
+                if (pastRented.SingleOrDefault(_ => _.Id == movie.Id) == null)
+                {
+                    pastRented.Add(movie);
+                }
+                currentlyRented.RemoveAt(indexCurrentlyRented);
+            }
+        }
+
+        private void MoviesCurrentlyRentedCellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            indexCurrentlyRented = e.RowIndex;
         }
     }
 }

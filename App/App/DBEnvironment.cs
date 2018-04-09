@@ -294,6 +294,41 @@ namespace App
             return queue;
 
         }
+
+        public static BindingList<Movie> RetrieveCustomerPending(Customer user)
+        {
+            string query = "SELECT * FROM movie " +
+                           "WHERE mid IN " +
+                           "(SELECT mid from [order] WHERE cid = @cid AND eid IS NULL)";
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            adaptor.SelectCommand.Parameters.AddWithValue("@cid", user.Id);
+
+            DataTable table = new DataTable();
+            adaptor.Fill(table);
+            BindingList<Movie> pending = GetMoviesFromQuery(table);
+
+            return pending;
+
+        }
+
+        public static BindingList<Movie> GetRentedInPast(Customer user)
+        {
+            string query = "SELECT * FROM movie " +
+                           "WHERE mid IN " +
+                           "(SELECT DISTINCT mid from [order] WHERE cid = @cid AND date_returned IS NOT NULL)";
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            adaptor.SelectCommand.Parameters.AddWithValue("@cid", user.Id);
+
+            DataTable table = new DataTable();
+            adaptor.Fill(table);
+            BindingList<Movie> pending = GetMoviesFromQuery(table);
+
+            return pending;
+
+        }
+
         private static BindingList<Movie> GetMoviesFromQuery(DataTable movieTable)
         {
             BindingList<Movie> movies = new BindingList<Movie>();
@@ -305,6 +340,7 @@ namespace App
             }
             return movies;
         }
+
         private static BindingList<Movie> RetrieveMovies()
         {
             string qString = "SELECT * FROM movie";
@@ -339,6 +375,7 @@ namespace App
             return actors;
 
         }
+
         public static BindingList<Order> RetrieveUnfulfilledOrders()
         {
             Debug.WriteLine("Retrieveing orders");
@@ -371,6 +408,30 @@ namespace App
             }
 
             return orders;
+        }
+
+        public static bool ReturnMovie(Movie movie, Customer user)
+        {
+            string qString = "UPDATE [order] SET date_returned = @date WHERE cid = @cid AND mid = @mid";
+
+            con.Open();
+            SqlCommand command = new SqlCommand(qString, con);
+            command.Parameters.AddWithValue("@cid", user.Id);
+            command.Parameters.AddWithValue("@mid", movie.Id);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("ReturnMovie: ", e);
+                con.Close();
+                return false;
+            }
+            con.Close();
+            return true;
         }
 
         public static bool FulfillOrder(int oid, int eid)

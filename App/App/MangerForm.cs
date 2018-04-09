@@ -239,7 +239,8 @@ namespace App
         private void FulfillOrderButton_Click(object sender, EventArgs e)
         {
             // TODO: implement
-            //Order selectedOrder = orders.ElementAt(index);
+            if (index >= orders.Count)
+                return;
             Order selectedOrder = orders[index];
             FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
             fufillForm.Show();
