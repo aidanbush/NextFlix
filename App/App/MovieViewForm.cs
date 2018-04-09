@@ -97,16 +97,16 @@ namespace App
             if (DBEnvironment.AddMovieRating(movie, user, int.Parse(RatingLabel.Text)))
             {
                 Debug.Print("Adding movie rating!");
-                return;
+                parent.fillMovies();
             }
             else
             {
                 Debug.Print("Updating movie rating");
                 DBEnvironment.EditMovieRating(movie, user, int.Parse(RatingLabel.Text));
-                this.parent.fillMovies();
-                this.Close();
+                parent.fillMovies();
             }
-                
+            Close();
+
         }
     }
 }
