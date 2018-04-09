@@ -49,6 +49,9 @@
             this.NameLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.HomePanel = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.personalSuggestionsDataGridView = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
             this.myMoviesPanel = new System.Windows.Forms.Panel();
             this.ReturnMovieButton = new System.Windows.Forms.Button();
@@ -71,6 +74,7 @@
             this.menuStrip1.SuspendLayout();
             this.ProfilePanel.SuspendLayout();
             this.HomePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.personalSuggestionsDataGridView)).BeginInit();
             this.myMoviesPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoviesPendingDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MoviesRentedThisMonth)).BeginInit();
@@ -271,6 +275,9 @@
             // 
             // HomePanel
             // 
+            this.HomePanel.Controls.Add(this.label5);
+            this.HomePanel.Controls.Add(this.button1);
+            this.HomePanel.Controls.Add(this.personalSuggestionsDataGridView);
             this.HomePanel.Controls.Add(this.label3);
             this.HomePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HomePanel.Location = new System.Drawing.Point(0, 0);
@@ -279,6 +286,39 @@
             this.HomePanel.Size = new System.Drawing.Size(1091, 605);
             this.HomePanel.TabIndex = 10;
             this.HomePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.HomePanel_Paint);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(31, 82);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(392, 17);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Here is some suggested movies based on your prefferences:";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(31, 420);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(117, 42);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Rent movie";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.RentButton_click);
+            // 
+            // personalSuggestionsDataGridView
+            // 
+            this.personalSuggestionsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.personalSuggestionsDataGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.personalSuggestionsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.personalSuggestionsDataGridView.Location = new System.Drawing.Point(34, 110);
+            this.personalSuggestionsDataGridView.Name = "personalSuggestionsDataGridView";
+            this.personalSuggestionsDataGridView.RowHeadersVisible = false;
+            this.personalSuggestionsDataGridView.RowTemplate.Height = 24;
+            this.personalSuggestionsDataGridView.Size = new System.Drawing.Size(710, 302);
+            this.personalSuggestionsDataGridView.TabIndex = 1;
+            this.personalSuggestionsDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.personalSuggestionsDataGridView_CellContentClick);
             // 
             // label3
             // 
@@ -304,7 +344,7 @@
             this.myMoviesPanel.Controls.Add(this.label4);
             this.myMoviesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.myMoviesPanel.Location = new System.Drawing.Point(0, 0);
-            this.myMoviesPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.myMoviesPanel.Margin = new System.Windows.Forms.Padding(4);
             this.myMoviesPanel.Name = "myMoviesPanel";
             this.myMoviesPanel.Size = new System.Drawing.Size(1091, 605);
             this.myMoviesPanel.TabIndex = 1;
@@ -492,7 +532,7 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(0, 0);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(160, 24);
             this.comboBox1.TabIndex = 4;
@@ -529,10 +569,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1091, 605);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.rentMoviePanel);
-            this.Controls.Add(this.myMoviesPanel);
             this.Controls.Add(this.HomePanel);
             this.Controls.Add(this.ProfilePanel);
+            this.Controls.Add(this.rentMoviePanel);
+            this.Controls.Add(this.myMoviesPanel);
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "CustomerForm";
@@ -545,6 +585,7 @@
             this.ProfilePanel.PerformLayout();
             this.HomePanel.ResumeLayout(false);
             this.HomePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.personalSuggestionsDataGridView)).EndInit();
             this.myMoviesPanel.ResumeLayout(false);
             this.myMoviesPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MoviesPendingDataGridView)).EndInit();
@@ -601,5 +642,8 @@
         private System.Windows.Forms.DataGridView MoviesPendingDataGridView;
         private System.Windows.Forms.Label MoviesPendingLabel;
         private System.Windows.Forms.Button ReturnMovieButton;
+        public System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView personalSuggestionsDataGridView;
     }
 }

@@ -1063,5 +1063,27 @@ namespace App
 
         }
 
+        public static BindingList<Movie> GetRecommendedMovies(Customer user)
+        {
+            int cid = user.Id;
+
+            string query = "select * from movie " +
+                "where movie.genre like " +
+                "(select genre from movie, " +
+                   "(select mid from movie_rating " +
+                   "where cid = " +user.Id+" " +
+                   "and rating > 2) as movieRatingMID " +
+                    "where movieRatingMID.mid = movie.mid) " +
+                    "and movie.rating > 1;";
+
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            DataTable queueTable = new DataTable();
+            adaptor.Fill(queueTable);
+            BindingList<Movie> queue = GetMoviesFromQuery(queueTable);
+
+            return queue;
+        }
+
     }
 }
