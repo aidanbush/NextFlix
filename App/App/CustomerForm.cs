@@ -23,9 +23,10 @@ namespace App
         private BindingList<Movie> recommendedMovies;
 
         private int index;
-        private int indexRentedThisMonth = 0;
-        private int indexCurrentlyRented = 0;
+        private int indexRentedThisMonth = -1;
+        private int indexCurrentlyRented = -1;
         private int recommendedMoviesIndex = -1;
+
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
 
