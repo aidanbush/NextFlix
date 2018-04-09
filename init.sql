@@ -417,6 +417,14 @@ begin
 	update movie
 		set rating = (select avg(rating) from movie_rating where mid = movie.mid) -- test
 		where movie.mid in (select mid from inserted) or movie.mid in (select mid from deleted);
+
+	update actor set actor.rating = averages.rating
+		from (select aid, avg(rating) as rating from 
+		movie, starred where
+		movie.mid = starred.mid
+		group by aid) as averages where
+		actor.aid = averages.aid;
+
 end;
 go
 
