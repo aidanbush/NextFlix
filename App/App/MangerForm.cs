@@ -243,7 +243,6 @@ namespace App
             Order selectedOrder = orders[index];
             FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
             fufillForm.Show();
-            FillTable();
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
