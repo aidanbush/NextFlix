@@ -163,12 +163,13 @@
             // 
             // EditPaymentInfo
             // 
-            this.EditPaymentInfo.Location = new System.Drawing.Point(16, 555);
+            this.EditPaymentInfo.Location = new System.Drawing.Point(16, 501);
             this.EditPaymentInfo.Name = "EditPaymentInfo";
             this.EditPaymentInfo.Size = new System.Drawing.Size(224, 52);
             this.EditPaymentInfo.TabIndex = 10;
             this.EditPaymentInfo.Text = "Edit Payment Info";
             this.EditPaymentInfo.UseVisualStyleBackColor = true;
+            this.EditPaymentInfo.Click += new System.EventHandler(this.EditPaymentInfo_Click);
             // 
             // NumberLabel
             // 
@@ -183,7 +184,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 408);
+            this.label2.Location = new System.Drawing.Point(20, 416);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(214, 25);
@@ -311,9 +312,10 @@
             // 
             // RateMovieButton
             // 
-            this.RateMovieButton.Location = new System.Drawing.Point(243, 691);
+            this.RateMovieButton.Location = new System.Drawing.Point(162, 442);
+            this.RateMovieButton.Margin = new System.Windows.Forms.Padding(2);
             this.RateMovieButton.Name = "RateMovieButton";
-            this.RateMovieButton.Size = new System.Drawing.Size(204, 81);
+            this.RateMovieButton.Size = new System.Drawing.Size(136, 52);
             this.RateMovieButton.TabIndex = 8;
             this.RateMovieButton.Text = "Rate Movie";
             this.RateMovieButton.UseVisualStyleBackColor = true;
@@ -332,9 +334,15 @@
             // 
             this.MoviesRentedThisMonth.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.MoviesRentedThisMonth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MoviesRentedThisMonth.BackgroundColor = System.Drawing.Color.White;
+            this.MoviesRentedThisMonth.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.MoviesRentedThisMonth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MoviesRentedThisMonth.Location = new System.Drawing.Point(16, 498);
+            this.MoviesRentedThisMonth.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.MoviesRentedThisMonth.Location = new System.Drawing.Point(11, 319);
+            this.MoviesRentedThisMonth.Margin = new System.Windows.Forms.Padding(2);
             this.MoviesRentedThisMonth.Name = "MoviesRentedThisMonth";
+            this.MoviesRentedThisMonth.RowHeadersVisible = false;
             this.MoviesRentedThisMonth.RowTemplate.Height = 33;
             this.MoviesRentedThisMonth.Size = new System.Drawing.Size(1608, 150);
             this.MoviesRentedThisMonth.TabIndex = 6;
@@ -344,20 +352,33 @@
             // 
             this.MoviesQueuedGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.MoviesQueuedGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MoviesQueuedGridView.BackgroundColor = System.Drawing.Color.White;
+            this.MoviesQueuedGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.MoviesQueuedGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MoviesQueuedGridView.Location = new System.Drawing.Point(16, 316);
+            this.MoviesQueuedGridView.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.MoviesQueuedGridView.Location = new System.Drawing.Point(11, 202);
+            this.MoviesQueuedGridView.Margin = new System.Windows.Forms.Padding(2);
             this.MoviesQueuedGridView.Name = "MoviesQueuedGridView";
+            this.MoviesQueuedGridView.RowHeadersVisible = false;
             this.MoviesQueuedGridView.RowTemplate.Height = 33;
             this.MoviesQueuedGridView.Size = new System.Drawing.Size(1610, 150);
             this.MoviesQueuedGridView.TabIndex = 5;
+            this.MoviesQueuedGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MoviesQueuedGridView_CellClick);
             // 
             // RentedMoviesGridView
             // 
             this.RentedMoviesGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.RentedMoviesGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.RentedMoviesGridView.BackgroundColor = System.Drawing.Color.White;
+            this.RentedMoviesGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.RentedMoviesGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.RentedMoviesGridView.Location = new System.Drawing.Point(16, 106);
+            this.RentedMoviesGridView.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.RentedMoviesGridView.Location = new System.Drawing.Point(11, 68);
+            this.RentedMoviesGridView.Margin = new System.Windows.Forms.Padding(2);
             this.RentedMoviesGridView.Name = "RentedMoviesGridView";
+            this.RentedMoviesGridView.RowHeadersVisible = false;
             this.RentedMoviesGridView.RowTemplate.Height = 33;
             this.RentedMoviesGridView.Size = new System.Drawing.Size(1610, 150);
             this.RentedMoviesGridView.TabIndex = 4;
@@ -416,13 +437,19 @@
             // 
             this.MovieGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.MovieGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.MovieGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.MovieGridView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.MovieGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MovieGridView.Location = new System.Drawing.Point(27, 130);
+            this.MovieGridView.GridColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.MovieGridView.Location = new System.Drawing.Point(13, 83);
+            this.MovieGridView.Margin = new System.Windows.Forms.Padding(2);
             this.MovieGridView.Name = "MovieGridView";
+            this.MovieGridView.RowHeadersVisible = false;
             this.MovieGridView.RowTemplate.Height = 33;
-            this.MovieGridView.Size = new System.Drawing.Size(1608, 230);
+            this.MovieGridView.Size = new System.Drawing.Size(1061, 147);
             this.MovieGridView.TabIndex = 2;
-            this.MovieGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MoviesQueuedGridView_CellClick);
+            this.MovieGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MovieGridView_CellContentClick);
             this.MovieGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MovieGridView_CellContentClick);
             // 
             // label6

@@ -88,7 +88,63 @@ namespace App
         {
             return queryObject.Add(con);
         }
+        public static bool EditCard(string query)
+        {
+            con.Open();
+            
+            try
+            {
+                SqlCommand command = new SqlCommand(query, con);
+                command.ExecuteNonQuery();      
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                con.Close();
+                return false;
+            }
+            
+            con.Close();
+            return true;
+        }
 
+        public static bool MovieRatingQuery(String query, Movie movie, Customer user, int rating)
+        {
+            con.Open();
+            using (SqlCommand command = new SqlCommand(query, con))
+            {
+                try
+                {
+                    command.Parameters.AddWithValue("@mid", movie.Id);
+                    command.Parameters.AddWithValue("@cid", user.Id);
+                    command.Parameters.AddWithValue("@rating", rating);
+                    int err = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                    con.Close();
+                    return false;
+                }
+
+            }
+            con.Close();
+            return true;
+        }
+
+        public static bool EditMovieRating(Movie movie, Customer user, int rating)
+        {
+            String q = "UPDATE movie_rating SET rating=@rating where mid=@mid and cid=@cid";
+            return MovieRatingQuery(q, movie, user, rating);
+        }
+
+        public static bool AddMovieRating(Movie movie, Customer user, int rating)
+        {
+            String q = "insert into movie_rating (mid, cid, rating) values (@mid, @cid, @rating);";
+            return MovieRatingQuery(q, movie, user, rating);
+        }
+
+     
         public static bool AddToQueue(IQuery queryObject)
         {
             return queryObject.AddToQueue(con);
@@ -183,6 +239,7 @@ namespace App
             return Actors;
 
         }
+
         public static BindingList<Customer> RetrieveCustomers()
         {
             BindingList<Customer> customers = new BindingList<Customer>();
@@ -200,6 +257,7 @@ namespace App
 
             return customers;
         }
+
         private static BindingList<Employee>  RetrieveEmployees()
 
         {
@@ -219,9 +277,9 @@ namespace App
 
             return employeeList;
         }
+
         public static BindingList<Queue> RetrieveAllQueue()
         {
-            //THis is wrong??????
             string query = "SELECT * FROM queue ORDER BY date_added";
 
             SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
@@ -258,6 +316,7 @@ namespace App
             return queue;
 
         }
+
         private static BindingList<Movie> GetMoviesFromQuery(DataTable movieTable)
         {
             BindingList<Movie> movies = new BindingList<Movie>();
@@ -269,6 +328,7 @@ namespace App
             }
             return movies;
         }
+
         private static BindingList<Movie> RetrieveMovies()
         {
             string qString = "SELECT * FROM movie";
@@ -325,6 +385,7 @@ namespace App
             return act;
 
         }
+
         public static BindingList<Order> RetrieveUnfulfilledOrders()
         {
             Debug.WriteLine("Retrieveing orders");
@@ -346,8 +407,12 @@ namespace App
                 Order order = new Order(mid, cid, 0)
                 {
                     Id = oid,
-                    PlacedDate = placedDate
+                    PlacedDate = placedDate,
                 };
+                if (!orderRow.IsNull("date_returned"))
+                {
+                    order.DateReturned = (DateTime)orderRow["date_returned"];
+                }
 
                 orders.Add(order);
             }
@@ -534,6 +599,75 @@ namespace App
             }
 
             return null;
+        }
+
+        public static BindingList<SaleReport> GetOrdersOverTime(DateTime from, DateTime to)
+        {
+            string qString = "SELECT m.name, m.genre, c.mid, c.count " +
+                "FROM (SELECT mid, COUNT(*) as count FROM [order] WHERE order_placed BETWEEN @from AND @to GROUP BY mid) AS c, movie AS m " +
+                "WHERE c.mid = m.mid;";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@from", from);
+            adapter.SelectCommand.Parameters.AddWithValue("@to", to);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            BindingList<SaleReport> reports = new BindingList<SaleReport>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                Debug.WriteLine("new order");
+                int mid = (int)row["mid"];
+                int count = (int)row["count"];
+                string name = (string)row["name"];
+                
+                SaleReport report = new SaleReport(mid, name, count);
+                if (!row.IsNull("genre"))
+                {
+                    report.Genre = (string)row["genre"];
+                }
+
+                reports.Add(report);
+            }
+
+            return reports;
+        }
+
+        public static BindingList<SaleReport> GetOrdersOverTimeLimitGenre(DateTime from, DateTime to, string genre)
+        {
+            string qString = "SELECT m.name, m.genre, c.mid, c.count " +
+                "FROM (SELECT mid, COUNT(*) as count FROM [order] WHERE order_placed BETWEEN @from AND @to GROUP BY mid) AS c, movie AS m " +
+                "WHERE c.mid = m.mid AND m.genre LIKE @genre";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(qString, con);
+            adapter.SelectCommand.Parameters.AddWithValue("@from", from);
+            adapter.SelectCommand.Parameters.AddWithValue("@to", to);
+            adapter.SelectCommand.Parameters.AddWithValue("@genre", genre);
+
+            DataTable table = new DataTable();
+            adapter.Fill(table);
+
+            BindingList<SaleReport> reports = new BindingList<SaleReport>();
+
+            foreach (DataRow row in table.Rows)
+            {
+                Debug.WriteLine("new order");
+                int mid = (int)row["mid"];
+                int count = (int)row["count"];
+                string name = (string)row["name"];
+
+                SaleReport report = new SaleReport(mid, name, count);
+                if (!row.IsNull("genre"))
+                {
+                    report.Genre = (string)row["genre"];
+                }
+
+                reports.Add(report);
+            }
+
+            return reports;
         }
 
         private static Employee CreateEmployeeFromRow(DataRow row)
@@ -749,7 +883,8 @@ namespace App
                 CreditCard = creditCard,
                 Id = (int)row["cid"],
                 Rating = (int)row["rating"],
-                Credentials = credentials
+                Credentials = credentials,
+                
             };
 
             return customer;

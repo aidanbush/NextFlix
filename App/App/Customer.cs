@@ -47,7 +47,7 @@ namespace App
                 return value.ToString();
             }
         }
-
+        
         private bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
@@ -182,9 +182,23 @@ namespace App
             return AddEdit(qString, con);
         }
 
+        public bool EditCustomerCreditCardNumber(string newNumber)
+        {
+            string query = "UPDATE customer SET credit_card='"+ newNumber +"' WHERE cid=" + this.Id;
+            Debug.WriteLine("CID " + this.Id.ToString() + " CC " + newNumber);
+            if (DBEnvironment.EditCard(query))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public bool Delete(SqlConnection con)
         {
-            String q = "UPDATE customer SET account_type = 'Disabled' WHERE cid = @cid";
+            
+            String q = "UPDATE customer SET account_type = 'Disabled' WHERE cid=@cid";
 
             con.Open();
             using (SqlCommand command = new SqlCommand(q, con))
