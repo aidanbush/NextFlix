@@ -15,6 +15,7 @@ namespace App
         private int copies_available;
         private int rating;
         private int id;
+        private int customerRating;
 
         public string Name { get => name; set => name = value; }
         public string Genre { get => genre; set => genre = value; }
@@ -23,6 +24,7 @@ namespace App
         public int Copies_available { get => copies_available; set => copies_available = value; }
         public int Rating { get => rating; set => rating = value; }
         public int Id { get => id; set => id = value; }
+        public int CustomerRating { get => customerRating; set => customerRating = value; }
 
         public Movie(string name, string genre, float fees, int numOfCopies, int copiesAvailable, int rating)
         {
