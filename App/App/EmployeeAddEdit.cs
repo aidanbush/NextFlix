@@ -61,7 +61,18 @@ namespace App
             Address userAddress = new Address(SuiteBox.Text, StreetBox.Text, HouseBox.Text, CityBox.Text, ProvinceBox.Text, PostalBox.Text);
             ContactInformation userInfo = new ContactInformation(null, PhoneBox.Text);
             Credentials credentials = new Credentials(UsernameTextBox.Text, PasswordTextBox.Text);
-            Employee newEmployee = new Employee(user, userAddress, userInfo, float.Parse(WageBox.Text, CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, SINBox.Text, Employee.Position.Employee)
+
+            Employee.Position position;
+            if (PossitionBox.Text == "Manager")
+            {
+                position = Employee.Position.Manager;
+            }
+            else
+            {
+                position = Employee.Position.Employee;
+            }
+
+            Employee newEmployee = new Employee(user, userAddress, userInfo, float.Parse(WageBox.Text, CultureInfo.InvariantCulture.NumberFormat), DateTime.Now, SINBox.Text, position)
             {
                 Credentials = credentials
             };
