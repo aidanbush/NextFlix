@@ -20,9 +20,9 @@ namespace App
         private BindingList<Movie> currentlyRented;
         private BindingList<Movie> pending;
         private BindingList<Movie> pastRented;
-        private int index;
-        private int indexRentedThisMonth = -1;
-        private int indexCurrentlyRented = -1;
+        private int index = 0;
+        private int indexRentedThisMonth = 0;
+        private int indexCurrentlyRented = 0;
         private enum CustomerFormType { home, movie, rentMovie, myMovies, profile };
         private CustomerFormType currentType;
 
@@ -86,27 +86,27 @@ namespace App
             MovieGridView.Columns["Id"].Visible = false;
             MovieGridView.Columns["Num_copies"].Visible = false;
             MovieGridView.Columns["Copies_available"].Visible = false;
-            MovieGridView.Columns["customerRating"].Visible = false;
+            MovieGridView.Columns["CustomerRating"].Visible = false;
 
             MoviesQueuedGridView.Columns["Id"].Visible = false;
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
             MoviesQueuedGridView.Columns["Copies_available"].Visible = false;
-            MoviesQueuedGridView.Columns["customerRating"].Visible = false;
+            MoviesQueuedGridView.Columns["CustomerRating"].Visible = false;
 
             RentedMoviesGridView.Columns["Id"].Visible = false;
             RentedMoviesGridView.Columns["Num_copies"].Visible = false;
             RentedMoviesGridView.Columns["Copies_available"].Visible = false;
-            RentedMoviesGridView.Columns["customerRating"].Visible = false;
+            RentedMoviesGridView.Columns["CustomerRating"].Visible = false;
 
             MoviesRentedThisMonth.Columns["Id"].Visible = false;
             MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
             MoviesRentedThisMonth.Columns["Copies_available"].Visible = false;
-            MoviesRentedThisMonth.Columns["customerRating"].HeaderText = "Your Rating";
+            MoviesRentedThisMonth.Columns["CustomerRating"].HeaderText = "Your Rating";
 
             MoviesPendingDataGridView.Columns["Id"].Visible = false;
             MoviesPendingDataGridView.Columns["Num_copies"].Visible = false;
             MoviesPendingDataGridView.Columns["Copies_available"].Visible = false;
-            MoviesPendingDataGridView.Columns["customerRating"].Visible = false;
+            MoviesPendingDataGridView.Columns["CustomerRating"].Visible = false;
         }
         
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -196,6 +196,9 @@ namespace App
 
         private void RentButton_click(object sender, EventArgs e)
         {
+            if (index >= movies.Count)
+                return;
+
             Movie selectedMovie = movies.ElementAt(index);
             MovieViewForm movieForm = new MovieViewForm(selectedMovie, this.user, false, this);
             movieForm.Show();
@@ -224,7 +227,7 @@ namespace App
 
         private void RateMovieButton_Click(object sender, EventArgs e)
         {
-            if (indexRentedThisMonth < 0)
+            if (indexRentedThisMonth >= pastRented.Count)
                 return;
 
             Movie movie = pastRented[indexRentedThisMonth];
