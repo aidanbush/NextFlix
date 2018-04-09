@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountTypeDetails.cs" />
     <Compile Include="AccountTypeException.cs" />
     <Compile Include="Actor.cs" />
     <Compile Include="ActorAddEdit.cs">
@@ -80,6 +81,12 @@
     </Compile>
     <Compile Include="CustomerInsertionParameters.cs" />
     <Compile Include="DBEnvironment.cs" />
+    <Compile Include="EditAccountType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditAccountType.Designer.cs">
+      <DependentUpon>EditAccountType.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditCustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +158,12 @@
     <Compile Include="Query.cs" />
     <Compile Include="Queue.cs" />
     <Compile Include="SaleReport.cs" />
+    <Compile Include="SearchMovieFcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchMovieFcs.Designer.cs">
+      <DependentUpon>SearchMovieFcs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Starred.cs" />
     <Compile Include="UserName.cs" />
     <Compile Include="Person.cs" />
@@ -167,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomerForm.resx">
       <DependentUpon>CustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditAccountType.resx">
+      <DependentUpon>EditAccountType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditCustomerForm.resx">
       <DependentUpon>EditCustomerForm.cs</DependentUpon>
@@ -205,6 +221,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SearchMovieFcs.resx">
+      <DependentUpon>SearchMovieFcs.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

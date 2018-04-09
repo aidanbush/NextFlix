@@ -38,6 +38,8 @@ namespace App
             Employee employee = ValidateEmployee();
             if (employee != null)
             {
+                
+                employee.EmployeePosition = Employee.Position.Employee;
                 new ManagerForm(this, employee).Show();
                 this.Hide();
                 ClearCredentials();
@@ -52,6 +54,7 @@ namespace App
             Employee manager = ValidateManager();
             if (manager != null)
             {
+                manager.EmployeePosition = Employee.Position.Manager;
                 new ManagerForm(this, manager).Show();
                 this.Hide();
                 ClearCredentials();

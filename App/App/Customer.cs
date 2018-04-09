@@ -48,6 +48,27 @@ namespace App
             }
         }
         
+        public string GetAccountType()
+        {
+            switch (type)
+            {
+                case (AccountType.Bronze):
+                    return "bronze";
+                case (AccountType.Silver):
+                    return "silver";
+                case (AccountType.Gold):
+                    return "gold";
+                case (AccountType.Limited):
+                    return "limited";
+                default:
+                    return "disabled";
+            }
+        }
+        public bool UpdateAccount(string newAccnt)
+        {
+            string query = "UPDATE customer SET account_type='" + newAccnt + "' WHERE cid =" + Id;
+            return DBEnvironment.UpdateCustAccount(query);
+        }
         private bool AddEdit(String queryString, SqlConnection con)
         {
             con.Open();
@@ -195,6 +216,7 @@ namespace App
                 return false;
             }
         }
+        
         public bool Delete(SqlConnection con)
         {
             

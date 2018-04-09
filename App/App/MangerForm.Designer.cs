@@ -47,43 +47,26 @@ namespace App
             this.OrderMovieButton = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ManagerViewPanel = new System.Windows.Forms.Panel();
-            this.SalesReportLabel = new System.Windows.Forms.Label();
-            this.DateRangeLabel = new System.Windows.Forms.Label();
-            this.FromLabel = new System.Windows.Forms.Label();
-            this.ToLabel = new System.Windows.Forms.Label();
-            this.FromDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.ToDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.GenreLabel = new System.Windows.Forms.Label();
-            this.GenreTextBox = new System.Windows.Forms.TextBox();
-            this.ManagerViewDataGridView = new System.Windows.Forms.DataGridView();
             this.GenerateReportButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.ManagerViewDataGridView = new System.Windows.Forms.DataGridView();
+            this.GenreTextBox = new System.Windows.Forms.TextBox();
+            this.GenreLabel = new System.Windows.Forms.Label();
+            this.ToDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.FromDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.ToLabel = new System.Windows.Forms.Label();
+            this.FromLabel = new System.Windows.Forms.Label();
+            this.DateRangeLabel = new System.Windows.Forms.Label();
+            this.SalesReportLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.ManagerViewPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ManagerViewDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(271, 58);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(690, 490);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(97, 58);
-            this.AddButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.AddButton.Location = new System.Drawing.Point(73, 47);
+            this.AddButton.Margin = new System.Windows.Forms.Padding(2);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(134, 58);
             this.AddButton.TabIndex = 1;
@@ -99,8 +82,8 @@ namespace App
             this.menuToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(1924, 26);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(2, 1, 0, 1);
+            this.menuStrip1.Size = new System.Drawing.Size(1443, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
@@ -168,7 +151,7 @@ namespace App
             // 
             // EditButton
             // 
-            this.EditButton.Location = new System.Drawing.Point(97, 129);
+            this.EditButton.Location = new System.Drawing.Point(73, 105);
             this.EditButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.EditButton.Name = "EditButton";
             this.EditButton.Size = new System.Drawing.Size(134, 55);
@@ -179,8 +162,8 @@ namespace App
             // 
             // DeleteButton
             // 
-            this.DeleteButton.Location = new System.Drawing.Point(97, 199);
-            this.DeleteButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DeleteButton.Location = new System.Drawing.Point(73, 162);
+            this.DeleteButton.Margin = new System.Windows.Forms.Padding(2);
             this.DeleteButton.Name = "DeleteButton";
             this.DeleteButton.Size = new System.Drawing.Size(134, 61);
             this.DeleteButton.TabIndex = 7;
@@ -190,8 +173,8 @@ namespace App
             // 
             // UpdateRatingsButton
             // 
-            this.UpdateRatingsButton.Location = new System.Drawing.Point(97, 273);
-            this.UpdateRatingsButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.UpdateRatingsButton.Location = new System.Drawing.Point(73, 222);
+            this.UpdateRatingsButton.Margin = new System.Windows.Forms.Padding(2);
             this.UpdateRatingsButton.Name = "UpdateRatingsButton";
             this.UpdateRatingsButton.Size = new System.Drawing.Size(134, 69);
             this.UpdateRatingsButton.TabIndex = 8;
@@ -201,7 +184,7 @@ namespace App
             // 
             // FulfillOrderButton
             // 
-            this.FulfillOrderButton.Location = new System.Drawing.Point(97, 59);
+            this.FulfillOrderButton.Location = new System.Drawing.Point(73, 49);
             this.FulfillOrderButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.FulfillOrderButton.Name = "FulfillOrderButton";
             this.FulfillOrderButton.Size = new System.Drawing.Size(134, 55);
@@ -214,8 +197,8 @@ namespace App
             // LogoutButton
             // 
             this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.LogoutButton.Location = new System.Drawing.Point(1789, 36);
-            this.LogoutButton.Margin = new System.Windows.Forms.Padding(4);
+            this.LogoutButton.Location = new System.Drawing.Point(1364, 27);
+            this.LogoutButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LogoutButton.Name = "LogoutButton";
             this.LogoutButton.Size = new System.Drawing.Size(75, 23);
             this.LogoutButton.TabIndex = 10;
@@ -225,8 +208,8 @@ namespace App
             // 
             // OrderMovieButton
             // 
-            this.OrderMovieButton.Location = new System.Drawing.Point(129, 72);
-            this.OrderMovieButton.Margin = new System.Windows.Forms.Padding(2);
+            this.OrderMovieButton.Location = new System.Drawing.Point(73, 49);
+            this.OrderMovieButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.OrderMovieButton.Name = "OrderMovieButton";
             this.OrderMovieButton.Size = new System.Drawing.Size(134, 55);
             this.OrderMovieButton.TabIndex = 11;
@@ -236,23 +219,29 @@ namespace App
             // 
             // dataGridView1
             // 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.Desktop;
-            this.dataGridView1.Location = new System.Drawing.Point(343, 72);
+            this.dataGridView1.Location = new System.Drawing.Point(271, 58);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1569, 664);
+            this.dataGridView1.Size = new System.Drawing.Size(1141, 664);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // ManagerViewPanel
             // 
+            this.ManagerViewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ManagerViewPanel.Controls.Add(this.GenerateReportButton);
             this.ManagerViewPanel.Controls.Add(this.ManagerViewDataGridView);
             this.ManagerViewPanel.Controls.Add(this.GenreTextBox);
@@ -263,78 +252,23 @@ namespace App
             this.ManagerViewPanel.Controls.Add(this.FromLabel);
             this.ManagerViewPanel.Controls.Add(this.DateRangeLabel);
             this.ManagerViewPanel.Controls.Add(this.SalesReportLabel);
-            this.ManagerViewPanel.Location = new System.Drawing.Point(0, 58);
+            this.ManagerViewPanel.Location = new System.Drawing.Point(0, 27);
+            this.ManagerViewPanel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ManagerViewPanel.Name = "ManagerViewPanel";
-            this.ManagerViewPanel.Size = new System.Drawing.Size(961, 490);
+            this.ManagerViewPanel.Size = new System.Drawing.Size(1443, 684);
             this.ManagerViewPanel.TabIndex = 12;
             this.ManagerViewPanel.Visible = false;
             // 
-            // SalesReportLabel
+            // GenerateReportButton
             // 
-            this.SalesReportLabel.AutoSize = true;
-            this.SalesReportLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SalesReportLabel.Location = new System.Drawing.Point(13, 41);
-            this.SalesReportLabel.Name = "SalesReportLabel";
-            this.SalesReportLabel.Size = new System.Drawing.Size(102, 20);
-            this.SalesReportLabel.TabIndex = 0;
-            this.SalesReportLabel.Text = "Sales Report";
-            // 
-            // DateRangeLabel
-            // 
-            this.DateRangeLabel.AutoSize = true;
-            this.DateRangeLabel.Location = new System.Drawing.Point(17, 71);
-            this.DateRangeLabel.Name = "DateRangeLabel";
-            this.DateRangeLabel.Size = new System.Drawing.Size(65, 13);
-            this.DateRangeLabel.TabIndex = 1;
-            this.DateRangeLabel.Text = "Date Range";
-            // 
-            // FromLabel
-            // 
-            this.FromLabel.AutoSize = true;
-            this.FromLabel.Location = new System.Drawing.Point(17, 88);
-            this.FromLabel.Name = "FromLabel";
-            this.FromLabel.Size = new System.Drawing.Size(33, 13);
-            this.FromLabel.TabIndex = 2;
-            this.FromLabel.Text = "From:";
-            // 
-            // ToLabel
-            // 
-            this.ToLabel.AutoSize = true;
-            this.ToLabel.Location = new System.Drawing.Point(17, 115);
-            this.ToLabel.Name = "ToLabel";
-            this.ToLabel.Size = new System.Drawing.Size(20, 13);
-            this.ToLabel.TabIndex = 3;
-            this.ToLabel.Text = "To";
-            // 
-            // FromDateTimePicker
-            // 
-            this.FromDateTimePicker.Location = new System.Drawing.Point(57, 88);
-            this.FromDateTimePicker.Name = "FromDateTimePicker";
-            this.FromDateTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.FromDateTimePicker.TabIndex = 4;
-            // 
-            // ToDateTimePicker
-            // 
-            this.ToDateTimePicker.Location = new System.Drawing.Point(57, 115);
-            this.ToDateTimePicker.Name = "ToDateTimePicker";
-            this.ToDateTimePicker.Size = new System.Drawing.Size(200, 20);
-            this.ToDateTimePicker.TabIndex = 5;
-            // 
-            // GenreLabel
-            // 
-            this.GenreLabel.AutoSize = true;
-            this.GenreLabel.Location = new System.Drawing.Point(17, 141);
-            this.GenreLabel.Name = "GenreLabel";
-            this.GenreLabel.Size = new System.Drawing.Size(36, 13);
-            this.GenreLabel.TabIndex = 6;
-            this.GenreLabel.Text = "Genre";
-            // 
-            // GenreTextBox
-            // 
-            this.GenreTextBox.Location = new System.Drawing.Point(17, 158);
-            this.GenreTextBox.Name = "GenreTextBox";
-            this.GenreTextBox.Size = new System.Drawing.Size(100, 20);
-            this.GenreTextBox.TabIndex = 7;
+            this.GenerateReportButton.Location = new System.Drawing.Point(16, 180);
+            this.GenerateReportButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GenerateReportButton.Name = "GenerateReportButton";
+            this.GenerateReportButton.Size = new System.Drawing.Size(100, 30);
+            this.GenerateReportButton.TabIndex = 9;
+            this.GenerateReportButton.Text = "Generate Report";
+            this.GenerateReportButton.UseVisualStyleBackColor = true;
+            this.GenerateReportButton.Click += new System.EventHandler(this.GenerateReportButton_Click);
             // 
             // ManagerViewDataGridView
             // 
@@ -342,38 +276,104 @@ namespace App
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ManagerViewDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ManagerViewDataGridView.Location = new System.Drawing.Point(271, 71);
+            this.ManagerViewDataGridView.Location = new System.Drawing.Point(289, 58);
+            this.ManagerViewDataGridView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ManagerViewDataGridView.Name = "ManagerViewDataGridView";
-            this.ManagerViewDataGridView.Size = new System.Drawing.Size(690, 419);
+            this.ManagerViewDataGridView.Size = new System.Drawing.Size(1154, 626);
             this.ManagerViewDataGridView.TabIndex = 8;
             // 
-            // GenerateReportButton
+            // GenreTextBox
             // 
-            this.GenerateReportButton.Location = new System.Drawing.Point(17, 194);
-            this.GenerateReportButton.Name = "GenerateReportButton";
-            this.GenerateReportButton.Size = new System.Drawing.Size(100, 40);
-            this.GenerateReportButton.TabIndex = 9;
-            this.GenerateReportButton.Text = "Generate Report";
-            this.GenerateReportButton.UseVisualStyleBackColor = true;
-            this.GenerateReportButton.Click += new System.EventHandler(this.GenerateReportButton_Click);
+            this.GenreTextBox.Location = new System.Drawing.Point(16, 154);
+            this.GenreTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.GenreTextBox.Name = "GenreTextBox";
+            this.GenreTextBox.Size = new System.Drawing.Size(76, 20);
+            this.GenreTextBox.TabIndex = 7;
+            // 
+            // GenreLabel
+            // 
+            this.GenreLabel.AutoSize = true;
+            this.GenreLabel.Location = new System.Drawing.Point(13, 139);
+            this.GenreLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.GenreLabel.Name = "GenreLabel";
+            this.GenreLabel.Size = new System.Drawing.Size(128, 13);
+            this.GenreLabel.TabIndex = 6;
+            this.GenreLabel.Text = "Genre (leave blank for all)";
+            // 
+            // ToDateTimePicker
+            // 
+            this.ToDateTimePicker.Location = new System.Drawing.Point(57, 105);
+            this.ToDateTimePicker.Name = "ToDateTimePicker";
+            this.ToDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.ToDateTimePicker.TabIndex = 5;
+            // 
+            // FromDateTimePicker
+            // 
+            this.FromDateTimePicker.Location = new System.Drawing.Point(57, 80);
+            this.FromDateTimePicker.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FromDateTimePicker.Name = "FromDateTimePicker";
+            this.FromDateTimePicker.Size = new System.Drawing.Size(200, 20);
+            this.FromDateTimePicker.TabIndex = 4;
+            // 
+            // ToLabel
+            // 
+            this.ToLabel.AutoSize = true;
+            this.ToLabel.Location = new System.Drawing.Point(13, 105);
+            this.ToLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ToLabel.Name = "ToLabel";
+            this.ToLabel.Size = new System.Drawing.Size(20, 13);
+            this.ToLabel.TabIndex = 3;
+            this.ToLabel.Text = "To";
+            this.ToLabel.Click += new System.EventHandler(this.ToLabel_Click);
+            // 
+            // FromLabel
+            // 
+            this.FromLabel.AutoSize = true;
+            this.FromLabel.Location = new System.Drawing.Point(13, 80);
+            this.FromLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.FromLabel.Name = "FromLabel";
+            this.FromLabel.Size = new System.Drawing.Size(33, 13);
+            this.FromLabel.TabIndex = 2;
+            this.FromLabel.Text = "From:";
+            // 
+            // DateRangeLabel
+            // 
+            this.DateRangeLabel.AutoSize = true;
+            this.DateRangeLabel.Location = new System.Drawing.Point(13, 58);
+            this.DateRangeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.DateRangeLabel.Name = "DateRangeLabel";
+            this.DateRangeLabel.Size = new System.Drawing.Size(65, 13);
+            this.DateRangeLabel.TabIndex = 1;
+            this.DateRangeLabel.Text = "Date Range";
+            // 
+            // SalesReportLabel
+            // 
+            this.SalesReportLabel.AutoSize = true;
+            this.SalesReportLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SalesReportLabel.Location = new System.Drawing.Point(10, 33);
+            this.SalesReportLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.SalesReportLabel.Name = "SalesReportLabel";
+            this.SalesReportLabel.Size = new System.Drawing.Size(102, 20);
+            this.SalesReportLabel.TabIndex = 0;
+            this.SalesReportLabel.Text = "Sales Report";
             // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1924, 933);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.ManagerViewPanel);
-            this.Controls.Add(this.OrderMovieButton);
+            this.ClientSize = new System.Drawing.Size(1443, 758);
             this.Controls.Add(this.LogoutButton);
-            this.Controls.Add(this.FulfillOrderButton);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.UpdateRatingsButton);
             this.Controls.Add(this.DeleteButton);
-            this.Controls.Add(this.EditButton);
             this.Controls.Add(this.AddButton);
+            this.Controls.Add(this.EditButton);
+            this.Controls.Add(this.OrderMovieButton);
+            this.Controls.Add(this.FulfillOrderButton);
+            this.Controls.Add(this.ManagerViewPanel);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ManagerForm";
             this.Text = "Manager";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ManagerFormClosed);

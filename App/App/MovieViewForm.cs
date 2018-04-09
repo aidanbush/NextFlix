@@ -17,10 +17,12 @@ namespace App
         Customer user;
         BindingList<Actor> actorsInMovie;
         CustomerForm parent;
+        bool canRate;
         public MovieViewForm(Movie selectedMovie, Customer CurrentUser, bool canRate, CustomerForm parent)
 
         {
             this.parent = parent;
+            this.canRate = canRate;
             movie = selectedMovie;
             user = CurrentUser;
             InitializeComponent();
@@ -32,29 +34,29 @@ namespace App
             Starred starred = new Starred(actors.ToArray(), null, movie);
             actorsInMovie = DBEnvironment.GetStarred(movie);
             MovieCastLabel.Text = CreateStarredText();
-            RatingButton.Hide();
             RatingSlider.Hide();
-
-            if (canRate)
-            {
-                RatingButton.Show();
-                RatingSlider.Show();
-                RentButton.Hide();
-            }
+            RatingButton.Hide();
+            if (!canRate)
+                return;
+            RatingSlider.Show();
+            RatingButton.Show();
+            RentButton.Hide();
         }
         private string CreateStarredText()
         {
             string outString = "Starring: ";
             string actors = "";
-            foreach(Actor actor in actorsInMovie)
+            foreach (Actor actor in actorsInMovie)
             {
                 actors += actor.Name.GetFullName() + ", ";
             }
-            int index = actors.LastIndexOf(",");
-            actors = actors.Remove(index);
-            outString += actors;
+            if (actors != "")
+            {
+                int index = actors.LastIndexOf(",");
+                actors = actors.Remove(index);
+                outString += actors;
+            }
             return outString;
-
         }
         private void RentButton_Click(object sender, EventArgs e)
         {

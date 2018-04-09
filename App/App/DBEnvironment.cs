@@ -317,6 +317,81 @@ namespace App
 
         }
 
+
+        public static BindingList<Movie> RetrieveCustomerPending(Customer user)
+        {
+            string query = "SELECT * FROM movie " +
+                           "WHERE mid IN " +
+                           "(SELECT mid from [order] WHERE cid = @cid AND eid IS NULL)";
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            adaptor.SelectCommand.Parameters.AddWithValue("@cid", user.Id);
+
+            DataTable table = new DataTable();
+            adaptor.Fill(table);
+            BindingList<Movie> pending = GetMoviesFromQuery(table);
+
+            return pending;
+
+        }
+        public static bool UpdateCustAccount(string query)
+        {
+         
+            con.Open();
+
+            try
+            {
+                SqlCommand command = new SqlCommand(query, con);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                con.Close();
+                return false;
+            }
+
+            con.Close();
+            return true;
+            
+        }
+        public static BindingList<Movie> GetRentedInPast(Customer user)
+        {
+            string query = "SELECT m.mid, m.name, m.genre, m.fees, m.num_copies, m.copies_available, m.rating, r.rating AS customer_rating " +
+                           "FROM (SELECT * " +
+                           "FROM movie AS m " +
+                           "WHERE m.mid in " +
+                           "(SELECT DISTINCT mid " +
+                           "FROM [order] " +
+                           "WHERE cid = @cid AND date_returned IS NOT NULL)) AS m " +
+                           "LEFT JOIN movie_rating r ON r.mid = m.mid AND r.cid = @cid";
+
+            SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
+            adaptor.SelectCommand.Parameters.AddWithValue("@cid", user.Id);
+
+            DataTable table = new DataTable();
+            adaptor.Fill(table);
+            BindingList<Movie> pending = GetCustomerMoviesFromQuery(table);
+
+            return pending;
+        }
+
+        private static BindingList<Movie> GetCustomerMoviesFromQuery(DataTable movieTable)
+        {
+            BindingList<Movie> movies = new BindingList<Movie>();
+
+            foreach (DataRow movieRow in movieTable.Rows)
+            {
+                Movie movie = CreateMovieFromRow(movieRow);
+                if (!movieRow.IsNull("customer_rating"))
+                {
+                    movie.CustomerRating = (int)movieRow["customer_rating"];
+                }
+                movies.Add(movie);
+            }
+            return movies;
+        }
+
         private static BindingList<Movie> GetMoviesFromQuery(DataTable movieTable)
         {
             BindingList<Movie> movies = new BindingList<Movie>();
@@ -420,6 +495,30 @@ namespace App
             return orders;
         }
 
+        public static bool ReturnMovie(Movie movie, Customer user)
+        {
+            string qString = "UPDATE [order] SET date_returned = @date WHERE cid = @cid AND mid = @mid";
+
+            con.Open();
+            SqlCommand command = new SqlCommand(qString, con);
+            command.Parameters.AddWithValue("@cid", user.Id);
+            command.Parameters.AddWithValue("@mid", movie.Id);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("ReturnMovie: ", e);
+                con.Close();
+                return false;
+            }
+            con.Close();
+            return true;
+        }
+
         public static bool FulfillOrder(int oid, int eid)
         {
             string qString = "UPDATE [order] SET eid = @eid WHERE oid = @oid";
@@ -456,6 +555,14 @@ namespace App
             cmd.ExecuteNonQuery();
 
             con.Close();
+        }
+
+        public static BindingList<Movie> searchForMovies(String Query)
+        {
+            SqlDataAdapter adaptor = new SqlDataAdapter(Query, con);
+            DataTable movieTable = new DataTable();
+            adaptor.Fill(movieTable); 
+            return GetMoviesFromQuery(movieTable);
         }
 
         public static Movie GetMovieByID(int id)
@@ -975,6 +1082,6 @@ namespace App
             return actors;
 
         }
-
+        
     }
 }
