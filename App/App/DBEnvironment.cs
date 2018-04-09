@@ -33,7 +33,7 @@ namespace App
 
         public static void SetActors()
         {
-            actors = RetreiveActors();
+            actors = RetrieveActors();
             
         }
         public static BindingList<Actor> GetActors()
@@ -88,6 +88,25 @@ namespace App
         {
             return queryObject.Add(con);
         }
+        public static bool EditCard(string query)
+        {
+            con.Open();
+            
+            try
+            {
+                SqlCommand command = new SqlCommand(query, con);
+                command.ExecuteNonQuery();      
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                con.Close();
+                return false;
+            }
+            
+            con.Close();
+            return true;
+        }
 
         public static bool MovieRatingQuery(String query, Movie movie, Customer user, int rating)
         {
@@ -112,6 +131,7 @@ namespace App
             con.Close();
             return true;
         }
+
         public static bool EditMovieRating(Movie movie, Customer user, int rating)
         {
             String q = "UPDATE movie_rating SET rating=@rating where mid=@mid and cid=@cid";
@@ -219,6 +239,7 @@ namespace App
             return Actors;
 
         }
+
         public static BindingList<Customer> RetrieveCustomers()
         {
             BindingList<Customer> customers = new BindingList<Customer>();
@@ -236,6 +257,7 @@ namespace App
 
             return customers;
         }
+
         private static BindingList<Employee>  RetrieveEmployees()
 
         {
@@ -255,9 +277,9 @@ namespace App
 
             return employeeList;
         }
+
         public static BindingList<Queue> RetrieveAllQueue()
         {
-            //THis is wrong??????
             string query = "SELECT * FROM queue ORDER BY date_added";
 
             SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
@@ -294,6 +316,7 @@ namespace App
             return queue;
 
         }
+
 
         public static BindingList<Movie> RetrieveCustomerPending(Customer user)
         {
@@ -371,7 +394,7 @@ namespace App
             return movies;
         }
 
-        public static BindingList<Actor> RetreiveActors()
+        public static BindingList<Actor> RetrieveActors()
         {
 
             string qString = "SELECT * FROM [actor]";
@@ -947,7 +970,8 @@ namespace App
                 CreditCard = creditCard,
                 Id = (int)row["cid"],
                 Rating = (int)row["rating"],
-                Credentials = credentials
+                Credentials = credentials,
+                
             };
 
             return customer;

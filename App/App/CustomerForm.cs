@@ -49,14 +49,17 @@ namespace App
             myMoviesPanel.Visible = false;
         }
 
-        private void FillUserInfo()
+        public void FillUserInfo()
+
         {
+            user = DBEnvironment.GetCustomerByID(user.Id);
             NameLabel.Text = "Name:" + user.Name.FirstName + " " + user.Name.LastName;
             AddressLabel.Text = "Address: " + user.Address.HouseNumber + " " + user.Address.StreetNumber;
             PhoneLabel.Text = "Phone number: " + user.ContactInformation.CleanNumberForOutput();
             CityLabel.Text = "City: " + user.Address.City;
             ProvinceLabel.Text = "Province: " + user.Address.Province;
             EmailLabel.Text = "Email: " + user.ContactInformation.Email;
+            NumberLabel.Text = "Number: " + user.CreditCard;
         }
         
         public void fillSearch(BindingList<Movie> movies)
@@ -229,6 +232,19 @@ namespace App
             movieForm.Show();
         }
 
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            EditCustomerForm editForm = new EditCustomerForm(user, this);
+            editForm.Show();
+        }
+
+        private void EditPaymentInfo_Click(object sender, EventArgs e)
+        {
+            CreditCardForm newCard = new CreditCardForm(user, this);
+            newCard.Show();
+        }
+        
         private void CustomerForm_Load(object sender, EventArgs e)
         {
 
@@ -271,6 +287,7 @@ namespace App
             if (e.RowIndex < 0)
                 return;
             indexCurrentlyRented = e.RowIndex;
+
         }
     }
 }

@@ -30,8 +30,7 @@ namespace App
             GenreLabel.Text = movie.Genre;
             RatingLabel.Text = movie.Rating.ToString();
             CopyLabel.Text = movie.Num_copies.ToString();
-
-            BindingList<Actor> actors = DBEnvironment.RetreiveActors();
+            BindingList<Actor> actors = DBEnvironment.RetrieveActors();
             Starred starred = new Starred(actors.ToArray(), null, movie);
             actorsInMovie = DBEnvironment.GetStarred(movie);
             MovieCastLabel.Text = CreateStarredText();
@@ -42,7 +41,6 @@ namespace App
             RatingSlider.Show();
             RatingButton.Show();
             RentButton.Hide();
-
         }
         private string CreateStarredText()
         {
@@ -52,7 +50,6 @@ namespace App
             {
                 actors += actor.Name.GetFullName() + ", ";
             }
-
             if (actors != "")
             {
                 int index = actors.LastIndexOf(",");

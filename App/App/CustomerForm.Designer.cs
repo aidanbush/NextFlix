@@ -136,6 +136,7 @@
             // myProfileToolStripMenuItem
             // 
             this.myProfileToolStripMenuItem.Name = "myProfileToolStripMenuItem";
+
             this.myProfileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.myProfileToolStripMenuItem.Text = "My Profile";
             this.myProfileToolStripMenuItem.Click += new System.EventHandler(this.myProfileToolStripMenuItem_Click);
@@ -175,6 +176,7 @@
             this.EditPaymentInfo.TabIndex = 10;
             this.EditPaymentInfo.Text = "Edit Payment Info";
             this.EditPaymentInfo.UseVisualStyleBackColor = true;
+            this.EditPaymentInfo.Click += new System.EventHandler(this.EditPaymentInfo_Click);
             // 
             // NumberLabel
             // 
@@ -205,6 +207,7 @@
             this.EditButton.TabIndex = 7;
             this.EditButton.Text = "Edit Information";
             this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // EmailLabel
             // 
@@ -294,6 +297,7 @@
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 13);
+
             this.label3.TabIndex = 0;
             this.label3.Text = "Hello, User";
             // 
@@ -312,7 +316,6 @@
             this.myMoviesPanel.Controls.Add(this.label4);
             this.myMoviesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.myMoviesPanel.Location = new System.Drawing.Point(0, 0);
-            this.myMoviesPanel.Margin = new System.Windows.Forms.Padding(2);
             this.myMoviesPanel.Name = "myMoviesPanel";
             this.myMoviesPanel.Size = new System.Drawing.Size(818, 564);
             this.myMoviesPanel.TabIndex = 1;
@@ -451,7 +454,6 @@
             this.rentMoviePanel.Controls.Add(this.RentButton);
             this.rentMoviePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rentMoviePanel.Location = new System.Drawing.Point(0, 0);
-            this.rentMoviePanel.Margin = new System.Windows.Forms.Padding(2);
             this.rentMoviePanel.Name = "rentMoviePanel";
             this.rentMoviePanel.Size = new System.Drawing.Size(818, 564);
             this.rentMoviePanel.TabIndex = 2;
@@ -483,6 +485,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 24);
             this.comboBox1.TabIndex = 4;
+
             // 
             // rentMoviePanel
             // 
