@@ -64,7 +64,10 @@ namespace App
                 this.Text = "Employee";
                 //customerRepresentativesToolStripMenuItem.Visible = false;
                 salesReportsToolStripMenuItem.Visible = false;
+                customerRepresentativesToolStripMenuItem.Visible = false;
             }
+
+            customerQueueToolStripMenuItem.Visible = false;
 
             dataGridView1.AutoGenerateColumns = true;
             ChangeView(FormType.customer);
@@ -237,11 +240,11 @@ namespace App
         private void FulfillOrderButton_Click(object sender, EventArgs e)
         {
             // TODO: implement
-            //Order selectedOrder = orders.ElementAt(index);
+            if (index >= orders.Count)
+                return;
             Order selectedOrder = orders[index];
             FufillOrderForm fufillForm = new FufillOrderForm(this, selectedOrder);
             fufillForm.Show();
-            FillTable();
         }
 
         private void LogoutButton_Click(object sender, EventArgs e)
@@ -489,6 +492,7 @@ namespace App
                 DBEnvironment.SetMovies();
                 parent.movies = DBEnvironment.GetMovies();
                 parent.dataGridView1.DataSource = parent.movies;
+                parent.dataGridView1.Columns["customerRating"].Visible = false;
 
                 parent.Refresh();
             }
@@ -603,6 +607,11 @@ namespace App
             }
 
             ManagerViewDataGridView.DataSource = sales;
+
+        }
+
+        private void ToLabel_Click(object sender, EventArgs e)
+        {
 
         }
     }

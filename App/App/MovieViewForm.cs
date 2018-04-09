@@ -40,30 +40,18 @@ namespace App
         {
             string outString = "Starring: ";
             string actors = "";
-            foreach(Actor actor in actorsInMovie)
+            foreach (Actor actor in actorsInMovie)
             {
                 actors += actor.Name.GetFullName() + ", ";
             }
-            int index = actors.LastIndexOf(",");
-            
-            Debug.WriteLine("INDEX AT " + index.ToString());
-            Debug.WriteLine("PRE " + actors+ "!");
-            actors = actors.Remove(index);
-            //actors = actors.Remove(index);
-            Debug.WriteLine("POS " + actors + "!");
-            outString += actors;
-            return outString;
 
-            RatingButton.Hide();
-            RatingSlider.Hide();
-
-            if (canRate)
+            if (actors != "")
             {
-                RatingButton.Show();
-                RatingSlider.Show();
-                RentButton.Hide();
+                int index = actors.LastIndexOf(",");
+                actors = actors.Remove(index);
+                outString += actors;
             }
-
+            return outString;
         }
         private void RentButton_Click(object sender, EventArgs e)
         {
