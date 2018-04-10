@@ -92,31 +92,37 @@ namespace App
             personalSuggestionsDataGridView.Columns["Num_copies"].Visible = false;
             personalSuggestionsDataGridView.Columns["Copies_available"].Visible = false;
             personalSuggestionsDataGridView.Columns["customerRating"].Visible = false;
+            personalSuggestionsDataGridView.Columns["Fees"].Visible = false;
 
             MovieGridView.Columns["Id"].Visible = false;
             MovieGridView.Columns["Num_copies"].Visible = false;
             MovieGridView.Columns["Copies_available"].Visible = false;
             MovieGridView.Columns["CustomerRating"].Visible = false;
+            MovieGridView.Columns["Fees"].Visible = false;
 
             MoviesQueuedGridView.Columns["Id"].Visible = false;
             MoviesQueuedGridView.Columns["Num_copies"].Visible = false;
             MoviesQueuedGridView.Columns["Copies_available"].Visible = false;
             MoviesQueuedGridView.Columns["CustomerRating"].Visible = false;
+            MoviesQueuedGridView.Columns["Fees"].Visible = false;
 
             RentedMoviesGridView.Columns["Id"].Visible = false;
             RentedMoviesGridView.Columns["Num_copies"].Visible = false;
             RentedMoviesGridView.Columns["Copies_available"].Visible = false;
             RentedMoviesGridView.Columns["CustomerRating"].Visible = false;
+            RentedMoviesGridView.Columns["Fees"].Visible = false;
 
             MoviesRentedThisMonth.Columns["Id"].Visible = false;
             MoviesRentedThisMonth.Columns["Num_copies"].Visible = false;
             MoviesRentedThisMonth.Columns["Copies_available"].Visible = false;
             MoviesRentedThisMonth.Columns["CustomerRating"].HeaderText = "Your Rating";
+            MoviesRentedThisMonth.Columns["Fees"].Visible = false;
 
             MoviesPendingDataGridView.Columns["Id"].Visible = false;
             MoviesPendingDataGridView.Columns["Num_copies"].Visible = false;
             MoviesPendingDataGridView.Columns["Copies_available"].Visible = false;
             MoviesPendingDataGridView.Columns["CustomerRating"].Visible = false;
+            MoviesPendingDataGridView.Columns["Fees"].Visible = false;
         }
         
         private void myMoviesToolStripMenuItem_Click(object sender, EventArgs e)
