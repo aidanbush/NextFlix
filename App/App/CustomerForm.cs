@@ -315,7 +315,7 @@ namespace App
         private void RentSuggestionButton_click(object sender, EventArgs e)
         {
             Debug.Print("Recommended movies" + recommendedMovies.Count);
-            if (recommendedMoviesIndex <= recommendedMovies.Count)
+            if (recommendedMoviesIndex < recommendedMovies.Count)
             {
                 Movie movie = recommendedMovies[recommendedMoviesIndex];
                 MovieViewForm movieForm = new MovieViewForm(movie, this.user, false, this);
