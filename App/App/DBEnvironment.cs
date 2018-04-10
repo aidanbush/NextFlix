@@ -1067,14 +1067,18 @@ namespace App
         {
             int cid = user.Id;
 
-            string query = "select * from movie " +
-                "where movie.genre like " +
-                "(select genre from movie, " +
-                   "(select mid from movie_rating " +
-                   "where cid = " +user.Id+" " +
-                   "and rating > 2) as movieRatingMID " +
-                    "where movieRatingMID.mid = movie.mid) " +
-                    "and movie.rating > 1;";
+            string query = "select * from movie as m "+
+                           "where exists "+
+                           "(select *from movie as m2, "+
+		                   "(select mid from movie_rating "+
+                            "where cid = "+user.Id+" "+
+                            "and rating > 2) as movieRatingMID "+
+                            "where movieRatingMID.mid = m2.mid "+
+                            "and m2.genre like m.genre) "+
+
+                            "and m.rating > 1;";
+
+
 
 
             SqlDataAdapter adaptor = new SqlDataAdapter(query, con);
