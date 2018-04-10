@@ -40,10 +40,10 @@ namespace App
             CustomerNameLabel.Text = "Name: " + customer.FirstName + " " + customer.LastName;
             StreetAddressLabel.Text = "Street Address: " + customer.StreetNumber;
             CityLabel.Text = "City: " + customer.City;
-            ProvenceLabel.Text = "Provence: " + customer.Province;
+            ProvenceLabel.Text = "Province: " + customer.Province;
             PostalCodeLabel.Text = "Postal Code: " + customer.PostalCode;
             PhoneLabel.Text = "Phone Number: " + customer.ContactInformation.PhoneNumber;
-            EmailLabel.Text = "Email:" + customer.ContactInformation.Email;
+            EmailLabel.Text = "Email: " + customer.ContactInformation.Email;
 
             Movie movie = DBEnvironment.GetMovieByID(order.MovieID);
             // get movie

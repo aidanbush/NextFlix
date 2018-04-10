@@ -61,10 +61,14 @@ namespace App
 
             if (user.EmployeePosition != Employee.Position.Manager)
             {
-                this.Text = "Employee";
+                this.Text = "NextFlix Employee";
                 //customerRepresentativesToolStripMenuItem.Visible = false;
                 salesReportsToolStripMenuItem.Visible = false;
                 customerRepresentativesToolStripMenuItem.Visible = false;
+            }
+            else
+            {
+                this.Text = "NextFlix Manager";
             }
 
             customerQueueToolStripMenuItem.Visible = false;

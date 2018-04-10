@@ -38,7 +38,8 @@ namespace App
             fillMovies();
 
             HidePanels();
-            
+
+            this.Text = "NextFlix";
         }
 
         private void HidePanels()

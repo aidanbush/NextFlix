@@ -17,6 +17,7 @@ namespace App
         public LoginForm()
         {
             InitializeComponent();
+            this.Text = "NextFlix Login";
         }
 
         private void CustomerButtonClick(object sender, EventArgs e)
